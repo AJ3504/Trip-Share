@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
@@ -17,10 +17,10 @@ function App() {
     googleMapsApiKey: 'AIzaSyBVHVR_jL_0yrOULYr2cOQk3ucM5LyhqXQ'
   });
 
-  const [map, setMap] = React.useState(null);
-  const [userLocation, setUserLocation] = React.useState(null);
+  const [map, setMap] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         setUserLocation({
@@ -33,14 +33,14 @@ function App() {
     }
   }, []);
 
-  const onLoad = React.useCallback(function callback(map) {
+  const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
 
     setMap(map);
   }, []);
 
-  const onUnmount = React.useCallback(function callback(map) {
+  const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
 
