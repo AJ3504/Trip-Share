@@ -1,7 +1,11 @@
 import React from 'react';
-
+import KakaoMap from '../components/map/KakaoMap';
 const Main = () => {
-  return <div>Main</div>;
+  return (
+    <>
+      <KakaoMap />
+    </>
+  );
 };
 
 export default Main;
