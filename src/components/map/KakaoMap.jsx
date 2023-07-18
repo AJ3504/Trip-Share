@@ -93,7 +93,7 @@ const KakaoMap = () => {
         />
         <button onClick={handleSearch}>검색</button>
       </div>
-      <div id="map" style={{ width: '1000px', height: '700px' }}></div>
+      <div id="map" style={{ width: '1000px', height: '700px', zIndex: -1 }} />
     </>
   );
 };
