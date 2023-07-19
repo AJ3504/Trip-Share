@@ -37,7 +37,6 @@ const PostListMain = ({ openSide, option }) => {
           id: doc.id,
           ...doc.data()
         };
-        // console.log('data', data);
         initialTils.push(data);
       });
       setPosts(initialTils);

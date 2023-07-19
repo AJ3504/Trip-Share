@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { db, storage } from '../../service/firebase';
+import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
 
 const PostWrite = ({ openModal, options }) => {
@@ -47,7 +47,7 @@ const PostWrite = ({ openModal, options }) => {
     console.log('downloadURL', downloadURL);
 
     const newPost = {
-      // uid: auth.currentUser.uid,
+      uid: auth.currentUser.uid,
       postTitle: postTitle,
       postBody: postBody,
       postImg: downloadURL,
