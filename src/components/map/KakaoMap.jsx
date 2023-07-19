@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+// import TourAPI from './TourAPI';
+import Menu from '../header/Menu';
 
 const { kakao } = window;
 
 const KakaoMap = () => {
   const [map, setMap] = useState();
   const [marker, setMarker] = useState();
+  const [selectedPlaceUrl, setSelectedPlaceUrl] = useState(null);
+  const [showSearchResults, setShowSearchResults] = useState(true);
 
   useEffect(() => {
     // 카카오 지도 초기화 코드
@@ -38,8 +42,8 @@ const KakaoMap = () => {
     );
 
     // 장소 검색 함수
-    function searchPlaces() {
-      var keyword = document.getElementById('keyword').value;
+    const searchPlaces = () => {
+      const keyword = document.getElementById('keyword').value;
 
       if (!keyword.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
@@ -48,10 +52,10 @@ const KakaoMap = () => {
 
       // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
       ps.keywordSearch(keyword, placesSearchCB);
-    }
+    };
 
     // 장소검색 결과 콜백 함수
-    function placesSearchCB(data, status, pagination) {
+    const placesSearchCB = (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         displayPlaces(data);
         displayPagination(pagination);
@@ -60,11 +64,27 @@ const KakaoMap = () => {
       } else if (status === kakao.maps.services.Status.ERROR) {
         alert('검색 결과 중 오류가 발생했습니다.');
       }
-    }
+    };
+
+    const addMarkerClickEvent = (marker, place_url) => {
+      kakao.maps.event.addListener(marker, 'click', () => {
+        setSelectedPlaceUrl(place_url);
+
+        setShowSearchResults(false);
+      });
+    };
+
+    // 검색 결과 목록 클릭 이벤트 리스너를 추가하는 함수
+    const addListItemClickEvent = (itemEl, marker, title, address, phone) => {
+      itemEl.onclick = () => {
+        setSelectedPlaceUrl(null);
+      };
+    };
 
     // 검색 결과 목록과 마커를 표출하는 함수
-    function displayPlaces(places) {
-      var listEl = document.getElementById('placesList'),
+    const displayPlaces = (places) => {
+      console.log(places);
+      const listEl = document.getElementById('placesList'),
         menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
@@ -73,29 +93,42 @@ const KakaoMap = () => {
       removeAllChildNods(listEl);
       removeMarker();
 
-      for (var i = 0; i < places.length; i++) {
-        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-          marker = addMarker(placePosition, i),
-          itemEl = getListItem(i, places[i]);
+      for (let i = 0; i < places.length; i++) {
+        const placePosition = new kakao.maps.LatLng(places[i].y, places[i].x);
+        const marker = addMarker(
+          placePosition,
+          i,
+          places[i].place_name,
+          places[i].address,
+          places[i].phone,
+          places[i].place_url
+        );
+        const itemEl = getListItem(i, places[i], marker);
 
         bounds.extend(placePosition);
 
-        (function (marker, title) {
-          kakao.maps.event.addListener(marker, 'mouseover', function () {
-            displayInfowindow(marker, title);
+        //이곳은 지도의 마커 마우스오버입니다!
+        ((marker, title) => {
+          kakao.maps.event.addListener(marker, 'mouseover', () => {
+            displayInfowindow(marker, title, places[i].address_name, places[i].phone, places[i].place_url);
           });
 
-          kakao.maps.event.addListener(marker, 'mouseout', function () {
+          kakao.maps.event.addListener(marker, 'mouseout', () => {
             infowindow.close();
           });
 
-          itemEl.onmouseover = function () {
-            displayInfowindow(marker, title);
+          //이곳은 검색결과 마우스오버입니다!
+          itemEl.onmouseover = () => {
+            displayInfowindow(marker, title, places[i].address_name, places[i].phone, places[i].place_url);
           };
 
-          itemEl.onmouseout = function () {
+          itemEl.onmouseout = () => {
             infowindow.close();
           };
+
+          addMarkerClickEvent(marker, places[i].place_url, places[i].place_name, places[i].address, places[i].phone);
+
+          addListItemClickEvent(itemEl, marker, places[i].place_name, places[i].address, places[i].phone);
         })(marker, places[i].place_name);
 
         fragment.appendChild(itemEl);
@@ -105,21 +138,24 @@ const KakaoMap = () => {
       menuEl.scrollTop = 0;
 
       map.setBounds(bounds);
-    }
 
-    function getListItem(index, places) {
-      var el = document.createElement('li'),
-        itemStr =
-          '<span class="markerbg marker_' +
-          (index + 1) +
-          '"></span>' +
-          '<div class="info">' +
-          '   <h5>' +
-          places.place_name +
-          '</h5>';
+      setShowSearchResults(true);
+    };
 
+    //여기서 places안의 내용을 보고 추가해야 합니다! 아래 contentStr 부분
+    const getListItem = (index, places) => {
+      const itemStr =
+        '<span class="markerbg marker_' +
+        (index + 1) +
+        '"></span>' +
+        '<div class="info">' +
+        '   <h5>' +
+        places.place_name +
+        '</h5>';
+
+      let addressStr = '';
       if (places.road_address_name) {
-        itemStr +=
+        addressStr +=
           '    <span>' +
           places.road_address_name +
           '</span>' +
@@ -127,19 +163,22 @@ const KakaoMap = () => {
           places.address_name +
           '</span>';
       } else {
-        itemStr += '    <span>' + places.address_name + '</span>';
+        addressStr += '    <span>' + places.address_name + '</span>';
       }
 
-      itemStr += '  <span class="tel">' + places.phone + '</span>' + '</div>';
+      //이 부분이 검색결과에 보이는 부분입니다
+      const contentStr = itemStr + addressStr + '  <span class="tel">' + places.phone + '</span>' + '</div>';
 
-      el.innerHTML = itemStr;
+      const el = document.createElement('li');
+      el.innerHTML = contentStr;
       el.className = 'item';
 
       return el;
-    }
+    };
 
-    function addMarker(position, idx, title) {
-      var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',
+    //마커 추가 함수
+    const addMarker = (position, idx) => {
+      const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',
         imageSize = new kakao.maps.Size(36, 37),
         imgOptions = {
           spriteSize: new kakao.maps.Size(36, 691),
@@ -156,17 +195,17 @@ const KakaoMap = () => {
       markers.push(marker);
 
       return marker;
-    }
+    };
 
-    function removeMarker() {
-      for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-      }
-      markers = [];
-    }
+    //마커 제거 함수
+    const removeMarker = () => {
+      markers.forEach((marker) => marker.setMap(null));
+      markers.length = 0;
+    };
 
-    function displayPagination(pagination) {
-      var paginationEl = document.getElementById('pagination'),
+    //검색결과 페이지네이션 부분입니다
+    const displayPagination = (pagination) => {
+      let paginationEl = document.getElementById('pagination'),
         fragment = document.createDocumentFragment(),
         i;
 
@@ -175,15 +214,15 @@ const KakaoMap = () => {
       }
 
       for (i = 1; i <= pagination.last; i++) {
-        var el = document.createElement('a');
+        const el = document.createElement('a');
         el.href = '#';
         el.innerHTML = i;
 
         if (i === pagination.current) {
           el.className = 'on';
         } else {
-          el.onclick = (function (i) {
-            return function () {
+          el.onclick = ((i) => {
+            return () => {
               pagination.gotoPage(i);
             };
           })(i);
@@ -192,50 +231,100 @@ const KakaoMap = () => {
         fragment.appendChild(el);
       }
       paginationEl.appendChild(fragment);
-    }
+    };
 
-    function displayInfowindow(marker, title) {
-      var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+    //이 부분이 마커 마우스 오버시 보이는 부분입니다
+    const displayInfowindow = (marker, place_name, address_name, phone) => {
+      const content =
+        '<div ">' +
+        '<h4>' +
+        place_name +
+        '</h4>' +
+        '<p>주소: ' +
+        address_name +
+        '</p>' +
+        '<p>전화번호: ' +
+        (phone ? phone : '전화번호가 없습니다.') +
+        '</p>' +
+        '</div>';
 
       infowindow.setContent(content);
       infowindow.open(map, marker);
-    }
 
-    function removeAllChildNods(el) {
+      map.panTo(marker.getPosition());
+
+      map.setLevel(3);
+    };
+
+    const removeAllChildNods = (el) => {
       while (el.hasChildNodes()) {
         el.removeChild(el.lastChild);
       }
-    }
+    };
 
     // 검색 결과 목록을 담을 배열
-    var markers = [];
+    const markers = [];
 
     // 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places();
+    const ps = new kakao.maps.services.Places();
 
     // 검색 버튼 클릭 시 장소 검색 함수 호출
     document.getElementById('searchBtn').onclick = searchPlaces;
 
+    // 엔터키
+    document.getElementById('keyword').onkeydown = (event) => {
+      if (event.key === 'Enter') {
+        searchPlaces();
+      }
+    };
+
     // 검색 결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
     // 인포윈도우에 장소명을 표시합니다
-    var infowindow = new kakao.maps.InfoWindow({
+    const infowindow = new kakao.maps.InfoWindow({
       zIndex: 1
+      // 마커에 클릭이벤트를 등록합니다
     });
   }, []);
 
+  const handleShowSearchResults = () => {
+    // 검색 결과 보여주는 상태로 변경
+    setShowSearchResults(true);
+    // 선택된 장소 URL 초기화
+    setSelectedPlaceUrl(null);
+  };
+
   return (
     <>
-      <input type="text" id="keyword" />
-      <button id="searchBtn">검색</button>
-
-      <div style={{ display: 'flex' }}>
-        <div id="menu_wrap" style={{ width: '20%', height: '700px', overflowY: 'scroll' }}>
-          <ul id="placesList"></ul>
-          <div id="pagination" style={{ textAlign: 'center' }}></div>
+      <div style={{ display: 'flex', marginTop: '30px' }}>
+        <div
+          id="menu_wrap"
+          style={{
+            width: '40%',
+            height: '930px',
+            overflow: showSearchResults ? 'scroll' : 'hidden'
+          }}
+        >
+          <div className="Input-Container" style={{ textAlign: 'center' }}>
+            <input type="text" id="keyword" placeholder="검색어를 입력해주세요" />
+            <button id="searchBtn">검색</button>
+          </div>
+          {showSearchResults ? (
+            <>
+              <ul id="placesList"></ul>
+              <div id="pagination" style={{ textAlign: 'center' }}></div>
+            </>
+          ) : (
+            <div>
+              <button onClick={handleShowSearchResults}>검색 페이지 종료</button>
+              {selectedPlaceUrl && (
+                <iframe title="place-details" src={selectedPlaceUrl} style={{ width: '100%', height: '880px' }} />
+              )}
+            </div>
+          )}
         </div>
-
-        <div id="map" style={{ width: '80%', height: '700px' }}></div>
+        <div id="map" style={{ width: '60%', height: '930px' }}></div>
       </div>
+      {/* <TourAPI /> */}
     </>
   );
 };
