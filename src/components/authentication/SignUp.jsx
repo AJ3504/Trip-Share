@@ -75,18 +75,21 @@ const SingUp = () => {
               <h3>SIGN UP</h3>
               <form onSubmit={handleSubmitSignUp}>
                 <St.Input
+                  type="text"
                   placeholder="닉네임을 입력해주세요"
                   onChange={(e) => {
                     setNickname(e.target.value);
                   }}
                 />
                 <St.Input
+                  type="email"
                   placeholder="이메일 주소를 입력해주세요"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
                 <St.Input
+                  type="password"
                   placeholder="비밀번호를 입력해주세요"
                   onChange={(e) => {
                     setPassword(e.target.value);

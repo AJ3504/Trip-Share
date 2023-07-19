@@ -97,12 +97,14 @@ const SignIn = () => {
                 }}
               >
                 <St.Input
+                  type="email"
                   placeholder="이메일 주소를 입력해주세요"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
                 <St.Input
+                  type="password"
                   placeholder="비밀번호를 입력해주세요"
                   onChange={(e) => {
                     setPassword(e.target.value);
