@@ -156,9 +156,6 @@ const St = {
   Btn: styled.button`
     border: none;
     cursor: pointer;
-    border-radius: 8px;
-    background-color: gray;
-    height: 40px;
-    width: 120px;
+    background-color: transparent;
   `
 };

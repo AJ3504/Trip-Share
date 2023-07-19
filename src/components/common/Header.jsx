@@ -37,20 +37,11 @@ const Header = () => {
   return (
     <>
       <St.Header>
-        <St.LogoWrapper>
-          <St.Logo
-            onClick={() => {
-              navigate('/');
-            }}
-          >
-            TripShare
-          </St.Logo>
-        </St.LogoWrapper>
         <St.MenuWrapper>
           {currentUser ? (
             <>
-              <St.HeaderMenu onClick={handleProfileClick}>프로필</St.HeaderMenu>
-              <St.HeaderMenu onClick={handleLogoutClick}>로그아웃</St.HeaderMenu>
+              <St.HeaderMenu2 onClick={handleProfileClick}>프로필</St.HeaderMenu2>
+              <St.HeaderMenu2 onClick={handleLogoutClick}>로그아웃</St.HeaderMenu2>
             </>
           ) : (
             <>
@@ -63,6 +54,15 @@ const Header = () => {
             </>
           )}
         </St.MenuWrapper>
+        <St.LogoWrapper>
+          <St.Logo
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            TripShare
+          </St.Logo>
+        </St.LogoWrapper>
       </St.Header>
     </>
   );
@@ -72,11 +72,11 @@ export default Header;
 
 const St = {
   Header: styled.header`
-    width: 100wh;
+    width: 100vw;
     height: 70px;
     background-color: beige;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 0 20px;
   `,
@@ -86,12 +86,18 @@ const St = {
   `,
   Logo: styled.div`
     cursor: pointer;
+    font-weight: 600;
+    font-size: 25px;
   `,
   MenuWrapper: styled.div`
     display: flex;
   `,
   HeaderMenu: styled.div`
     cursor: pointer;
-    margin-left: 15px;
+  `,
+  HeaderMenu2: styled.div`
+    cursor: pointer;
+    padding: 1px 6px;
+    font-size: 0.8333rem;
   `
 };
