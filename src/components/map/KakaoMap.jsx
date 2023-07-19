@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import TourAPI from './TourAPI';
+import Menu from '../header/Menu';
 
 const { kakao } = window;
 
@@ -137,6 +138,7 @@ const KakaoMap = () => {
       menuEl.scrollTop = 0;
 
       map.setBounds(bounds);
+
       setShowSearchResults(true);
     };
 
@@ -165,7 +167,7 @@ const KakaoMap = () => {
       }
 
       //이 부분이 검색결과에 보이는 부분입니다
-      const contentStr = itemStr + addressStr + '  <span class="tel">' + places.phone + '</span>';
+      const contentStr = itemStr + addressStr + '  <span class="tel">' + places.phone + '</span>' + '</div>';
 
       const el = document.createElement('li');
       el.innerHTML = contentStr;
@@ -234,7 +236,7 @@ const KakaoMap = () => {
     //이 부분이 마커 마우스 오버시 보이는 부분입니다
     const displayInfowindow = (marker, place_name, address_name, phone) => {
       const content =
-        '<div style="padding:5px;z-index:1;">' +
+        '<div ">' +
         '<h4>' +
         place_name +
         '</h4>' +
@@ -280,6 +282,7 @@ const KakaoMap = () => {
     // 인포윈도우에 장소명을 표시합니다
     const infowindow = new kakao.maps.InfoWindow({
       zIndex: 1
+      // 마커에 클릭이벤트를 등록합니다
     });
   }, []);
 
