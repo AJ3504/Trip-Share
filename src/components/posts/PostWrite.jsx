@@ -3,6 +3,9 @@ import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
+import { useMutation, useQueryClient } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { addPost } from '../../redux/modules/postsSlice';
 
 const PostWrite = ({ openModal, options }) => {
   // const options = ['관광', '식당', '카페', '숙소'];
@@ -37,6 +40,8 @@ const PostWrite = ({ openModal, options }) => {
     setPostImg(e.target.files[0]);
   };
 
+  const dispatch = useDispatch();
+
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
@@ -54,11 +59,15 @@ const PostWrite = ({ openModal, options }) => {
       category: option
     };
 
+    const collectionRef = collection(db, 'posts');
+    const { id } = await addDoc(collectionRef, newPost);
+
+    // newPost를 배열로 만들고 id를 추가합니다.
+    const newPostWithId = { ...newPost, id };
+    dispatch(addPost(newPostWithId));
+
     setPostTitle('');
     setPostBody('');
-
-    const collectionRef = collection(db, 'posts');
-    await addDoc(collectionRef, newPost);
   };
 
   return (
