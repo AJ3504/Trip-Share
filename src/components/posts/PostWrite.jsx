@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
+import shortid from 'shortid';
 
 const PostWrite = ({ openModal, options }) => {
   // const options = ['관광', '식당', '카페', '숙소'];
@@ -20,6 +21,7 @@ const PostWrite = ({ openModal, options }) => {
   const [postTitle, setPostTitle] = useState('');
   const [postBody, setPostBody] = useState('');
   const [postImg, setPostImg] = useState(null);
+  const [downloadURL, setDownloadURL] = useState(null);
 
   const onChangePost = (e) => {
     const {
@@ -40,13 +42,16 @@ const PostWrite = ({ openModal, options }) => {
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
-    const imageRef = ref(storage, `posts/${postImg.name}`);
-    await uploadBytes(imageRef, postImg);
+    if (postImg != null) {
+      const imageRef = ref(storage, `${auth.currentUser.uid}/${postImg.name}`);
+      await uploadBytes(imageRef, postImg);
 
-    const downloadURL = await getDownloadURL(imageRef);
-    console.log('downloadURL', downloadURL);
+      const downloadURL = await getDownloadURL(imageRef);
+      setDownloadURL(downloadURL);
+    }
 
     const newPost = {
+      id: shortid.generate(),
       uid: auth.currentUser.uid,
       postTitle: postTitle,
       postBody: postBody,

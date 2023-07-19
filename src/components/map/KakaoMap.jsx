@@ -149,21 +149,20 @@ const KakaoMap = () => {
         (index + 1) +
         '"></span>' +
         '<div class="info">' +
-        '   <h5>' +
+        '<h5>' +
         places.place_name +
         '</h5>';
-
       let addressStr = '';
       if (places.road_address_name) {
         addressStr +=
-          '    <span>' +
+          '<span>' +
           places.road_address_name +
           '</span>' +
-          '   <span class="jibun gray">' +
+          '<span class="jibun gray">' +
           places.address_name +
           '</span>';
       } else {
-        addressStr += '    <span>' + places.address_name + '</span>';
+        addressStr += '<span>' + places.address_name + '</span>';
       }
 
       //이 부분이 검색결과에 보이는 부분입니다
