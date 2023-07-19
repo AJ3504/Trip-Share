@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Menu from '../header/Menu';
 
 const { kakao } = window;
 
@@ -55,6 +56,7 @@ const KakaoMap = () => {
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.setBounds(bounds);
+      console.log('검색 범위', bounds);
     }
   }
 
@@ -68,8 +70,10 @@ const KakaoMap = () => {
     // 마커에 클릭이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function () {
       // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-      infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+      infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + `</div>`);
       infowindow.open(map, marker);
+      console.log(place.place_name);
+      console.log(marker);
     });
   }
 
@@ -93,7 +97,7 @@ const KakaoMap = () => {
         />
         <button onClick={handleSearch}>검색</button>
       </div>
-      <div id="map" style={{ width: '1000px', height: '700px' }}></div>
+      <div id="map" style={{ width: '1000px', height: '700px' }} />
     </>
   );
 };
