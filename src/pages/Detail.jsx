@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { deletePost } from '../redux/modules/postsSlice';
+import { deletePost, editPost } from '../redux/modules/postsSlice';
 import { auth, db } from '../service/firebase';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { styled } from 'styled-components';
+import useInput from '../hooks/useInput';
 
-const Detail = ({ openModal, options }) => {
+const Detail = () => {
   //hooks
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ const Detail = ({ openModal, options }) => {
 
   //넘겨받은 값
   const { postId } = useParams();
-  console.log(postId);
+  const prevTitle = location.state.prevTitle;
+  const prevBody = location.state.prevBody;
 
   //others
   const targetPost = data.find((item) => item.id === postId);
@@ -28,7 +30,13 @@ const Detail = ({ openModal, options }) => {
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
+  const options = ['관광', '식당', '카페', '숙소'];
 
+  //custom hook
+  const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
+  const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
+
+  //------------------------------------------------------------------------------------------
   //event Handler
   //Update
   const editModeHandler = async () => {
@@ -46,6 +54,43 @@ const Detail = ({ openModal, options }) => {
       setEditMode((prev) => !prev);
     }
   };
+
+  const onSubmitEditHandler = async (e) => {
+    e.preventDefault();
+
+    if (!newPostTitle || !newPostBody) {
+      alert('제목과 본문을 모두 입력해주세요!');
+      return;
+    } else if (newPostTitle.length < 5 || newPostBody.length < 5) {
+      alert('제목과 본문을 5글자 이상 입력해주세요!');
+      return;
+    }
+
+    const editedPost = {
+      postTitle: newPostTitle,
+      postBody: newPostBody,
+      isModified: true,
+      category: editSelectedOption,
+      id: postId
+    };
+
+    const targetPostRef = doc(db, 'posts', targetPost.id);
+    await updateDoc(targetPostRef, editedPost);
+
+    dispatch(editPost(editedPost));
+
+    resetNewPostTitle('');
+    resetNewPostBody('');
+
+    setEditMode(false);
+  };
+
+  const handleOptionClick = (option) => {
+    setEditSelectedOption(option);
+    setEditSelectAreaIsOpen(false);
+  };
+
+  //------------------------------------------------------------------------------------------
 
   //Delete
   const deleteHandler = async (targetPostId) => {
@@ -71,25 +116,6 @@ const Detail = ({ openModal, options }) => {
 
   return (
     <>
-      {/* ------게시글------ */}
-      <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
-        <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            {targetPost?.postTitle}
-            <br />
-            {targetPost?.postBody}
-            <div>
-              <button onClick={editModeHandler}>수정하기</button>
-              <button onClick={() => deleteHandler(postId)}>삭제하기</button>
-              <button onClick={() => navigate('/')}>이전 화면으로</button>
-            </div>
-          </div>
-          <div>
-            <img src={targetPost?.postImg} alt="이미지 없음" />
-          </div>
-        </li>
-      </ul>
-
       {/* ------수정폼------ */}
       <div>
         {editMode ? (
@@ -126,14 +152,32 @@ const Detail = ({ openModal, options }) => {
               </div>
               {/* ---------------------------------------------------- */}
               <div className="editInputArea">
-                <input type="text" value={newTitle} onChange={onChangeNewTitleHandler} />
-                <input type="text" value={newBody} onChange={onChangeNewBodyHandler} />
+                <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
+                <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
                 <button>수정 완료</button>
               </div>
             </form>
           </>
         ) : null}
       </div>
+      {/* ------게시글------ */}
+      <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
+        <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            {targetPost?.postTitle}
+            <br />
+            {targetPost?.postBody}
+            <div>
+              <button onClick={editModeHandler}>수정하기</button>
+              <button onClick={() => deleteHandler(postId)}>삭제하기</button>
+              <button onClick={() => navigate('/')}>이전 화면으로</button>
+            </div>
+          </div>
+          <div>
+            <img src={targetPost?.postImg} alt="이미지 없음" />
+          </div>
+        </li>
+      </ul>
     </>
   );
 };

@@ -3,15 +3,20 @@ import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../../service/firebase';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { readPost } from '../../redux/modules/postsSlice';
 
 const PostListMain = ({ openSide, option }) => {
-  const [posts, setPosts] = useState([]);
+  //useSelector
+  const posts = useSelector((state) => state.postsSlice);
+  //hooks
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, 'posts'));
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot);
       const initialTils = [];
       querySnapshot.forEach((doc) => {
         const data = {
@@ -20,17 +25,19 @@ const PostListMain = ({ openSide, option }) => {
         };
         initialTils.push(data);
       });
-      setPosts(initialTils);
+      dispatch(readPost(initialTils));
     };
     fetchData();
   }, []);
 
-  //hooks
-  const navigate = useNavigate();
-
   //Event Handler
   const onPostClick = (post) => {
-    navigate(`/detail/${post.id}`);
+    navigate(`/detail/${post.id}`, {
+      state: {
+        prevTitle: post.postTitle,
+        prevBody: post.postBody
+      }
+    });
   };
 
   return (
