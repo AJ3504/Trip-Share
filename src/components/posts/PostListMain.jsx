@@ -30,15 +30,7 @@ const PostListMain = ({ openSide, option }) => {
 
   //Event Handler
   const onPostClick = (post) => {
-    navigate(`/detail/${post.id}`, {
-      state: {
-        prevTitle: post.postTitle,
-        prevBody: post.postBody,
-        prevCategory: post.category,
-        postId: post.id,
-        writerId: post.uid
-      }
-    });
+    navigate(`/detail/${post.id}`);
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
+import Detail from '../../pages/Detail';
 
 const Menu = () => {
   const options = ['관광', '식당', '카페', '숙소'];
@@ -27,7 +28,12 @@ const Menu = () => {
       <button onClick={openSide}>{options[3]}</button>
       {isSide && <PostListMain openSide={openSide} option={options[3]} />} */}
       <button onClick={openModal}>작성</button>
-      {isModal && <PostWrite openModal={openModal} options={options} />}
+      {isModal && (
+        <>
+          <PostWrite openModal={openModal} options={options} />
+          <Detail openModal={openModal} options={options} />
+        </>
+      )}
     </div>
   );
 };
