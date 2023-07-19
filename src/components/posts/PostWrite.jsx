@@ -40,8 +40,10 @@ const PostWrite = ({ openModal, options }) => {
     setPostImg(e.target.files[0]);
   };
 
+  //hooks
   const dispatch = useDispatch();
 
+  //event Handler
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
@@ -62,7 +64,6 @@ const PostWrite = ({ openModal, options }) => {
     const collectionRef = collection(db, 'posts');
     const { id } = await addDoc(collectionRef, newPost);
 
-    // newPost를 배열로 만들고 id를 추가합니다.
     const newPostWithId = { ...newPost, id };
     dispatch(addPost(newPostWithId));
 
