@@ -18,8 +18,8 @@ const Menu = () => {
 
   return (
     <div>
-      {/* <button onClick={openSide}>{options[0]}</button>
-      {isSide && <PostListMain openSide={openSide} option={options[0]} />} */}
+      <button onClick={openSide}>{options[0]}</button>
+      {isSide && <PostListMain openSide={openSide} option={options[0]} />}
       {/* <button onClick={openSide}>{options[1]}</button>
       {isSide && <PostListMain openSide={openSide} option={options[1]} />}
       <button onClick={openSide}>{options[2]}</button>
