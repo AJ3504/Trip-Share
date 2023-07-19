@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// import TourAPI from './TourAPI';
 
 const { kakao } = window;
 
@@ -211,15 +212,15 @@ const KakaoMap = () => {
       }
 
       for (i = 1; i <= pagination.last; i++) {
-        var el = document.createElement('a');
+        const el = document.createElement('a');
         el.href = '#';
         el.innerHTML = i;
 
         if (i === pagination.current) {
           el.className = 'on';
         } else {
-          el.onclick = (function (i) {
-            return function () {
+          el.onclick = ((i) => {
+            return () => {
               pagination.gotoPage(i);
             };
           })(i);
@@ -247,6 +248,10 @@ const KakaoMap = () => {
 
       infowindow.setContent(content);
       infowindow.open(map, marker);
+
+      map.panTo(marker.getPosition());
+
+      map.setLevel(3);
     };
 
     const removeAllChildNods = (el) => {
@@ -263,6 +268,13 @@ const KakaoMap = () => {
 
     // 검색 버튼 클릭 시 장소 검색 함수 호출
     document.getElementById('searchBtn').onclick = searchPlaces;
+
+    // 엔터키
+    document.getElementById('keyword').onkeydown = (event) => {
+      if (event.key === 'Enter') {
+        searchPlaces();
+      }
+    };
 
     // 검색 결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
     // 인포윈도우에 장소명을 표시합니다
@@ -309,7 +321,7 @@ const KakaoMap = () => {
         </div>
         <div id="map" style={{ width: '60%', height: '930px' }}></div>
       </div>
-      {/* <div> {selectedPlaceUrl ? <PlaceDetail placeUrl={selectedPlaceUrl} /> : null}</div> */}
+      {/* <TourAPI /> */}
     </>
   );
 };
