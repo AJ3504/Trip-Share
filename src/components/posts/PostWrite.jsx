@@ -3,7 +3,6 @@ import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
-import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/modules/postsSlice';
 import shortid from 'shortid';
@@ -58,19 +57,20 @@ const PostWrite = ({ marker }) => {
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
-    const imageRef = ref(storage, `posts/${postImg.name}`);
-    await uploadBytes(imageRef, postImg);
-
-    const downloadURL = await getDownloadURL(imageRef);
+    if (postImg != null) {
+      const imageRef = ref(storage, `posts/${postImg.name}`);
+      await uploadBytes(imageRef, postImg);
+      const downloadURL = await getDownloadURL(imageRef);
+      setPostImg(downloadURL);
+    }
 
     const newPost = {
-      id: shortid.generate(),
       uid: auth.currentUser.uid,
       markerId: marker.id,
       markerPsiton: marker.position,
       postTitle: postTitle,
       postBody: postBody,
-      postImg: downloadURL,
+      postImg: postImg,
       category: option
     };
 
