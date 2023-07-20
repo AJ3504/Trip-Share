@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { auth } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { ERR_CODE } from '../../constant';
 
 const SignIn = () => {
   const [userData, setUserData] = useState(null);
@@ -31,7 +32,10 @@ const SignIn = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('로그인 된 유저 정보', userCredential);
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -42,9 +46,12 @@ const SignIn = () => {
       const user = result.user;
       navigate('/');
       setUserData(result.user);
-      console.log(user);
+      console.log('로그인 된 유저', user);
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -56,9 +63,12 @@ const SignIn = () => {
       const user = result.user;
       navigate('/');
       setUserData(result.user);
-      console.log(user);
+      console.log('로그인 된 유저', user);
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -91,11 +101,7 @@ const SignIn = () => {
           <St.ModalContents>
             <div>
               <h3>LOGIN</h3>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
-              >
+              <form onSubmit={handleEmailSignIn}>
                 <St.Input
                   type="email"
                   placeholder="이메일 주소를 입력해주세요"
@@ -110,9 +116,7 @@ const SignIn = () => {
                     setPassword(e.target.value);
                   }}
                 />
-                <button type="submit" onClick={handleEmailSignIn}>
-                  로그인
-                </button>
+                <button type="submit">로그인</button>
               </form>
               <div>
                 <button onClick={handleGoogleSignIn}>Google</button>

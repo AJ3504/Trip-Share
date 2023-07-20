@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../../service/firebase';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { ERR_CODE } from '../../constant';
 
 const SingUp = () => {
   const [nickname, setNickname] = useState('');
@@ -17,9 +18,10 @@ const SingUp = () => {
   const handleEmailSignUp = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, { nickname: nickname });
       console.log('가입된 유저 정보', userCredential);
 
-      const collectionRef = collection(db, 'userinfo');
+      const collectionRef = collection(db, 'userInfo');
       await setDoc(doc(collectionRef, userCredential.user.uid), {
         nickname: nickname,
         email: userCredential.user.email,
@@ -31,7 +33,10 @@ const SingUp = () => {
       alert('회원가입 완료');
       navigate('/');
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -41,7 +46,7 @@ const SingUp = () => {
       await handleEmailSignUp();
     } else if (nickname && email && password && checkPassword && password !== checkPassword) {
       alert('입력하신 비밀번호가 다릅니다.');
-    } else alert('모든 내용을 입력해주세요!');
+    } else alert('모든 항목을 입력해주세요!');
   };
 
   const openModal = () => {
@@ -96,14 +101,13 @@ const SingUp = () => {
                   }}
                 />
                 <St.Input
+                  type="password"
                   placeholder="비밀번호를 다시 한 번 입력해주세요"
                   onChange={(e) => {
                     setCheckPassword(e.target.value);
                   }}
                 />
-                <button type="submit" onClick={handleEmailSignUp}>
-                  회원가입
-                </button>
+                <button type="submit">회원가입</button>
               </form>
             </div>
           </St.ModalContents>
