@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { db, storage } from '../../service/firebase';
+import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
+import { useMutation, useQueryClient } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { addPost } from '../../redux/modules/postsSlice';
 
 const PostWrite = ({ openModal, options }) => {
   // const options = ['관광', '식당', '카페', '숙소'];
@@ -37,6 +40,10 @@ const PostWrite = ({ openModal, options }) => {
     setPostImg(e.target.files[0]);
   };
 
+  //hooks
+  const dispatch = useDispatch();
+
+  //event Handler
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
@@ -47,18 +54,21 @@ const PostWrite = ({ openModal, options }) => {
     console.log('downloadURL', downloadURL);
 
     const newPost = {
-      // uid: auth.currentUser.uid,
+      uid: auth.currentUser.uid,
       postTitle: postTitle,
       postBody: postBody,
       postImg: downloadURL,
       category: option
     };
 
+    const collectionRef = collection(db, 'posts');
+    const { id } = await addDoc(collectionRef, newPost);
+
+    const newPostWithId = { ...newPost, id };
+    dispatch(addPost(newPostWithId));
+
     setPostTitle('');
     setPostBody('');
-
-    const collectionRef = collection(db, 'posts');
-    await addDoc(collectionRef, newPost);
   };
 
   return (
