@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import SingUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
 import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useSelector } from 'react-redux';
 import UserInfoModal from '../authentication/UserInfoModal';
+import { St } from './HeaderStyle';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -41,7 +41,6 @@ const Header = () => {
           {currentUser ? (
             <>
               <St.Img
-                id="PROFILE IMG"
                 src={
                   getProfile.photoURL
                     ? getProfile.photoURL
@@ -80,45 +79,3 @@ const Header = () => {
 };
 
 export default Header;
-
-const St = {
-  Header: styled.header`
-    width: 100vw;
-    height: 70px;
-    background-color: beige;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-  `,
-  LogoWrapper: styled.div`
-    flex: 1;
-    text-align: center;
-  `,
-  Logo: styled.div`
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 25px;
-  `,
-  MenuWrapper: styled.div`
-    display: flex;
-  `,
-  HeaderMenu: styled.div`
-    cursor: pointer;
-  `,
-  HeaderMenu2: styled.div`
-    cursor: pointer;
-    padding: 1px 6px;
-    font-size: 0.8333rem;
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
-  `,
-  Img: styled.img`
-    background-color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    cursor: pointer;
-  `
-};
