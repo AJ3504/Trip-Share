@@ -5,12 +5,7 @@ import PostListMain from '../posts/PostListMain';
 const Menu = () => {
   const options = ['관광', '식당', '카페', '숙소'];
 
-  const [isModal, setIsModal] = useState(false);
   const [isSide, setIsSide] = useState(false);
-
-  const openModal = () => {
-    setIsModal(!isModal);
-  };
 
   const openSide = () => {
     setIsSide(!isSide);
@@ -26,8 +21,7 @@ const Menu = () => {
       {isSide && <PostListMain openSide={openSide} option={options[2]} />}
       <button onClick={openSide}>{options[3]}</button>
       {isSide && <PostListMain openSide={openSide} option={options[3]} />} */}
-      <button onClick={openModal}>작성</button>
-      {isModal && <PostWrite openModal={openModal} options={options} />}
+      <PostWrite />
     </div>
   );
 };

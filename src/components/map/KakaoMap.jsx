@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Button, Li } from './KakaoMap-Styled';
+import PostWrite from '../posts/PostWrite';
 
 const { kakao } = window;
 
@@ -101,6 +102,7 @@ const KakaoMap = () => {
                 },
 
                 //마커안에 정보를 추가하고 싶으시다면 여기에 추가하시면 됩니다
+                id: data[i].id,
                 content: data[i].place_name,
                 address: data[i].address_name,
                 phone: data[i].phone,
@@ -114,7 +116,6 @@ const KakaoMap = () => {
 
             // 검색 결과를 state에 저장하여 옆에 표시
             setSearchResults(data);
-
             searchBlogs(searchKeyword);
           }
         });
@@ -195,6 +196,7 @@ const KakaoMap = () => {
             <MapMarker position={currentPosition} height="fit-content">
               125% 모두 화이팅입니다!
             </MapMarker>
+
             {markers.map((marker) => (
               <MapMarker
                 key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
@@ -220,6 +222,7 @@ const KakaoMap = () => {
                     <div style={{ marginTop: '30px' }}>
                       <h3>{marker.content}</h3>
                       <p>{marker.address}</p>
+                      <PostWrite marker={marker} />
                     </div>
                   </div>
                 )}

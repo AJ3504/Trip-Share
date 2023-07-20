@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from '../../service/firebase';
@@ -6,9 +6,20 @@ import { styled } from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/modules/postsSlice';
+import shortid from 'shortid';
 
-const PostWrite = ({ openModal, options }) => {
-  // const options = ['관광', '식당', '카페', '숙소'];
+const PostWrite = ({ marker }) => {
+  console.log('작성', marker);
+
+  useEffect(() => {}, [marker]);
+
+  const options = ['관광', '식당', '카페', '숙소'];
+
+  const [isModal, setIsModal] = useState(false);
+
+  const openModal = () => {
+    setIsModal(!isModal);
+  };
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -51,10 +62,12 @@ const PostWrite = ({ openModal, options }) => {
     await uploadBytes(imageRef, postImg);
 
     const downloadURL = await getDownloadURL(imageRef);
-    console.log('downloadURL', downloadURL);
 
     const newPost = {
+      id: shortid.generate(),
       uid: auth.currentUser.uid,
+      markerId: marker.id,
+      markerPsiton: marker.position,
       postTitle: postTitle,
       postBody: postBody,
       postImg: downloadURL,
@@ -72,45 +85,50 @@ const PostWrite = ({ openModal, options }) => {
   };
 
   return (
-    <StModalBox>
-      <StModalContents>
-        <h3>게시글 작성</h3>
-        <button onClick={openModal}>닫기</button>
-        <form onSubmit={onSubmitNewPost}>
-          <StOptionWrapper>
-            <StOptionHeader
-              onClick={() => {
-                setIsOpen((prev) => !prev);
-              }}
-            >
-              <span>{selectedOption || '카테고리'}</span>
-              <span>{isOpen ? '▴' : '▾'}</span>
-            </StOptionHeader>
-            {isOpen && (
-              <StOptionList>
-                {options.map((option) => (
-                  <StOptionItem
-                    key={option}
-                    onClick={() => {
-                      handelOptionClick(option);
-                    }}
-                  >
-                    {option}
-                  </StOptionItem>
-                ))}
-              </StOptionList>
-            )}
-          </StOptionWrapper>
-          <label>제목</label>
-          <input type="text" value={postTitle} name="title" onChange={onChangePost} required />
-          <label>내용</label>
-          <input type="text" value={postBody} name="body" onChange={onChangePost} required></input>
-          <label>사진</label>
-          <input type="file" onChange={imgSelect}></input>
-          <button type="submit">확인</button>
-        </form>
-      </StModalContents>
-    </StModalBox>
+    <>
+      <button onClick={openModal}>작성</button>
+      {isModal && (
+        <StModalBox>
+          <StModalContents>
+            <h3>게시글 작성</h3>
+            <button onClick={openModal}>닫기</button>
+            <form onSubmit={onSubmitNewPost}>
+              <StOptionWrapper>
+                <StOptionHeader
+                  onClick={() => {
+                    setIsOpen((prev) => !prev);
+                  }}
+                >
+                  <span>{selectedOption || '카테고리'}</span>
+                  <span>{isOpen ? '▴' : '▾'}</span>
+                </StOptionHeader>
+                {isOpen && (
+                  <StOptionList>
+                    {options.map((option) => (
+                      <StOptionItem
+                        key={option}
+                        onClick={() => {
+                          handelOptionClick(option);
+                        }}
+                      >
+                        {option}
+                      </StOptionItem>
+                    ))}
+                  </StOptionList>
+                )}
+              </StOptionWrapper>
+              <label>제목</label>
+              <input type="text" value={postTitle} name="title" onChange={onChangePost} required />
+              <label>내용</label>
+              <input type="text" value={postBody} name="body" onChange={onChangePost} required></input>
+              <label>사진</label>
+              <input type="file" onChange={imgSelect}></input>
+              <button type="submit">확인</button>
+            </form>
+          </StModalContents>
+        </StModalBox>
+      )}
+    </>
   );
 };
 
