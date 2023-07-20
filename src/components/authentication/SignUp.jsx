@@ -5,6 +5,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ERR_CODE } from '../../constant';
+// import { St } from './SignUpStyle';
 
 const SingUp = () => {
   const [nickname, setNickname] = useState('');
@@ -27,7 +28,7 @@ const SingUp = () => {
         email: userCredential.user.email,
         uid: userCredential.user.uid,
         photoURL:
-          'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/41311/FreeVectorWorld_Tourism_Day_Backgroundyc0622_generated.jpg'
+          'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
       });
 
       alert('회원가입 완료');
