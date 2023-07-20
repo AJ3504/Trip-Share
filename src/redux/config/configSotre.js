@@ -6,7 +6,13 @@ const store = configureStore({
   reducer: {
     usersSlice,
     postsSlice
-  }
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    }),
+
+  devTools: true
 });
 
 export default store;
