@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Button, Li } from './KakaoMap-Styled';
 
 const { kakao } = window;
 
@@ -150,22 +151,24 @@ const KakaoMap = () => {
               }
             }}
           />
-          <button onClick={handleSearch}>검색</button>
+          <Button style={{ width: '80px', height: '40px' }} onClick={handleSearch}>
+            검색
+          </Button>
           {showDetails ? (
             <div>
-              <button onClick={() => setShowDetails(false)}>돌아가기</button>
+              <Button onClick={() => setShowDetails(false)}>돌아가기</Button>
               {selectedMarker && (
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
-                  style={{ width: '100%', height: '880px' }}
+                  style={{ width: '1000px', height: '800px' }}
                 />
               )}
             </div>
           ) : (
             <ul style={{ height: '880px', overflowY: 'scroll' }}>
               {searchResults.map((result, index) => (
-                <li
+                <Li
                   key={result.id}
                   style={{ padding: '18px', cursor: 'pointer', border: '1px solid green' }}
                   onClick={() => handleResultClick({ lat: result.y, lng: result.x })}
@@ -182,7 +185,7 @@ const KakaoMap = () => {
                       <p>{result.phone}</p>
                     </div>
                   </div>
-                </li>
+                </Li>
               ))}
             </ul>
           )}
