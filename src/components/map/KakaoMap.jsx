@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 // import TourAPI from './TourAPI';
-import Menu from '../header/Menu';
 
 const { kakao } = window;
 
