@@ -5,8 +5,6 @@ import PostWrite from '../posts/PostWrite';
 
 const { kakao } = window;
 
-const kakaoAPIKEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
-
 const KakaoMap = () => {
   const [currentPosition, setCurrentPosition] = useState({ lat: 33.5563, lng: 126.79581 });
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -15,46 +13,6 @@ const KakaoMap = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [thumbnails, setThumbnails] = useState([]);
-
-  const displayBlogs = (blogData) => {
-    return (
-      <ul>
-        {blogData.map((blog) => (
-          <li key={blog.id}>
-            <a href={blog.url}>
-              <img src={blog.thumbnail} alt="썸네일" />
-              <h3>{blog.title}</h3>
-              <p>{blog.contents}</p>
-            </a>
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  // 블로그 검색 함수
-  const searchBlogs = (keyword) => {
-    const apiUrl = `https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=15&query=${encodeURIComponent(
-      keyword
-    )}`;
-    const headers = {
-      Authorization: 'KakaoAK ' + kakaoAPIKEY
-    };
-
-    fetch(apiUrl, {
-      headers: headers
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const thumbnails = data.documents.map((document) => document.thumbnail);
-        setThumbnails(thumbnails);
-        displayBlogs(data.documents);
-      })
-      .catch((error) => {
-        console.error('블로그 검색 에러:', error);
-      });
-  };
 
   useEffect(() => {
     // 사용자의 현재 위치를 가져오는 코드
@@ -89,10 +47,12 @@ const KakaoMap = () => {
 
       if (map) {
         const ps = new kakao.maps.services.Places();
-        ps.keywordSearch(searchKeyword, (data, status, pagination) => {
+        ps.keywordSearch(searchKeyword, (data, status) => {
           if (status === kakao.maps.services.Status.OK) {
             const bounds = new kakao.maps.LatLngBounds();
             const markers = [];
+
+            console.log(data);
 
             for (var i = 0; i < data.length; i++) {
               markers.push({
@@ -116,7 +76,6 @@ const KakaoMap = () => {
 
             // 검색 결과를 state에 저장하여 옆에 표시
             setSearchResults(data);
-            searchBlogs(searchKeyword);
           }
         });
       }
@@ -168,18 +127,14 @@ const KakaoMap = () => {
             </div>
           ) : (
             <ul style={{ height: '880px', overflowY: 'scroll' }}>
-              {searchResults.map((result, index) => (
+              {searchResults.map((result) => (
                 <Li
                   key={result.id}
                   style={{ padding: '18px', cursor: 'pointer', border: '1px solid green' }}
                   onClick={() => handleResultClick({ lat: result.y, lng: result.x })}
                 >
                   <div style={{ display: 'flex' }}>
-                    <img
-                      src={thumbnails[index]}
-                      alt={`thumbnail-${result.id}`}
-                      style={{ width: '100px', height: '100px', margin: '5px' }}
-                    />
+                    <img />
                     <div style={{ padding: '18px' }}>
                       <h3>{result.place_name}</h3>
                       <p>{result.address_name}</p>
@@ -214,11 +169,7 @@ const KakaoMap = () => {
                       alignItems: 'center'
                     }}
                   >
-                    <img
-                      src={thumbnails[markers.indexOf(marker)]}
-                      alt={`thumbnail-${marker.content}`}
-                      style={{ width: '100px', height: '100px', margin: '5px' }}
-                    />
+                    <img />
                     <div style={{ marginTop: '30px' }}>
                       <h3>{marker.content}</h3>
                       <p>{marker.address}</p>
