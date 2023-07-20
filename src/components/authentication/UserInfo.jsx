@@ -45,11 +45,13 @@ const UserInfo = () => {
       <div key={uid}>
         <St.ProfileContainer>
           <St.ProfileWarp>
-            <UserInfoModal />
+            <St.ProfileEditBtn>
+              <UserInfoModal />
+            </St.ProfileEditBtn>
             <St.ProfileImageBox>
               <St.ProfileImage src={currentPhotoURL} alt="userInfo" />
             </St.ProfileImageBox>
-            <p>{currentNickname}</p>
+            <St.Nickname>{currentNickname}</St.Nickname>
           </St.ProfileWarp>
         </St.ProfileContainer>
       </div>

@@ -3,12 +3,11 @@ import { styled } from 'styled-components';
 export const St = {
   ProfileContainer: styled.div`
     position: relative;
-    outline: 2px solid black;
     width: 250px;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    text-align: center;
   `,
 
   ProfileWarp: styled.div`
@@ -26,5 +25,13 @@ export const St = {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  `,
+  ProfileEditBtn: styled.div`
+    margin-top: 10px;
+    text-align: right;
+  `,
+  Nickname: styled.p`
+    margin-top: 20px;
+    font-size: 20px;
   `
 };
