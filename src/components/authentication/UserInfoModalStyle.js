@@ -1,6 +1,4 @@
 import { styled } from 'styled-components';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import Header from '../header/Header';
 
 export const St = {
   ModalBox: styled.div`
@@ -76,6 +74,5 @@ export const St = {
     height: 35px;
     margin-top: 10px;
     border-radius: 5px;
-    background-color: ;
   `
 };

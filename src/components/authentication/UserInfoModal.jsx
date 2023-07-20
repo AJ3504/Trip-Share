@@ -6,7 +6,6 @@ import { db, storage } from '../../service/firebase';
 import { getUserProfile } from '../../redux/modules/userInfoSlice';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { St } from './UserInfoModalStyle';
-import { styled } from 'styled-components';
 
 const UserInfoModal = () => {
   const dispatch = useDispatch();
