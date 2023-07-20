@@ -11,6 +11,7 @@ export const St = {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 999;
   `,
 
   ModalContents: styled.div`
