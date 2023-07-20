@@ -16,3 +16,5 @@ const store = configureStore({
 });
 
 export default store;
+
+//커밋용
