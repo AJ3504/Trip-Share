@@ -11,8 +11,6 @@ const KakaoMaps = () => {
   const [map, setMap] = useState();
 
   useEffect(() => {
-    console.log('지도');
-
     if (!map) return;
     const ps = new kakao.maps.services.Places();
 
