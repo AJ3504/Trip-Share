@@ -3,6 +3,8 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 const { kakao } = window;
 
+const kakaoAPIKEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
+
 const KakaoMap = () => {
   const [currentPosition, setCurrentPosition] = useState({ lat: 33.5563, lng: 126.79581 });
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -11,6 +13,46 @@ const KakaoMap = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [thumbnails, setThumbnails] = useState([]);
+
+  const displayBlogs = (blogData) => {
+    return (
+      <ul>
+        {blogData.map((blog) => (
+          <li key={blog.id}>
+            <a href={blog.url}>
+              <img src={blog.thumbnail} alt="썸네일" />
+              <h3>{blog.title}</h3>
+              <p>{blog.contents}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  // 블로그 검색 함수
+  const searchBlogs = (keyword) => {
+    const apiUrl = `https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=15&query=${encodeURIComponent(
+      keyword
+    )}`;
+    const headers = {
+      Authorization: 'KakaoAK ' + kakaoAPIKEY
+    };
+
+    fetch(apiUrl, {
+      headers: headers
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const thumbnails = data.documents.map((document) => document.thumbnail);
+        setThumbnails(thumbnails);
+        displayBlogs(data.documents);
+      })
+      .catch((error) => {
+        console.error('블로그 검색 에러:', error);
+      });
+  };
 
   useEffect(() => {
     // 사용자의 현재 위치를 가져오는 코드
@@ -20,7 +62,7 @@ const KakaoMap = () => {
         setCurrentPosition({ lat: latitude, lng: longitude });
       },
       (error) => {
-        console.error('Error getting the user location:', error);
+        console.error('유저 정보를 가져오지 못했습니다:', error);
       },
       {
         enableHighAccuracy: true,
@@ -71,7 +113,8 @@ const KakaoMap = () => {
 
             // 검색 결과를 state에 저장하여 옆에 표시
             setSearchResults(data);
-            console.log(data);
+
+            searchBlogs(searchKeyword);
           }
         });
       }
@@ -120,24 +163,35 @@ const KakaoMap = () => {
               )}
             </div>
           ) : (
-            <ul>
-              {searchResults.map((result) => (
+            <ul style={{ height: '880px', overflowY: 'scroll' }}>
+              {searchResults.map((result, index) => (
                 <li
                   key={result.id}
                   style={{ padding: '18px', cursor: 'pointer', border: '1px solid green' }}
                   onClick={() => handleResultClick({ lat: result.y, lng: result.x })}
                 >
-                  {result.place_name}
-                  <br />
-                  {result.address_name}
+                  <div style={{ display: 'flex' }}>
+                    <img
+                      src={thumbnails[index]}
+                      alt={`thumbnail-${result.id}`}
+                      style={{ width: '100px', height: '100px', margin: '5px' }}
+                    />
+                    <div style={{ padding: '18px' }}>
+                      <h3>{result.place_name}</h3>
+                      <p>{result.address_name}</p>
+                      <p>{result.phone}</p>
+                    </div>
+                  </div>
                 </li>
               ))}
             </ul>
           )}
         </div>
-        <div style={{ width: '70%', height: '1100px' }}>
+        <div style={{ width: '70%', height: '900px' }}>
           <Map center={currentPosition} style={{ width: '100%', height: '100%' }} onCreate={setMap}>
-            <MapMarker position={currentPosition}></MapMarker>
+            <MapMarker position={currentPosition} height="fit-content">
+              125% 모두 화이팅입니다!
+            </MapMarker>
             {markers.map((marker) => (
               <MapMarker
                 key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
@@ -147,19 +201,23 @@ const KakaoMap = () => {
                 {selectedMarker === marker && showDetails && (
                   <div
                     style={{
-                      fontSize: '16px',
-                      fontWeight: 'bold',
-                      width: '300px',
-                      height: '70px'
+                      width: 'fit-content',
+                      height: 'fit-content',
+                      backgroundColor: 'white',
+                      borderRadius: '5px',
+                      display: 'flex',
+                      alignItems: 'center'
                     }}
                   >
-                    {marker.content}
-                    <br />
-
-                    {marker.phone}
-                    <br />
-
-                    {marker.address}
+                    <img
+                      src={thumbnails[markers.indexOf(marker)]}
+                      alt={`thumbnail-${marker.content}`}
+                      style={{ width: '100px', height: '100px', margin: '5px' }}
+                    />
+                    <div style={{ marginTop: '30px' }}>
+                      <h3>{marker.content}</h3>
+                      <p>{marker.address}</p>
+                    </div>
                   </div>
                 )}
               </MapMarker>
