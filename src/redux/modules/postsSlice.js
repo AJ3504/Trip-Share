@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
-import { db } from '../../service/firebase';
+import { db, storage } from '../../service/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 // const postsSlice = createSlice({
 //   name: 'posts',
@@ -59,11 +60,19 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
 export const __addPostSlice = createAsyncThunk('posts/addPostSlice', async (payload, thunkAPI) => {
   try {
     //이미지
+    const { postImg, ...postData } = payload; // 이미지를 분리하여 게시글 데이터를 만듦
+
+    if (postImg) {
+      const imageRef = ref(storage, `posts/${postImg.name}`);
+      await uploadBytes(imageRef, postImg);
+      const downloadURL = await getDownloadURL(imageRef);
+      postData.postImg = downloadURL;
+    }
 
     //게시글
     const collectionRef = collection(db, 'posts');
-    const { id } = await addDoc(collectionRef, payload);
-    const newPostWithId = { ...payload, id };
+    const { id } = await addDoc(collectionRef, postData);
+    const newPostWithId = { ...postData, id };
 
     return thunkAPI.fulfillWithValue(newPostWithId);
   } catch (error) {

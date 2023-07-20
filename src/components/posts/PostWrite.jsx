@@ -71,7 +71,7 @@ const PostWrite = ({ marker }) => {
       markerPsiton: marker.position,
       postTitle: postTitle,
       postBody: postBody,
-      // postImg: postImg,
+      postImg: postImg,
       category: option
     };
 
