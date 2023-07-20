@@ -2,30 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../../service/firebase';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { readPost } from '../../redux/modules/postsSlice';
 
 const PostListMain = ({ openSide, option }) => {
-  const [posts, setPosts] = useState([
-    // {
-    //   id: 1,
-    //   location: '',
-    //   category: '관광',
-    //   keyword: '케이스포돔',
-    //   userNickname: 'jennie',
-    //   postTitle: 'Born Pink',
-    //   postBody: 'World Tour Seoul Encore',
-    //   postImg: ''
-    // },
-    // {
-    //   id: 2,
-    //   location: '',
-    //   category: '음식점',
-    //   keyword: '떡도리탕',
-    //   userNickname: '풍자',
-    //   postTitle: '또간집',
-    //   postBody: '개맛있어',
-    //   postImg: ''
-    // }
-  ]);
+  //useSelector
+  const posts = useSelector((state) => state.postsSlice);
+  //hooks
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,10 +25,20 @@ const PostListMain = ({ openSide, option }) => {
         };
         initialTils.push(data);
       });
-      setPosts(initialTils);
+      dispatch(readPost(initialTils));
     };
     fetchData();
   }, []);
+
+  //Event Handler
+  const onPostClick = (post) => {
+    navigate(`/detail/${post.id}`, {
+      state: {
+        prevTitle: post.postTitle,
+        prevBody: post.postBody
+      }
+    });
+  };
 
   return (
     <StSideBox>
@@ -51,11 +47,15 @@ const PostListMain = ({ openSide, option }) => {
         .filter((post) => post.category === `${option}`)
         .map((post) => {
           return (
-            <div key={post.id}>
-              <div>{post.category}</div>
-              <div>{post.postTitle}</div>
-              <div>{post.postBody}</div>
-              {/* <img src={post.postImg} /> */}
+            <div key={post.id} style={{ border: 'solid', margin: '10px', padding: '10px' }}>
+              <ul>
+                <li>{post.category}</li>
+                <br />
+                <li>{post.postTitle}</li>
+                <li>{post.postBody}</li>
+                {/* <img src={post.postImg} /> */}
+                <button onClick={() => onPostClick(post)}>상세보기</button>
+              </ul>
             </div>
           );
         })}
