@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readPost } from '../../redux/modules/postsSlice';
 
-const PostListMain = ({ openSide, option }) => {
+const PostListMain = ({ openSide, option, position }) => {
+  console.log(position);
+
   //useSelector
   const posts = useSelector((state) => state.postsSlice);
   //hooks
@@ -40,20 +42,28 @@ const PostListMain = ({ openSide, option }) => {
     });
   };
 
+  const statedPosts = posts.filter(
+    (post) =>
+      post.markerPsition.lat > position.swLat &&
+      post.markerPsition.lat < position.neLat &&
+      post.markerPsition.lng > position.swLng &&
+      post.markerPsition.lng < position.neLng
+  );
+
   return (
     <StSideBox>
       <button onClick={openSide}>닫기</button>
-      {posts
+      {statedPosts
         .filter((post) => post.category === `${option}`)
         .map((post) => {
           return (
             <div key={post.id} style={{ border: 'solid', margin: '10px', padding: '10px' }}>
               <ul>
                 <li>{post.category}</li>
-                <br />
                 <li>{post.postTitle}</li>
                 <li>{post.postBody}</li>
-                {/* <img src={post.postImg} /> */}
+                <li>위도{post.markerPsition.lat}</li>
+                <li>경도{post.markerPsition.lng}</li>
                 <button onClick={() => onPostClick(post)}>상세보기</button>
               </ul>
             </div>
@@ -67,7 +77,7 @@ export default PostListMain;
 
 export const StSideBox = styled.ul`
   background-color: lightblue;
-  width: 400px;
+  width: 20%;
   height: 100%;
   right: 0px;
   position: absolute;

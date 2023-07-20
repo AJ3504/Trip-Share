@@ -8,10 +8,6 @@ import { addPost } from '../../redux/modules/postsSlice';
 import shortid from 'shortid';
 
 const PostWrite = ({ marker }) => {
-  console.log('작성', marker);
-
-  useEffect(() => {}, [marker]);
-
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [isModal, setIsModal] = useState(false);
@@ -58,7 +54,7 @@ const PostWrite = ({ marker }) => {
     e.preventDefault();
 
     if (postImg != null) {
-      const imageRef = ref(storage, `posts/${postImg.name}`);
+      const imageRef = ref(storage, `${auth.currentUser.uid}/${postImg.name}`);
       await uploadBytes(imageRef, postImg);
       const downloadURL = await getDownloadURL(imageRef);
       setPostImg(downloadURL);
@@ -67,7 +63,7 @@ const PostWrite = ({ marker }) => {
     const newPost = {
       uid: auth.currentUser.uid,
       markerId: marker.id,
-      markerPsiton: marker.position,
+      markerPsition: marker.position,
       postTitle: postTitle,
       postBody: postBody,
       postImg: postImg,

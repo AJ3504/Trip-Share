@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Button, Li } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
+import PostListMain from '../posts/PostListMain';
 
 const { kakao } = window;
 
@@ -16,6 +17,13 @@ const KakaoMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [thumbnails, setThumbnails] = useState([]);
+  // 영역
+  const [state, setState] = useState({
+    swLat: 0,
+    swLng: 0,
+    neLat: 90,
+    neLng: 180
+  });
 
   const displayBlogs = (blogData) => {
     return (
@@ -162,7 +170,7 @@ const KakaoMap = () => {
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
-                  style={{ width: '1000px', height: '800px' }}
+                  // style={{ width: '1000px', height: '800px' }}
                 />
               )}
             </div>
@@ -191,12 +199,23 @@ const KakaoMap = () => {
             </ul>
           )}
         </div>
-        <div style={{ width: '70%', height: '900px' }}>
-          <Map center={currentPosition} style={{ width: '100%', height: '100%' }} onCreate={setMap}>
+        <div style={{ width: '80%', height: '900px' }}>
+          <Map
+            center={currentPosition}
+            style={{ width: '100%', height: '100%' }}
+            onCreate={setMap}
+            onBoundsChanged={(map) =>
+              setState({
+                swLat: map.getBounds().getSouthWest().Ma,
+                swLng: map.getBounds().getSouthWest().La,
+                neLat: map.getBounds().getNorthEast().Ma,
+                neLng: map.getBounds().getNorthEast().La
+              })
+            }
+          >
             <MapMarker position={currentPosition} height="fit-content">
               125% 모두 화이팅입니다!
             </MapMarker>
-
             {markers.map((marker) => (
               <MapMarker
                 key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
@@ -235,6 +254,7 @@ const KakaoMap = () => {
             ))}
           </Map>
         </div>
+        <PostListMain option={'관광'} position={state} />
       </div>
     </>
   );
