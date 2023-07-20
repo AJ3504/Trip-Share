@@ -27,8 +27,9 @@ export const St = {
     object-fit: cover;
   `,
   ProfileEditBtn: styled.div`
-    margin-top: 10px;
+    margin-top: 20px;
     text-align: right;
+    font-size: 25px;
   `,
   Nickname: styled.p`
     margin-top: 20px;

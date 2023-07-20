@@ -81,5 +81,6 @@ export const St = {
     height: 35px;
     margin-top: 10px;
     border-radius: 5px;
+    outline: none;
   `
 };
