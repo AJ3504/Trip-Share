@@ -166,7 +166,12 @@ const KakaoMap = () => {
                       backgroundColor: 'white',
                       borderRadius: '5px',
                       display: 'flex',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      position: 'absolute',
+                      top: '50%', // 모달을 수직 가운데로 배치합니다.
+                      left: '50%', // 모달을 수평 가운데로 배치합니다.
+                      transform: 'translate(-50%, -50%)', // 모달을 정중앙으로 정렬합니다.
+                      zIndex: 9999 // 모달의 z-index를 마커보다 큰 값으로 설정합니다.
                     }}
                   >
                     <img />
