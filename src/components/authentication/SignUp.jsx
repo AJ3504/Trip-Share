@@ -5,6 +5,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ERR_CODE } from '../../constant';
+// import { St } from './SignUpStyle';
 
 const SingUp = () => {
   const [nickname, setNickname] = useState('');
