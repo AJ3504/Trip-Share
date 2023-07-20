@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { auth } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { ERR_CODE } from '../../constant';
+import { ERR_CODE } from '../../error';
 // import { St } from './SignInStyle';
 
 const SignIn = () => {
