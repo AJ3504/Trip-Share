@@ -117,6 +117,7 @@ const UserInfoModal = () => {
         <St.ModalBox ref={modalRef}>
           <St.ModalContents>
             <div key={uid}>
+              <St.ProfileTitle>Profile</St.ProfileTitle>
               <St.ProfileContainer>
                 <St.ProfileImageBox>
                   <St.ProfileImage src={currentPhotoURL} alt="userInfo" onClick={onClickImageFile} />

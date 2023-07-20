@@ -29,6 +29,12 @@ export const St = {
     gap: 20px;
   `,
 
+  ProfileTitle: styled.p`
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+  `,
+
   ProfileImageBox: styled.div`
     width: 200px;
     height: 200px;
@@ -55,6 +61,7 @@ export const St = {
   ProfileBody: styled.div`
     display: flex;
     flex-direction: column;
+    text-align: left;
     gap: 15px;
   `,
   Input: styled.input`
