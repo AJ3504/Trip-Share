@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import Header from '../header/Header';
 
 export const St = {
   ModalBox: styled.div`
@@ -16,18 +18,9 @@ export const St = {
 
   ModalContents: styled.div`
     background-color: #fff;
-    width: 600px;
+    width: 550px;
     padding: 20px;
     border-radius: 12px;
-  `,
-
-  Btn: styled.button`
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: #fab1a0;
-    height: 40px;
-    width: 120px;
   `,
 
   ProfileContainer: styled.div`
@@ -35,14 +28,7 @@ export const St = {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 50px;
-  `,
-
-  ProfileImageWrap: styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 20px;
   `,
 
   ProfileImageBox: styled.div`
@@ -56,6 +42,7 @@ export const St = {
   ProfileImage: styled.img`
     width: 100%;
     height: 100%;
+    cursor: pointer;
     object-fit: cover;
   `,
 
@@ -72,51 +59,23 @@ export const St = {
     flex-direction: column;
     gap: 15px;
   `,
-  MemberInput: styled.input`
-    width: 300px;
+  Input: styled.input`
+    width: 150px;
     height: 30px;
     padding-left: 15px;
     border: 0.03rem solid gray;
     border-radius: 5px;
     background-color: transparent;
     outline: none;
-  `,
-  MemberTextarea: styled.textarea`
-    width: 296px;
-    height: 40px;
-    padding: 10px;
-    border: 0.03rem solid gray;
-    border-radius: 5px;
-    background-color: transparent;
-    outline: none;
+    margin-right: 20px;
   `,
 
-  Contents: styled.div`
-    display: flex;
-    gap: 30px;
-    margin: 10px;
-  `,
-
-  ContentsTitle: styled.button`
-    cursor: pointer;
-    margin-left: 15px;
-    margin-bottom: 5px;
+  NicknameChangeBtn: styled.button`
     border: none;
-    background-color: transparent;
-    font-size: 15px;
-  `,
-
-  contentsBody: styled.div`
+    width: 170px;
+    height: 35px;
+    margin-top: 10px;
     border-radius: 5px;
-    margin-top: 15px;
-    width: 100%;
-    height: 100%;
-  `,
-
-  Btns: styled.button`
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #e4dccf;
+    background-color: ;
   `
 };

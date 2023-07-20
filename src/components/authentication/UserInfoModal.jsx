@@ -6,6 +6,7 @@ import { db, storage } from '../../service/firebase';
 import { getUserProfile } from '../../redux/modules/userInfoSlice';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { St } from './UserInfoModalStyle';
+import { styled } from 'styled-components';
 
 const UserInfoModal = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const UserInfoModal = () => {
   // useRef를 이용하여 input태그에 접근
   const imageFileInput = useRef();
 
-  // 이미지 업로드 버튼 클릭 시 이미지 파일 인풋 태그에 클릭 이벤트 걸기
+  // 이미지 클릭 시 이미지 파일 인풋 태그에 클릭 이벤트 걸기
   const onClickImageFile = () => {
     imageFileInput.current.click();
   };
@@ -118,27 +119,23 @@ const UserInfoModal = () => {
           <St.ModalContents>
             <div key={uid}>
               <St.ProfileContainer>
-                <St.ProfileImageWrap>
-                  <St.ProfileImageBox>
-                    <St.ProfileImage src={currentPhotoURL} alt="userInfo" />
-                  </St.ProfileImageBox>
-                  <St.ImageUploadBox>
-                    <St.ImageInput type="file" ref={imageFileInput} onChange={changedPhoto} />
-                    <button onClick={onClickImageFile}>프로필 사진 변경</button>
-                  </St.ImageUploadBox>
-                </St.ProfileImageWrap>
+                <St.ProfileImageBox>
+                  <St.ProfileImage src={currentPhotoURL} alt="userInfo" onClick={onClickImageFile} />
+                </St.ProfileImageBox>
+
+                <St.ImageInput type="file" ref={imageFileInput} onChange={changedPhoto} />
 
                 <form onSubmit={profileUpdateHandler}>
-                  <div>
+                  <St.ProfileBody>
                     <p>EMAIL</p>
-                    <input type="email" placeholder={getProfile.email} disabled={true} />
-
+                    <St.Input type="email" placeholder={getProfile.email} disabled={true} />
                     <p>NICKNAME</p>
-                    <input type="text" maxLength={10} value={currentNickname} onChange={nicknameChangeHandler} />
-                    <button type="submit" onClick={updateProfile}>
+                    <St.Input type="text" maxLength={10} value={currentNickname} onChange={nicknameChangeHandler} />
+
+                    <St.NicknameChangeBtn type="submit" onClick={updateProfile}>
                       닉네임 변경
-                    </button>
-                  </div>
+                    </St.NicknameChangeBtn>
+                  </St.ProfileBody>
                 </form>
               </St.ProfileContainer>
             </div>
