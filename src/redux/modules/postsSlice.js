@@ -3,34 +3,6 @@ import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'f
 import { db, storage } from '../../service/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-// const postsSlice = createSlice({
-//   name: 'posts',
-//   initialState: [],
-//   reducers: {
-//     addPost: (state, action) => {
-//       state.push(action.payload);
-//     },
-//     deletePost: (state, action) => {
-//       return state.filter((item) => item.id !== action.payload);
-//     },
-//     editPost: (state, action) => {
-//       return state.map((item) => {
-//         if (item.id === action.payload.id) {
-//           console.log(action.payload);
-//           return action.payload;
-//         } else {
-//           console.log(item);
-//           return item;
-//         }
-//       });
-//     },
-//     readPost: (state, action) => {
-//       console.log(action.payload);
-//       return action.payload;
-//     }
-//   }
-// });
-
 const initialState = {
   postsData: [],
   isLoading: false,
@@ -60,7 +32,7 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
 export const __addPostSlice = createAsyncThunk('posts/addPostSlice', async (payload, thunkAPI) => {
   try {
     //이미지
-    const { postImg, ...postData } = payload; // 이미지를 분리하여 게시글 데이터를 만듦
+    const { postImg, ...postData } = payload;
 
     if (postImg) {
       const imageRef = ref(storage, `posts/${postImg.name}`);
@@ -113,7 +85,6 @@ export const postsSlice = createSlice({
   extraReducers: {
     //GET
     [__getPostsSlice.fulfilled]: (state, action) => {
-      // console.log(action);
       state.isLoading = false;
       state.isError = false;
       state.postsData = action.payload;
@@ -134,6 +105,7 @@ export const postsSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.postsData.push(action.payload);
+      // state.postsData = [...state.postsData, action.payload]
       console.log(state);
     },
     [__addPostSlice.rejected]: (state, action) => {
@@ -150,7 +122,7 @@ export const postsSlice = createSlice({
     [__deletePostSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.postsData.filter((item) => item.id !== action.payload);
+      state.postsData = state.postsData.filter((item) => item.id !== action.payload);
     },
     [__deletePostSlice.rejected]: (state, action) => {
       state.isLoading = false;
@@ -166,23 +138,14 @@ export const postsSlice = createSlice({
     [__updatePostSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.postsData.map((item) => {
+
+      state.postsData = state.postsData.map((item) => {
         if (item.id === action.payload.id) {
-          return {
-            ...item,
-            ...action.payload
-          };
+          return action.payload;
         } else {
           return item;
         }
       });
-      // return state.postsData.map((item) => {
-      //   if (item.id === action.payload.id) {
-      //     return action.payload;
-      //   } else {
-      //     return item;
-      //   }
-      // });
     },
     [__updatePostSlice.rejected]: (state, action) => {
       state.isLoading = false;
