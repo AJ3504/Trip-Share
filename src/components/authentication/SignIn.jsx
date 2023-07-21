@@ -1,17 +1,18 @@
 import {
+  getAuth,
+  getRedirectResult,
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  // signInWithPopup,
-  signInWithRedirect
+  signInWithPopup
 } from 'firebase/auth';
 import React, { useEffect, useRef, useState } from 'react';
 import { auth, db } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
 import { ERR_CODE } from '../../error';
 import { St } from './SignInStyle';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const SignIn = () => {
   const [userData, setUserData] = useState(null);
@@ -44,24 +45,30 @@ const SignIn = () => {
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider(); // provider 구글 설정
     try {
-      const result = await signInWithRedirect(auth, provider);
+      const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      const collectionRef = collection(db, 'userInfo');
-      await setDoc(doc(collectionRef, user.uid), {
-        nickname: user.displayName,
-        email: user.email,
-        uid: user.uid,
-        photoURL:
-          'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
-      });
+      const docRef = doc(db, 'userInfo', user.uid);
+      const docSnap = await getDoc(docRef);
 
+      if (!docSnap.data()) {
+        const collectionRef = collection(db, 'userInfo');
+        await setDoc(doc(collectionRef, user.uid), {
+          nickname: user.displayName,
+          email: user.email,
+          uid: user.uid,
+          photoURL:
+            'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
+        });
+      }
       navigate('/');
       setUserData(result.user);
       console.log('로그인 된 유저', user);
     } catch (error) {
-      alert('Google 로그인 실패');
-      console.error('error', error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.error('error', errorCode, errorMessage);
     }
   };
 
@@ -69,24 +76,30 @@ const SignIn = () => {
     const provider = new GithubAuthProvider(); // provider 깃허브 설정
 
     try {
-      const result = await signInWithRedirect(auth, provider);
+      const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      const collectionRef = collection(db, 'userInfo');
-      await setDoc(doc(collectionRef, user.uid), {
-        nickname: Math.floor(Math.random() * 1000),
-        email: user.email,
-        uid: user.uid,
-        photoURL:
-          'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
-      });
+      const docRef = doc(db, 'userInfo', user.uid);
+      const docSnap = await getDoc(docRef);
 
+      if (!docSnap.data()) {
+        const collectionRef = collection(db, 'userInfo');
+        await setDoc(doc(collectionRef, user.uid), {
+          nickname: Math.floor(Math.random() * 1000),
+          email: user.email,
+          uid: user.uid,
+          photoURL:
+            'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
+        });
+      }
       navigate('/');
       setUserData(result.user);
       console.log('로그인 된 유저', user);
     } catch (error) {
-      alert('Github 로그인 실패');
-      console.error('error', error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.error('error', errorCode, errorMessage);
     }
   };
 
