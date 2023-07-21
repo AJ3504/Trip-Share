@@ -9,8 +9,8 @@ export const St = {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* position: fixed; 배너 상단 고정
-    z-index: 2; 지도 & 글쓰기 인덱스 조정 필요*/
+    position: fixed;
+    z-index: 2;
   `,
   MenuWrapper: styled.div`
     display: flex;

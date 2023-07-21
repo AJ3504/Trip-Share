@@ -18,6 +18,7 @@ export const St = {
 
   ProfileWarp: styled.div`
     margin: 0 auto;
+    padding-left: 20px;
   `,
 
   ProfileImageBox: styled.div`
