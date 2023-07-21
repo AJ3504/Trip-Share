@@ -19,16 +19,16 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   const { postId } = useParams();
-  const prevTitle = location.state.prevTitle;
-  const prevBody = location.state.prevBody;
+  // const prevTitle = location.state.prevTitle;
+  // const prevBody = location.state.prevBody;
 
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
   const options = ['관광', '식당', '카페', '숙소'];
 
-  const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
-  const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
+  const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
+  const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
 
   useEffect(() => {
     const fetchData = () => {

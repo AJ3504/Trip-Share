@@ -6,6 +6,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { getUserProfile } from '../../redux/modules/userInfoSlice';
 import { St } from './UserInfoStyle';
 import UserInfoModal from './UserInfoModal';
+import MyPosts from './MyPosts';
 
 const UserInfo = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const UserInfo = () => {
   }, [getProfile.nickname]);
 
   return (
-    <>
+    <St.wholeContainer>
       <div key={uid}>
         <St.ProfileContainer>
           <St.ProfileWarp>
@@ -55,7 +56,13 @@ const UserInfo = () => {
           </St.ProfileWarp>
         </St.ProfileContainer>
       </div>
-    </>
+      {/* ------------------------내가쓴글 목록-------------------------------- */}
+      <div>
+        <St.MyPostContainer>
+          <MyPosts />
+        </St.MyPostContainer>
+      </div>
+    </St.wholeContainer>
   );
 };
 
