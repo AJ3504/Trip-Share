@@ -38,7 +38,7 @@ const KakaoMap = () => {
   });
 
   // 카테고리 게시글 data
-  const posts = useSelector((state) => state.postsSlice);
+  const { postsData } = useSelector((state) => state.postsSlice);
 
   const [showScroll, setShowScroll] = useState(false);
 
@@ -57,7 +57,7 @@ const KakaoMap = () => {
 
       if (data.documents.length > 0) {
         const thumbnail = data.documents[3].thumbnail;
-        console.log('들어간 순서', thumbnail);
+
         setThumbnails((prevThumbnails) => [...prevThumbnails, thumbnail]);
       } else {
         setThumbnails((prevThumbnails) => [
@@ -106,6 +106,7 @@ const KakaoMap = () => {
       setShowScroll(true);
       setThumbnails([]);
 
+      //마커에 들어갈 내용을
       if (map) {
         const ps = new kakao.maps.services.Places();
         ps.keywordSearch(searchKeyword, async (data, status, pagination) => {
@@ -189,7 +190,7 @@ const KakaoMap = () => {
               </Button2>
             </DetailsContainer>
           ) : (
-            <ul style={{ height: '880px', overflowY: showScroll ? 'scroll' : 'hidden' }}>
+            <ul style={{ height: '880px' }}>
               {searchResults.map((result, index) => (
                 <Li key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
                   <div style={{ display: 'flex' }}>
@@ -241,7 +242,7 @@ const KakaoMap = () => {
               </MapMarker>
             ))}
             {/* 카테고리 장소 마커 */}
-            {posts.map((post, index) => (
+            {postsData.map((post, index) => (
               <MapMarker
                 key={`${post.postTitle}-${post.markerPosition}`}
                 // 마커를 표시할 위치
