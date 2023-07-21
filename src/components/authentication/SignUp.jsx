@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../../service/firebase';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { ERR_CODE } from '../../error';
+import { St } from './SignUpStyle';
 
 const SingUp = () => {
   const [nickname, setNickname] = useState('');
@@ -17,21 +18,25 @@ const SingUp = () => {
   const handleEmailSignUp = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, { nickname: nickname });
       console.log('가입된 유저 정보', userCredential);
 
-      const collectionRef = collection(db, 'userinfo');
+      const collectionRef = collection(db, 'userInfo');
       await setDoc(doc(collectionRef, userCredential.user.uid), {
         nickname: nickname,
         email: userCredential.user.email,
         uid: userCredential.user.uid,
         photoURL:
-          'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/41311/FreeVectorWorld_Tourism_Day_Backgroundyc0622_generated.jpg'
+          'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
       });
 
       alert('회원가입 완료');
       navigate('/');
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -41,7 +46,7 @@ const SingUp = () => {
       await handleEmailSignUp();
     } else if (nickname && email && password && checkPassword && password !== checkPassword) {
       alert('입력하신 비밀번호가 다릅니다.');
-    } else alert('모든 내용을 입력해주세요!');
+    } else alert('모든 항목을 입력해주세요!');
   };
 
   const openModal = () => {
@@ -71,38 +76,45 @@ const SingUp = () => {
       {isOpen && (
         <St.ModalBox ref={modalRef}>
           <St.ModalContents>
-            <div>
-              <h3>SIGN UP</h3>
+            <St.SignUPWrap>
+              <St.SignUp>SIGN UP</St.SignUp>
               <form onSubmit={handleSubmitSignUp}>
+                <St.SignUpTitle>닉네임*</St.SignUpTitle>
                 <St.Input
+                  type="text"
+                  maxLength={10}
                   placeholder="닉네임을 입력해주세요"
                   onChange={(e) => {
                     setNickname(e.target.value);
                   }}
                 />
+                <St.SignUpTitle>이메일*</St.SignUpTitle>
                 <St.Input
+                  type="email"
                   placeholder="이메일 주소를 입력해주세요"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
+                <St.SignUpTitle>비밀번호*</St.SignUpTitle>
                 <St.Input
+                  type="password"
                   placeholder="비밀번호를 입력해주세요"
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
                 />
+                <St.SignUpTitle>비밀번호 재확인*</St.SignUpTitle>
                 <St.Input
+                  type="password"
                   placeholder="비밀번호를 다시 한 번 입력해주세요"
                   onChange={(e) => {
                     setCheckPassword(e.target.value);
                   }}
                 />
-                <button type="submit" onClick={handleEmailSignUp}>
-                  회원가입
-                </button>
+                <St.SignUpBtn type="submit">회원가입</St.SignUpBtn>
               </form>
-            </div>
+            </St.SignUPWrap>
           </St.ModalContents>
         </St.ModalBox>
       )}
@@ -110,40 +122,3 @@ const SingUp = () => {
   );
 };
 export default SingUp;
-
-const St = {
-  ModalBox: styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  `,
-
-  ModalContents: styled.div`
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-  `,
-
-  Input: styled.input`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  Btn: styled.button`
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: gray;
-    height: 40px;
-    width: 120px;
-  `
-};
