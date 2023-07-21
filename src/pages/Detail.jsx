@@ -75,7 +75,8 @@ const Detail = () => {
       postBody: newPostBody,
       isModified: true,
       category: editSelectedOption,
-      id: postId
+      id: postId,
+      markerPosition: targetPost.markerPosition
     };
 
     dispatch(__updatePostSlice(editedPost));
