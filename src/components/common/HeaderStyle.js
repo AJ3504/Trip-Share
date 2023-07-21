@@ -44,5 +44,12 @@ export const St = {
     display: flex;
     align-items: center;
     margin-left: 10px;
+  `,
+  Nickname: styled.div`
+    cursor: pointer;
+    font-size: 0.8333rem;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
   `
 };

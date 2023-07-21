@@ -53,7 +53,13 @@ const Header = () => {
                 }}
               />
 
-              <St.HeaderMenu2>{nickname}</St.HeaderMenu2>
+              <St.Nickname
+                onClick={() => {
+                  navigate('/mypage');
+                }}
+              >
+                {nickname}
+              </St.Nickname>
               <UserInfoModal />
               <St.HeaderMenu2 onClick={handleLogoutClick}>로그아웃</St.HeaderMenu2>
             </>
