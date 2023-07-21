@@ -4,7 +4,7 @@ export const St = {
   Header: styled.header`
     width: 100vw;
     height: 80px;
-    background-color: skyblue;
+    background-color: rgb(236, 249, 255);
     position: relative;
     display: flex;
     justify-content: space-between;
