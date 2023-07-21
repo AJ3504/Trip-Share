@@ -83,7 +83,7 @@ const SingUp = () => {
                 <St.Input
                   type="text"
                   maxLength={10}
-                  placeholder="닉네임을 입력해주세요"
+                  placeholder="닉네임은 10자리까지만 입력해주세요"
                   onChange={(e) => {
                     setNickname(e.target.value);
                   }}
@@ -91,7 +91,7 @@ const SingUp = () => {
                 <St.SignUpTitle>이메일*</St.SignUpTitle>
                 <St.Input
                   type="email"
-                  placeholder="이메일 주소를 입력해주세요"
+                  placeholder="올바른 이메일 주소를 입력해주세요"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -99,7 +99,7 @@ const SingUp = () => {
                 <St.SignUpTitle>비밀번호*</St.SignUpTitle>
                 <St.Input
                   type="password"
-                  placeholder="비밀번호를 입력해주세요"
+                  placeholder="비밀번호는 6자리 이상 입력해주세요"
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}

@@ -8,22 +8,22 @@ export const St = {
   `,
 
   ModalBox: styled.div`
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
     display: flex;
+    position: fixed;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
   `,
 
   ModalContents: styled.div`
-    background-color: #fff;
     padding: 20px;
     border-radius: 12px;
+    background-color: #fff;
   `,
 
   LoginWrap: styled.div`
@@ -31,9 +31,9 @@ export const St = {
   `,
 
   Login: styled.p`
-    text-align: center;
     font-size: 25px;
     font-weight: 600;
+    text-align: center;
     margin-bottom: 10px;
   `,
 
@@ -45,34 +45,43 @@ export const St = {
   Input: styled.input`
     width: 200px;
     height: 30px;
+    border: none;
     outline: none;
-    padding-left: 10px;
-    margin-bottom: 10px;
     display: flex;
+    border-radius: 5px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    align-items: center;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    background-color: rgb(232, 240, 254);
   `,
 
   LoginBtn: styled.button`
     width: 216px;
     height: 30px;
+    border: none;
     outline: none;
     cursor: pointer;
     margin-top: 5px;
+    border-radius: 5px;
     margin-bottom: 10px;
+    background-color: rgb(255, 255, 205);
   `,
 
   SocialLoginWarp: styled.div`
+    gap: 5px;
     display: flex;
     flex-direction: row;
-    gap: 5px;
   `,
 
   SocialLoginBtn: styled.button`
     width: 105px;
     height: 30px;
+    border: none;
     outline: none;
     cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(255, 230, 205);
   `
 };

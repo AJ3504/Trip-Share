@@ -30,6 +30,7 @@ const Header = () => {
     alert('로그아웃 하시겠습니까?');
     await signOut(auth);
     navigate('/');
+    window.location.reload();
   };
 
   const getProfile = useSelector((state) => state.userInfo);
@@ -41,7 +42,7 @@ const Header = () => {
         <St.MenuWrapper>
           {currentUser ? (
             <>
-              <St.Img
+              <St.ProfileImg
                 src={
                   getProfile.photoURL
                     ? getProfile.photoURL
@@ -74,13 +75,13 @@ const Header = () => {
           )}
         </St.MenuWrapper>
         <St.LogoWrapper>
-          <St.Logo
+          <div
             onClick={() => {
               navigate('/');
             }}
           >
-            <img src="/Logo.png" alt="TripShare Logo" style={{ width: '300px', height: '200px', marginTop: '30px' }} />
-          </St.Logo>
+            <St.LogoImg src="/Logo.png" alt="TripShare Logo" />
+          </div>
         </St.LogoWrapper>
       </St.Header>
     </>

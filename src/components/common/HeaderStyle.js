@@ -6,16 +6,17 @@ export const St = {
     min-width: 800px;
     height: 80px;
     background-color: rgb(236, 249, 255);
-    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* position: fixed; 배너 상단 고정
+    z-index: 2; 지도 & 글쓰기 인덱스 조정 필요*/
   `,
   MenuWrapper: styled.div`
     display: flex;
   `,
 
-  Img: styled.img`
+  ProfileImg: styled.img`
     background-color: white;
     width: 50px;
     height: 50px;
@@ -28,11 +29,12 @@ export const St = {
     left: 50%;
     transform: translateX(-50%);
   `,
-  Logo: styled.div`
-    text-align: center;
+
+  LogoImg: styled.img`
+    width: 280px;
+    height: 200px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 25px;
+    margin-top: 30px;
   `,
 
   HeaderMenu: styled.div`
