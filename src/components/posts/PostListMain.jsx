@@ -69,5 +69,5 @@ export const StSideBox = styled.ul`
   right: 0px;
   position: absolute;
   transition: 1s;
-  z-index: 999;
+  z-index: 999; // 1로 수정 필요(박제이)
 `;
