@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { auth, db, storage } from '../../service/firebase';
-import { styled } from 'styled-components';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addPost } from '../../redux/modules/postsSlice';
-import { Button } from '../map/KakaoMap-Styled';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { auth, storage } from '../../service/firebase';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
+import { styled } from 'styled-components';
+import { Button } from '../map/KakaoMap-Styled';
 
 const PostWrite = ({ marker }) => {
   const options = ['관광', '식당', '카페', '숙소'];

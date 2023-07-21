@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import {
   Button,
@@ -14,7 +15,6 @@ import {
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
-import { useSelector } from 'react-redux';
 
 const { kakao } = window;
 
@@ -36,6 +36,8 @@ const KakaoMap = () => {
     neLat: 90,
     neLng: 180
   });
+  // 카테고리 button 활성화
+  const [option, setOption] = useState('');
 
   // 카테고리 게시글 data
   const { postsData } = useSelector((state) => state.postsSlice);
@@ -66,10 +68,12 @@ const KakaoMap = () => {
         ]);
       }
 
-      return data.documents; // 검색 결과를 반환합니다.
+      // 검색 결과를 반환
+      return data.documents;
     } catch (error) {
       console.error('블로그 검색 에러:', error);
-      return []; // 에러 발생 시 빈 배열을 반환합니다.
+      // 에러 발생 시 빈 배열을 반환
+      return [];
     }
   };
 
@@ -94,7 +98,7 @@ const KakaoMap = () => {
     iframeContainer.id = 'place_url_iframe';
     document.getElementById('root').appendChild(iframeContainer);
     return () => {
-      // 컴포넌트가 언마운트 될 때 iframe 컨테이너를 제거합니다.
+      // 컴포넌트가 언마운트 될 때 iframe 컨테이너를 제거
       document.getElementById('root').removeChild(iframeContainer);
     };
   }, []);
@@ -145,13 +149,14 @@ const KakaoMap = () => {
     }
   };
 
-  // 검색 결과 항목을 클릭했을 때 실행되는 함수 현재는 맵에서 이동됩니다
+  // 검색 결과 항목을 클릭했을 때 실행되는 함수 현재는 맵에서 이동
   const handleResultClick = (position) => {
     setCurrentPosition(position);
     map.setLevel(3);
   };
 
-  // 마커를 클릭했을 때 선택된 마커 정보를 업데이트하는 함수 제일 자세한 level로 보여주고 검색페이지를 열어줍니다
+  // 마커를 클릭했을 때 선택된 마커 정보를 업데이트하는 함수
+  // 제일 자세한 level로 보여주고 검색페이지를 열어줍니다
   const handleMarkerClick = (marker) => {
     setSelectedMarker(marker);
     setCurrentPosition(marker.position);
@@ -242,27 +247,35 @@ const KakaoMap = () => {
               </MapMarker>
             ))}
             {/* 카테고리 장소 마커 */}
-            {postsData.map((post, index) => (
-              <MapMarker
-                key={`${post.postTitle}-${post.markerPosition}`}
-                // 마커를 표시할 위치
-                position={post.markerPosition}
-                image={{
-                  // 마커이미지의 주소입니다
-                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                  // 마커이미지의 크기입니다
-                  size: {
-                    width: 24,
-                    height: 35
-                  }
-                }}
-                // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                title={post.postTitle}
-              />
-            ))}
+            {postsData
+              .filter((post) => post.category === `${option}`)
+              .map((post, index) => (
+                <MapMarker
+                  key={`${post.postTitle}-${post.markerPosition}`}
+                  // 마커를 표시할 위치
+                  position={post.markerPosition}
+                  image={{
+                    // 마커이미지의 주소입니다
+                    src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                    // 마커이미지의 크기입니다
+                    size: {
+                      width: 24,
+                      height: 35
+                    }
+                  }}
+                  // 마커에 마우스를 올리면 타이틀이 표시
+                  title={post.postTitle}
+                />
+              ))}
           </Map>
         </MapContainer>
-        <PostListMain option={'관광'} position={state} />
+        <div>
+          <button onClick={() => setOption('관광')}>관광</button>
+          <button onClick={() => setOption('식당')}>식당</button>
+          <button onClick={() => setOption('카페')}>카페</button>
+          <button onClick={() => setOption('숙소')}>숙소</button>
+          <PostListMain option={option} position={state} />
+        </div>
       </Container>
     </>
   );
