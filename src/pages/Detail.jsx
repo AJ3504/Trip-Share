@@ -14,27 +14,22 @@ import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 
 const Detail = () => {
-  //hooks
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //넘겨받은 값
   const { postId } = useParams();
   const prevTitle = location.state.prevTitle;
   const prevBody = location.state.prevBody;
 
-  //useStates
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
   const options = ['관광', '식당', '카페', '숙소'];
 
-  //custom hook
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
   const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
 
-  //
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
@@ -52,12 +47,8 @@ const Detail = () => {
     return <h1>오류가 발생했어요</h1>;
   }
 
-  //others
   const targetPost = postsData.find((item) => item.id === postId);
-  console.log(targetPost);
-  //------------------------------------------------------------------------------------------
-  //event Handler
-  //Update
+
   const editModeHandler = async () => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
@@ -106,7 +97,6 @@ const Detail = () => {
     setEditSelectAreaIsOpen(false);
   };
 
-  //Delete
   const deleteHandler = async (targetPostId) => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
@@ -127,11 +117,9 @@ const Detail = () => {
 
   return (
     <>
-      {/* ------수정폼------ */}
       <div>
         {editMode ? (
           <form onSubmit={onSubmitEditHandler}>
-            {/* ---selectArea------------------------------------ */}
             <div>
               <DropdownWrapper>
                 <DropdownHeader
@@ -159,7 +147,6 @@ const Detail = () => {
                 )}
               </DropdownWrapper>
             </div>
-            {/* ---------------------------------------------------- */}
             <div className="editInputArea">
               <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
               <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
@@ -168,7 +155,6 @@ const Detail = () => {
           </form>
         ) : null}
       </div>
-      {/* ------게시글------ */}
       <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
         <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>

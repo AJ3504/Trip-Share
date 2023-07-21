@@ -9,8 +9,6 @@ import { Button } from '../map/KakaoMap-Styled';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
 
 const PostWrite = ({ marker }) => {
-  // console.log('작성', marker);
-
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [isModal, setIsModal] = useState(false);
@@ -49,10 +47,8 @@ const PostWrite = ({ marker }) => {
     setPostImg(e.target.files[0]);
   };
 
-  //hooks
   const dispatch = useDispatch();
 
-  //event Handler
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
