@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { collection, getDocs, query } from 'firebase/firestore';
-import { db } from '../../service/firebase';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getPostsSlice, __postsSlice, readPost } from '../../redux/modules/postsSlice';
+import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 
 const PostListMain = ({ openSide, option, position }) => {
-  console.log(position);
-
   //hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,7 +26,6 @@ const PostListMain = ({ openSide, option, position }) => {
     return <h1>오류가 발생했어요</h1>;
   }
 
-  //Event Handler
   const onPostClick = (post) => {
     navigate(`/detail/${post.id}`, {
       state: {
@@ -50,7 +45,6 @@ const PostListMain = ({ openSide, option, position }) => {
 
   return (
     <StSideBox>
-      <button onClick={openSide}>닫기</button>
       {statedPosts
         .filter((post) => post.category === `${option}`)
         .map((post) => {

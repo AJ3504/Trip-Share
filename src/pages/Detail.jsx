@@ -1,40 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  __deletePostSlice,
-  __getPostsSlice,
-  __updatePostSlice,
-  deletePost,
-  editPost
-} from '../redux/modules/postsSlice';
-import { auth, db } from '../service/firebase';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { auth } from '../service/firebase';
+import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/modules/postsSlice';
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 
 const Detail = () => {
-  //hooks
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //넘겨받은 값
   const { postId } = useParams();
   const prevTitle = location.state.prevTitle;
   const prevBody = location.state.prevBody;
 
-  //useStates
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
   const options = ['관광', '식당', '카페', '숙소'];
 
-  //custom hook
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
   const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
 
-  //
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
@@ -43,8 +31,7 @@ const Detail = () => {
     fetchData();
   }, [dispatch]);
 
-  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
-
+  const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
   }
@@ -52,9 +39,8 @@ const Detail = () => {
     return <h1>오류가 발생했어요</h1>;
   }
 
-  //others
   const targetPost = postsData.find((item) => item.id === postId);
-  //------------------------------------------------------------------------------------------
+
   //event Handler
   const isDisabled = targetPost.uid !== auth.currentUser.uid;
 
@@ -91,7 +77,8 @@ const Detail = () => {
       postBody: newPostBody,
       isModified: true,
       category: editSelectedOption,
-      id: postId
+      id: postId,
+      markerPosition: targetPost.markerPosition
     };
 
     dispatch(__updatePostSlice(editedPost));
@@ -107,7 +94,6 @@ const Detail = () => {
     setEditSelectAreaIsOpen(false);
   };
 
-  //Delete
   const deleteHandler = async (targetPostId) => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
@@ -128,11 +114,9 @@ const Detail = () => {
 
   return (
     <>
-      {/* ------수정폼------ */}
       <div>
         {editMode ? (
           <form onSubmit={onSubmitEditHandler}>
-            {/* ---selectArea------------------------------------ */}
             <div>
               <DropdownWrapper>
                 <DropdownHeader
@@ -160,7 +144,6 @@ const Detail = () => {
                 )}
               </DropdownWrapper>
             </div>
-            {/* ---------------------------------------------------- */}
             <div className="editInputArea">
               <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
               <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
@@ -169,7 +152,6 @@ const Detail = () => {
           </form>
         ) : null}
       </div>
-      {/* ------게시글------ */}
       <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
         <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>

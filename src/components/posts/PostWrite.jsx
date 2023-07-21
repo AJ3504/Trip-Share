@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { auth, db, storage } from '../../service/firebase';
-import { styled } from 'styled-components';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addPost } from '../../redux/modules/postsSlice';
-import { Button } from '../map/KakaoMap-Styled';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { auth, storage } from '../../service/firebase';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
+import { styled } from 'styled-components';
 
 const PostWrite = ({ marker }) => {
-  // console.log('작성', marker);
-
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [isModal, setIsModal] = useState(false);
@@ -49,10 +44,8 @@ const PostWrite = ({ marker }) => {
     setPostImg(e.target.files[0]);
   };
 
-  //hooks
   const dispatch = useDispatch();
 
-  //event Handler
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
@@ -81,7 +74,9 @@ const PostWrite = ({ marker }) => {
 
   return (
     <>
-      <Button onClick={openModal}>작성</Button>
+      <PostButton onClick={openModal}>
+        <img src={'/animation-write.gif'} alt="버튼 이미지" style={{ width: '30px', height: '30px' }} />
+      </PostButton>
       {isModal && (
         <StModalBox>
           <StModalContents>
@@ -170,4 +165,18 @@ export const StOptionItem = styled.div`
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
+`;
+
+export const PostButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: transparent;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 `;

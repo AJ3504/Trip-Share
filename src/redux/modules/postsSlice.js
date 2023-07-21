@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
-import { db, storage } from '../../service/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { db, storage } from '../../service/firebase';
 
 const initialState = {
   postsData: [],
@@ -10,7 +10,6 @@ const initialState = {
   error: null
 };
 
-//GET
 export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (payload, thunkAPI) => {
   try {
     const q = query(collection(db, 'posts'));
@@ -28,10 +27,8 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
   }
 });
 
-//POST
 export const __addPostSlice = createAsyncThunk('posts/addPostSlice', async (payload, thunkAPI) => {
   try {
-    //이미지
     const { postImg, ...postData } = payload;
 
     if (postImg) {
@@ -41,7 +38,6 @@ export const __addPostSlice = createAsyncThunk('posts/addPostSlice', async (payl
       postData.postImg = downloadURL;
     }
 
-    //게시글
     const collectionRef = collection(db, 'posts');
     const { id } = await addDoc(collectionRef, postData);
     const newPostWithId = { ...postData, id };
@@ -52,7 +48,6 @@ export const __addPostSlice = createAsyncThunk('posts/addPostSlice', async (payl
   }
 });
 
-//DELETE
 export const __deletePostSlice = createAsyncThunk('posts/deletePostSlice', async (payload, thunkAPI) => {
   try {
     const postsRef = doc(db, 'posts', payload);
@@ -64,7 +59,6 @@ export const __deletePostSlice = createAsyncThunk('posts/deletePostSlice', async
   }
 });
 
-//UPDATE
 export const __updatePostSlice = createAsyncThunk('posts/updatePostSlice', async (payload, thunkAPI) => {
   try {
     const targetPostRef = doc(db, 'posts', payload.id);
@@ -76,14 +70,11 @@ export const __updatePostSlice = createAsyncThunk('posts/updatePostSlice', async
   }
 });
 
-//
-//Redux
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {},
   extraReducers: {
-    //GET
     [__getPostsSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
@@ -100,12 +91,10 @@ export const postsSlice = createSlice({
       state.isError = false;
     },
 
-    //POST
     [__addPostSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
       state.postsData.push(action.payload);
-      console.log(state);
     },
     [__addPostSlice.rejected]: (state, action) => {
       state.isLoading = false;
@@ -117,7 +106,6 @@ export const postsSlice = createSlice({
       state.isError = false;
     },
 
-    //DELETE
     [__deletePostSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
@@ -133,7 +121,6 @@ export const postsSlice = createSlice({
       state.isError = false;
     },
 
-    //UPDATE
     [__updatePostSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
