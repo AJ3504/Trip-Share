@@ -15,7 +15,7 @@ export const St = {
     display: flex;
   `,
 
-  Img: styled.img`
+  ProfileImg: styled.img`
     background-color: white;
     width: 50px;
     height: 50px;
@@ -28,11 +28,12 @@ export const St = {
     left: 50%;
     transform: translateX(-50%);
   `,
-  Logo: styled.div`
-    text-align: center;
+
+  LogoImg: styled.img`
+    width: 280px;
+    height: 200px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 25px;
+    margin-top: 30px;
   `,
 
   HeaderMenu: styled.div`
