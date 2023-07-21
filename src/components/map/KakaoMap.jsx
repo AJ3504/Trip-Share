@@ -8,9 +8,12 @@ import {
   LeftContainer,
   SearchInput,
   DetailsContainer,
-  DetailsContainer2,
+  MarkerContentContainer,
   ThumbnailImage,
-  MapContainer
+  MapContainer,
+  StyledUl,
+  StyledIframe,
+  MarkerContent
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
@@ -40,8 +43,6 @@ const KakaoMap = () => {
   // 카테고리 게시글 data
   const { postsData } = useSelector((state) => state.postsSlice);
 
-  const [showScroll, setShowScroll] = useState(false);
-
   // 블로그 검색 함수
   const searchBlogs = async (keyword) => {
     const apiUrl = `https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=15&query=${encodeURIComponent(
@@ -56,7 +57,7 @@ const KakaoMap = () => {
       const data = await response.json();
 
       if (data.documents.length > 0) {
-        const thumbnail = data.documents[3].thumbnail;
+        const thumbnail = data.documents[0].thumbnail;
 
         setThumbnails((prevThumbnails) => [...prevThumbnails, thumbnail]);
       } else {
@@ -103,7 +104,6 @@ const KakaoMap = () => {
   const handleSearch = async () => {
     if (searchKeyword.trim() !== '') {
       setMarkers([]); // 기존 마커 초기화
-      setShowScroll(true);
       setThumbnails([]);
 
       //마커에 들어갈 내용을
@@ -162,35 +162,29 @@ const KakaoMap = () => {
   return (
     <>
       <Container>
-        <LeftContainer>
-          <SearchInput
-            type="text"
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            placeholder="검색어를 입력하세요"
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                handleSearch();
-              }
-            }}
-          />
-          <Button onClick={handleSearch}>검색</Button>
+        {showDetails ? (
+          <DetailsContainer>
+            {selectedMarker && <StyledIframe title="place-details" src={selectedMarker.place_url} scrolling="no" />}
+            <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
+              ⬅️
+            </Button2>
+          </DetailsContainer>
+        ) : (
+          <LeftContainer>
+            <SearchInput
+              type="text"
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              placeholder="검색어를 입력하세요"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
+            />
+            <Button onClick={handleSearch}>🔎</Button>
 
-          {showDetails ? (
-            <DetailsContainer>
-              {selectedMarker && (
-                <iframe
-                  title="place-details"
-                  src={selectedMarker.place_url}
-                  style={{ width: '800px', height: '800px' }}
-                />
-              )}
-              <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
-                ⬅️
-              </Button2>
-            </DetailsContainer>
-          ) : (
-            <ul style={{ height: '880px' }}>
+            <StyledUl>
               {searchResults.map((result, index) => (
                 <Li key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
                   <div style={{ display: 'flex' }}>
@@ -203,9 +197,10 @@ const KakaoMap = () => {
                   </div>
                 </Li>
               ))}
-            </ul>
-          )}
-        </LeftContainer>
+            </StyledUl>
+          </LeftContainer>
+        )}
+
         <MapContainer>
           <Map
             center={currentPosition}
@@ -220,9 +215,7 @@ const KakaoMap = () => {
               })
             }
           >
-            <MapMarker position={currentPosition} height="fit-content" width="fit-content">
-              125% 모두 화이팅입니다!
-            </MapMarker>
+            <MapMarker position={currentPosition} height="fit-content" width="fit-content"></MapMarker>
             {markers.map((marker) => (
               <MapMarker
                 key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
@@ -230,14 +223,14 @@ const KakaoMap = () => {
                 onClick={() => handleMarkerClick(marker)}
               >
                 {selectedMarker === marker && showDetails && (
-                  <DetailsContainer2>
+                  <MarkerContentContainer>
                     <ThumbnailImage src={thumbnails[markers.indexOf(marker)]} alt={`thumbnail-${marker.content}`} />
-                    <div style={{ marginTop: '30px' }}>
+                    <PostWrite marker={marker} />
+                    <MarkerContent>
                       <h3>{marker.content}</h3>
                       <p>{marker.address}</p>
-                      <PostWrite marker={marker} />
-                    </div>
-                  </DetailsContainer2>
+                    </MarkerContent>
+                  </MarkerContentContainer>
                 )}
               </MapMarker>
             ))}

@@ -5,7 +5,6 @@ import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/modules/postsSlice';
-import { Button } from '../map/KakaoMap-Styled';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
 
 const PostWrite = ({ marker }) => {
@@ -77,7 +76,9 @@ const PostWrite = ({ marker }) => {
 
   return (
     <>
-      <Button onClick={openModal}>작성</Button>
+      <PostButton onClick={openModal}>
+        <img src={'/animation-write.gif'} alt="버튼 이미지" style={{ width: '30px', height: '30px' }} />
+      </PostButton>
       {isModal && (
         <StModalBox>
           <StModalContents>
@@ -166,4 +167,18 @@ export const StOptionItem = styled.div`
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
+`;
+
+export const PostButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: transparent;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 `;
