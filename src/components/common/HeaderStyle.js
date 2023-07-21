@@ -6,10 +6,11 @@ export const St = {
     min-width: 800px;
     height: 80px;
     background-color: rgb(236, 249, 255);
-    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* position: fixed; 배너 상단 고정
+    z-index: 2; 지도 & 글쓰기 인덱스 조정 필요*/
   `,
   MenuWrapper: styled.div`
     display: flex;
