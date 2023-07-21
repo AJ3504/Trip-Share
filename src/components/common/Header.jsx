@@ -7,7 +7,6 @@ import { auth } from '../../service/firebase';
 import { useSelector } from 'react-redux';
 import UserInfoModal from '../authentication/UserInfoModal';
 import { St } from './HeaderStyle';
-// import { BiSolidDownArrow } from 'react-icons/bi'
 
 const Header = () => {
   const navigate = useNavigate();
@@ -80,7 +79,7 @@ const Header = () => {
               navigate('/');
             }}
           >
-            TripShare
+            <img src="/Logo.png" alt="TripShare Logo" style={{ width: '300px', height: '200px', marginTop: '30px' }} />
           </St.Logo>
         </St.LogoWrapper>
       </St.Header>

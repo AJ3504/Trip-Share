@@ -57,7 +57,11 @@ const KakaoMap = () => {
 
       if (data.documents.length > 0) {
         const thumbnail = data.documents[3].thumbnail;
+<<<<<<< HEAD
         console.log('들어간 순서', thumbnail);
+=======
+
+>>>>>>> 0ccd6f224b726c3d47dafe30ab051c731bf3a4d5
         setThumbnails((prevThumbnails) => [...prevThumbnails, thumbnail]);
       } else {
         setThumbnails((prevThumbnails) => [
@@ -106,6 +110,7 @@ const KakaoMap = () => {
       setShowScroll(true);
       setThumbnails([]);
 
+      //마커에 들어갈 내용을
       if (map) {
         const ps = new kakao.maps.services.Places();
         ps.keywordSearch(searchKeyword, async (data, status, pagination) => {
@@ -181,7 +186,11 @@ const KakaoMap = () => {
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
+<<<<<<< HEAD
                   style={{ width: '300px', height: '800px' }}
+=======
+                  style={{ width: '800px', height: '800px' }}
+>>>>>>> 0ccd6f224b726c3d47dafe30ab051c731bf3a4d5
                 />
               )}
               <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
@@ -189,7 +198,11 @@ const KakaoMap = () => {
               </Button2>
             </DetailsContainer>
           ) : (
+<<<<<<< HEAD
             <ul style={{ height: '880px', overflowY: showScroll ? 'scroll' : 'hidden' }}>
+=======
+            <ul style={{ height: '880px' }}>
+>>>>>>> 0ccd6f224b726c3d47dafe30ab051c731bf3a4d5
               {searchResults.map((result, index) => (
                 <Li key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
                   <div style={{ display: 'flex' }}>

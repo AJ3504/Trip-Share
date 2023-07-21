@@ -14,27 +14,22 @@ import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 
 const Detail = () => {
-  //hooks
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //넘겨받은 값
   const { postId } = useParams();
   const prevTitle = location.state.prevTitle;
   const prevBody = location.state.prevBody;
 
-  //useStates
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
   const options = ['관광', '식당', '카페', '숙소'];
 
-  //custom hook
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
   const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
 
-  //
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
@@ -52,7 +47,6 @@ const Detail = () => {
     return <h1>오류가 발생했어요</h1>;
   }
 
-  //others
   const targetPost = postsData.find((item) => item.id === postId);
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -128,7 +122,6 @@ const Detail = () => {
 
   return (
     <>
-      {/* ------수정폼------ */}
       <div>
         {editMode ? (
           <form onSubmit={onSubmitEditHandler}>
@@ -169,7 +162,6 @@ const Detail = () => {
           </form>
         ) : null}
       </div>
-      {/* ------게시글------ */}
       <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
         <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
