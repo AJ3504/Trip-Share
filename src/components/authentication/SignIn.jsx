@@ -1,3 +1,5 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   getAuth,
   getRedirectResult,
@@ -7,9 +9,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup
 } from 'firebase/auth';
-import React, { useEffect, useRef, useState } from 'react';
+import { collection, doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../service/firebase';
-import { useNavigate } from 'react-router-dom';
 import { ERR_CODE } from '../../error';
 import { St } from './SignInStyle';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -73,7 +74,8 @@ const SignIn = () => {
   };
 
   const handleGithubSignIn = async () => {
-    const provider = new GithubAuthProvider(); // provider 깃허브 설정
+    // provider 깃허브 설정
+    const provider = new GithubAuthProvider();
 
     try {
       const result = await signInWithPopup(auth, provider);

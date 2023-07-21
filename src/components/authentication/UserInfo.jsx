@@ -1,16 +1,18 @@
-import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth, db } from '../../service/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../../service/firebase';
 import { getUserProfile } from '../../redux/modules/userInfoSlice';
 import { St } from './UserInfoStyle';
 import UserInfoModal from './UserInfoModal';
+import MyPosts from './MyPosts';
 
 const UserInfo = () => {
   const dispatch = useDispatch();
 
-  // 초기 회원가입 후 로그인 시 렌더링 시점이 로그인 전이기에 데이터가 스토어에 저장되지 않아 프로필 접속 시 스토어로 데이터가 전달될 수 있도록 구현
+  // 초기 회원가입 후 로그인 시 렌더링 시점이 로그인 전이기에
+  // 데이터가 스토어에 저장되지 않아 프로필 접속 시 스토어로 데이터가 전달될 수 있도록 구현
   const firebaseGetProfile = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -41,7 +43,7 @@ const UserInfo = () => {
   }, [getProfile.nickname]);
 
   return (
-    <>
+    <St.wholeContainer>
       <div key={uid}>
         <St.ProfileContainer>
           <St.ProfileWarp>
@@ -55,7 +57,13 @@ const UserInfo = () => {
           </St.ProfileWarp>
         </St.ProfileContainer>
       </div>
-    </>
+      {/* ------------------------내가쓴글 목록-------------------------------- */}
+      <div>
+        <St.MyPostContainer>
+          <MyPosts />
+        </St.MyPostContainer>
+      </div>
+    </St.wholeContainer>
   );
 };
 

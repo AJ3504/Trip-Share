@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  __deletePostSlice,
-  __getPostsSlice,
-  __updatePostSlice,
-  deletePost,
-  editPost
-} from '../redux/modules/postsSlice';
-import { auth, db } from '../service/firebase';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { auth } from '../service/firebase';
+import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/modules/postsSlice';
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 
@@ -19,16 +12,16 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   const { postId } = useParams();
-  const prevTitle = location.state.prevTitle;
-  const prevBody = location.state.prevBody;
+  // const prevTitle = location.state.prevTitle;
+  // const prevBody = location.state.prevBody;
 
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
   const options = ['관광', '식당', '카페', '숙소'];
 
-  const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
-  const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
+  const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
+  const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
 
   useEffect(() => {
     const fetchData = () => {
@@ -38,8 +31,7 @@ const Detail = () => {
     fetchData();
   }, [dispatch]);
 
-  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
-
+  const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
   }
@@ -48,17 +40,12 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
+  //------------------------------------------------------------------------------------------
+  //event Handler
+  const isSignedIn = auth.currentUser && targetPost.uid === auth.currentUser.uid;
 
+  //Update
   const editModeHandler = async () => {
-    if (!auth.currentUser) {
-      alert('로그인 먼저 해주세요!');
-      return;
-    }
-    if (targetPost.uid !== auth.currentUser.uid) {
-      alert('수정 권한이 없습니다.');
-      return;
-    }
-
     const confirmed = window.confirm('정말 수정하시겠습니까?');
     if (confirmed) {
       setEditMode((prev) => !prev);
@@ -81,7 +68,8 @@ const Detail = () => {
       postBody: newPostBody,
       isModified: true,
       category: editSelectedOption,
-      id: postId
+      id: postId,
+      markerPosition: targetPost.markerPosition
     };
 
     dispatch(__updatePostSlice(editedPost));
@@ -97,6 +85,7 @@ const Detail = () => {
     setEditSelectAreaIsOpen(false);
   };
 
+  //Delete
   const deleteHandler = async (targetPostId) => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
@@ -120,6 +109,7 @@ const Detail = () => {
       <div>
         {editMode ? (
           <form onSubmit={onSubmitEditHandler}>
+            {/* ---selectArea------------------------------------ */}
             <div>
               <DropdownWrapper>
                 <DropdownHeader
@@ -147,6 +137,7 @@ const Detail = () => {
                 )}
               </DropdownWrapper>
             </div>
+            {/* ---------------------------------------------------- */}
             <div className="editInputArea">
               <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
               <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
@@ -162,8 +153,8 @@ const Detail = () => {
             <br />
             {targetPost?.postBody}
             <div>
-              <button onClick={editModeHandler}>수정하기</button>
-              <button onClick={() => deleteHandler(postId)}>삭제하기</button>
+              {isSignedIn ? <button onClick={editModeHandler}>수정하기</button> : null}
+              {isSignedIn ? <button onClick={() => deleteHandler(postId)}>삭제하기</button> : null}
               <button onClick={() => navigate('/')}>이전 화면으로</button>
             </div>
           </div>

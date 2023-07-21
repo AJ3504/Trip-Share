@@ -27,12 +27,7 @@ const PostListMain = ({ openSide, option, position }) => {
   }
 
   const onPostClick = (post) => {
-    navigate(`/detail/${post.id}`, {
-      state: {
-        prevTitle: post.postTitle,
-        prevBody: post.postBody
-      }
-    });
+    navigate(`/detail/${post.id}`);
   };
 
   const statedPosts = postsData.filter(
@@ -45,7 +40,6 @@ const PostListMain = ({ openSide, option, position }) => {
 
   return (
     <StSideBox>
-      <button onClick={openSide}>닫기</button>
       {statedPosts
         .filter((post) => post.category === `${option}`)
         .map((post) => {

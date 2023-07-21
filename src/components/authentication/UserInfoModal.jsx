@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IoMdSettings } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../../service/firebase';
 import { getUserProfile } from '../../redux/modules/userInfoSlice';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { St } from './UserInfoModalStyle';
+import { IoMdSettings } from 'react-icons/io';
 
 const UserInfoModal = () => {
   const dispatch = useDispatch();
   const getProfile = useSelector((state) => state.userInfo);
 
   const { uid } = getProfile;
-
   const [selectedFile, setSelectedFile] = useState(null);
   const [currentPhotoURL, setCurrentPhotoURL] = useState(null);
   const [currentNickname, setCurrentNickname] = useState(null);
@@ -100,9 +99,7 @@ const UserInfoModal = () => {
       const userDocRef = doc(db, 'userInfo', uid);
       await updateDoc(userDocRef, { photoURL: resultPhotoURL });
       alert('프로필 사진 변경 완료');
-
       const updateProfileData = { ...getProfile, photoURL: resultPhotoURL };
-
       dispatch(getUserProfile(updateProfileData));
     } catch (error) {
       console.error(error);

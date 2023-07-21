@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+// page
 import Main from '../pages/Main';
 import Detail from '../pages/Detail';
 import MyPage from '../pages/MyPage';
 import Layout from './Layout';
-import { getUserProfile } from '../redux/modules/userInfoSlice';
-import { useDispatch } from 'react-redux';
+// data
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../service/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { showUser } from '../redux/modules/logSlice';
+import { getUserProfile } from '../redux/modules/userInfoSlice';
 
 const Router = () => {
   const dispatch = useDispatch();

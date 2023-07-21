@@ -3,8 +3,9 @@ import { styled } from 'styled-components';
 export const St = {
   Header: styled.header`
     width: 100vw;
+    min-width: 800px;
     height: 80px;
-    background-color: skyblue;
+    background-color: rgb(236, 249, 255);
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -13,6 +14,7 @@ export const St = {
   MenuWrapper: styled.div`
     display: flex;
   `,
+
   Img: styled.img`
     background-color: white;
     width: 50px;
@@ -52,4 +54,25 @@ export const St = {
     align-items: center;
     margin-left: 5px;
   `
+
+  //이안진
+  // Header: styled.header`
+  //   position: fixed;
+  //   width: 100%;
+  //   min-width: 800px;
+  //   height: 80px;
+  //   margin: 0 auto;
+  //   background-color: skyblue;
+  //   z-index: 999;
+  // `,
+  // MenuWrapper: styled.div`
+  //   display: flex;
+  //   align-items: center;
+  //   width: 90%;
+  //   height: 100%;
+  //   margin: 0 auto;
+  // `,
+  // Img: styled.img`
+
+  // `
 };
