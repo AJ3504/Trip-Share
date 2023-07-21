@@ -162,7 +162,7 @@ const KakaoMap = () => {
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
-                  style={{ width: '1000px', height: '800px' }}
+                  // style={{ width: '1000px', height: '800px' }}
                 />
               )}
             </div>

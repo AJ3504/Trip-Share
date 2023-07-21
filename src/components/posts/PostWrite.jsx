@@ -4,11 +4,12 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { addPost } from '../../redux/modules/postsSlice';
+// import { addPost } from '../../redux/modules/postsSlice';
 import shortid from 'shortid';
+import { __addPostSlice } from '../../redux/modules/postsSlice';
 
 const PostWrite = ({ marker }) => {
-  console.log('작성', marker);
+  // console.log('작성', marker);
 
   useEffect(() => {}, [marker]);
 
@@ -57,13 +58,6 @@ const PostWrite = ({ marker }) => {
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
-    if (postImg != null) {
-      const imageRef = ref(storage, `posts/${postImg.name}`);
-      await uploadBytes(imageRef, postImg);
-      const downloadURL = await getDownloadURL(imageRef);
-      setPostImg(downloadURL);
-    }
-
     const newPost = {
       uid: auth.currentUser.uid,
       markerId: marker.id,
@@ -74,11 +68,7 @@ const PostWrite = ({ marker }) => {
       category: option
     };
 
-    const collectionRef = collection(db, 'posts');
-    const { id } = await addDoc(collectionRef, newPost);
-
-    const newPostWithId = { ...newPost, id };
-    dispatch(addPost(newPostWithId));
+    dispatch(__addPostSlice(newPost));
 
     setPostTitle('');
     setPostBody('');
