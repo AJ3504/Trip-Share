@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -6,7 +6,7 @@ import { auth } from '../../service/firebase';
 import SingUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
 import { St } from './HeaderStyle';
-import ArrowIcon from './ArrowIcon';
+import { BiSolidDownArrow } from 'react-icons/bi';
 
 const Header = () => {
   const getProfile = useSelector((state) => state.userInfo);
@@ -75,7 +75,7 @@ const Header = () => {
 
               <St.Nickname onClick={openDropdwon}>
                 {nickname}
-                <ArrowIcon isOpen={openDropdwon} />
+                <BiSolidDownArrow />
               </St.Nickname>
               {isDropdownOpen ? (
                 <St.Dropdown>
