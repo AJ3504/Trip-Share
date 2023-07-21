@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { Button, Li } from './KakaoMap-Styled';
+import {
+  Button,
+  Button2,
+  Li,
+  Container,
+  LeftContainer,
+  SearchInput,
+  DetailsContainer,
+  DetailsContainer2,
+  ThumbnailImage,
+  MapContainer
+} from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 
 const { kakao } = window;
@@ -16,25 +27,10 @@ const KakaoMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [thumbnails, setThumbnails] = useState([]);
-
-  const displayBlogs = (blogData) => {
-    return (
-      <ul>
-        {blogData.map((blog) => (
-          <li key={blog.id}>
-            <a href={blog.url}>
-              <img src={blog.thumbnail} alt="썸네일" />
-              <h3>{blog.title}</h3>
-              <p>{blog.contents}</p>
-            </a>
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  const [showScroll, setShowScroll] = useState(false);
 
   // 블로그 검색 함수
-  const searchBlogs = (keyword) => {
+  const searchBlogs = async (keyword) => {
     const apiUrl = `https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=15&query=${encodeURIComponent(
       keyword
     )}`;
@@ -42,18 +38,26 @@ const KakaoMap = () => {
       Authorization: 'KakaoAK ' + kakaoAPIKEY
     };
 
-    fetch(apiUrl, {
-      headers: headers
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const thumbnails = data.documents.map((document) => document.thumbnail);
-        setThumbnails(thumbnails);
-        displayBlogs(data.documents);
-      })
-      .catch((error) => {
-        console.error('블로그 검색 에러:', error);
-      });
+    try {
+      const response = await fetch(apiUrl, { headers });
+      const data = await response.json();
+
+      if (data.documents.length > 0) {
+        const thumbnail = data.documents[3].thumbnail;
+        console.log('들어간 순서', thumbnail);
+        setThumbnails((prevThumbnails) => [...prevThumbnails, thumbnail]);
+      } else {
+        setThumbnails((prevThumbnails) => [
+          ...prevThumbnails,
+          'https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1600'
+        ]);
+      }
+
+      return data.documents; // 검색 결과를 반환합니다.
+    } catch (error) {
+      console.error('블로그 검색 에러:', error);
+      return []; // 에러 발생 시 빈 배열을 반환합니다.
+    }
   };
 
   useEffect(() => {
@@ -83,13 +87,15 @@ const KakaoMap = () => {
   }, []);
 
   // 검색 버튼 클릭 시 또는 엔터키 눌렀을 때 검색 실행
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchKeyword.trim() !== '') {
       setMarkers([]); // 기존 마커 초기화
+      setShowScroll(true);
+      setThumbnails([]);
 
       if (map) {
         const ps = new kakao.maps.services.Places();
-        ps.keywordSearch(searchKeyword, (data, status, pagination) => {
+        ps.keywordSearch(searchKeyword, async (data, status, pagination) => {
           if (status === kakao.maps.services.Status.OK) {
             const bounds = new kakao.maps.LatLngBounds();
             const markers = [];
@@ -100,8 +106,6 @@ const KakaoMap = () => {
                   lat: data[i].y,
                   lng: data[i].x
                 },
-
-                //마커안에 정보를 추가하고 싶으시다면 여기에 추가하시면 됩니다
                 id: data[i].id,
                 content: data[i].place_name,
                 address: data[i].address_name,
@@ -116,7 +120,11 @@ const KakaoMap = () => {
 
             // 검색 결과를 state에 저장하여 옆에 표시
             setSearchResults(data);
-            searchBlogs(searchKeyword);
+
+            // 검색 결과 안에 들어있는 place_name으로 카카오 블로그 서칭 실행
+            for (const item of data) {
+              const thumbnail = await searchBlogs(item.place_name);
+            }
           }
         });
       }
@@ -134,14 +142,14 @@ const KakaoMap = () => {
     setSelectedMarker(marker);
     setCurrentPosition(marker.position);
     setShowDetails(true);
-    map.setLevel(3);
+    map.setLevel(1);
   };
 
   return (
     <>
-      <div style={{ display: 'flex' }}>
-        <div style={{ padding: '10px', flex: 1 }}>
-          <input
+      <Container>
+        <LeftContainer>
+          <SearchInput
             type="text"
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
@@ -152,34 +160,29 @@ const KakaoMap = () => {
               }
             }}
           />
-          <Button style={{ width: '80px', height: '40px' }} onClick={handleSearch}>
-            검색
-          </Button>
+          <Button onClick={handleSearch}>검색</Button>
+
           {showDetails ? (
-            <div>
-              <Button onClick={() => setShowDetails(false)}>돌아가기</Button>
+            <DetailsContainer>
               {selectedMarker && (
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
-                  // style={{ width: '1000px', height: '800px' }}
+
+                  style={{ width: '800px', height: '800px' }}
+
                 />
               )}
-            </div>
+              <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
+                ⬅️
+              </Button2>
+            </DetailsContainer>
           ) : (
-            <ul style={{ height: '880px', overflowY: 'scroll' }}>
+            <ul style={{ height: '880px', overflowY: showScroll ? 'scroll' : 'hidden' }}>
               {searchResults.map((result, index) => (
-                <Li
-                  key={result.id}
-                  style={{ padding: '18px', cursor: 'pointer', border: '1px solid green' }}
-                  onClick={() => handleResultClick({ lat: result.y, lng: result.x })}
-                >
+                <Li key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
                   <div style={{ display: 'flex' }}>
-                    <img
-                      src={thumbnails[index]}
-                      alt={`thumbnail-${result.id}`}
-                      style={{ width: '100px', height: '100px', margin: '5px' }}
-                    />
+                    <ThumbnailImage src={thumbnails[index]} alt={`thumbnail-${result.id}`} />
                     <div style={{ padding: '18px' }}>
                       <h3>{result.place_name}</h3>
                       <p>{result.address_name}</p>
@@ -190,10 +193,10 @@ const KakaoMap = () => {
               ))}
             </ul>
           )}
-        </div>
-        <div style={{ width: '70%', height: '900px' }}>
+        </LeftContainer>
+        <MapContainer>
           <Map center={currentPosition} style={{ width: '100%', height: '100%' }} onCreate={setMap}>
-            <MapMarker position={currentPosition} height="fit-content">
+            <MapMarker position={currentPosition} height="fit-content" width="fit-content">
               125% 모두 화이팅입니다!
             </MapMarker>
 
@@ -204,38 +207,20 @@ const KakaoMap = () => {
                 onClick={() => handleMarkerClick(marker)}
               >
                 {selectedMarker === marker && showDetails && (
-                  <div
-                    style={{
-                      width: 'fit-content',
-                      height: 'fit-content',
-                      backgroundColor: 'white',
-                      borderRadius: '5px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      position: 'absolute',
-                      top: '50%', // 모달을 수직 가운데로 배치합니다.
-                      left: '50%', // 모달을 수평 가운데로 배치합니다.
-                      transform: 'translate(-50%, -50%)', // 모달을 정중앙으로 정렬합니다.
-                      zIndex: 9999 // 모달의 z-index를 마커보다 큰 값으로 설정합니다.
-                    }}
-                  >
-                    <img
-                      src={thumbnails[markers.indexOf(marker)]}
-                      alt={`thumbnail-${marker.content}`}
-                      style={{ width: '100px', height: '100px', margin: '5px' }}
-                    />
+                  <DetailsContainer2>
+                    <ThumbnailImage src={thumbnails[markers.indexOf(marker)]} alt={`thumbnail-${marker.content}`} />
                     <div style={{ marginTop: '30px' }}>
                       <h3>{marker.content}</h3>
                       <p>{marker.address}</p>
                       <PostWrite marker={marker} />
                     </div>
-                  </div>
+                  </DetailsContainer2>
                 )}
               </MapMarker>
             ))}
           </Map>
-        </div>
-      </div>
+        </MapContainer>
+      </Container>
     </>
   );
 };
