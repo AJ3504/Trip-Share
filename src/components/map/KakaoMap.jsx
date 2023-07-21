@@ -168,7 +168,9 @@ const KakaoMap = () => {
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
+
                   style={{ width: '800px', height: '800px' }}
+
                 />
               )}
               <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
