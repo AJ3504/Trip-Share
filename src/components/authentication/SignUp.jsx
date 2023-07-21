@@ -3,9 +3,8 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../../service/firebase';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
-import { ERR_CODE } from '../../constant';
-// import { St } from './SignUpStyle';
+import { ERR_CODE } from '../../error';
+import { St } from './SignUpStyle';
 
 const SingUp = () => {
   const [nickname, setNickname] = useState('');
@@ -77,16 +76,19 @@ const SingUp = () => {
       {isOpen && (
         <St.ModalBox ref={modalRef}>
           <St.ModalContents>
-            <div>
-              <h3>SIGN UP</h3>
+            <St.SignUPWrap>
+              <St.SignUp>SIGN UP</St.SignUp>
               <form onSubmit={handleSubmitSignUp}>
+                <St.SignUpTitle>닉네임*</St.SignUpTitle>
                 <St.Input
                   type="text"
+                  maxLength={10}
                   placeholder="닉네임을 입력해주세요"
                   onChange={(e) => {
                     setNickname(e.target.value);
                   }}
                 />
+                <St.SignUpTitle>이메일*</St.SignUpTitle>
                 <St.Input
                   type="email"
                   placeholder="이메일 주소를 입력해주세요"
@@ -94,6 +96,7 @@ const SingUp = () => {
                     setEmail(e.target.value);
                   }}
                 />
+                <St.SignUpTitle>비밀번호*</St.SignUpTitle>
                 <St.Input
                   type="password"
                   placeholder="비밀번호를 입력해주세요"
@@ -101,6 +104,7 @@ const SingUp = () => {
                     setPassword(e.target.value);
                   }}
                 />
+                <St.SignUpTitle>비밀번호 재확인*</St.SignUpTitle>
                 <St.Input
                   type="password"
                   placeholder="비밀번호를 다시 한 번 입력해주세요"
@@ -108,9 +112,9 @@ const SingUp = () => {
                     setCheckPassword(e.target.value);
                   }}
                 />
-                <button type="submit">회원가입</button>
+                <St.SignUpBtn type="submit">회원가입</St.SignUpBtn>
               </form>
-            </div>
+            </St.SignUPWrap>
           </St.ModalContents>
         </St.ModalBox>
       )}
@@ -118,37 +122,3 @@ const SingUp = () => {
   );
 };
 export default SingUp;
-
-const St = {
-  ModalBox: styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  `,
-
-  ModalContents: styled.div`
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-  `,
-
-  Input: styled.input`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  Btn: styled.button`
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
-  `
-};

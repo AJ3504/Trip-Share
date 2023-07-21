@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import SingUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
 import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import { useSelector } from 'react-redux';
 import UserInfoModal from '../authentication/UserInfoModal';
+import { St } from './HeaderStyle';
+// import { BiSolidDownArrow } from 'react-icons/bi'
 
 const Header = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Header = () => {
   };
 
   const getProfile = useSelector((state) => state.userInfo);
+  const { nickname } = getProfile;
 
   return (
     <>
@@ -41,16 +43,23 @@ const Header = () => {
           {currentUser ? (
             <>
               <St.Img
-                id="PROFILE IMG"
                 src={
                   getProfile.photoURL
                     ? getProfile.photoURL
-                    : 'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/41311/FreeVectorWorld_Tourism_Day_Backgroundyc0622_generated.jpg'
+                    : 'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
                 }
                 onClick={() => {
                   navigate('/mypage');
                 }}
               />
+
+              <St.Nickname
+                onClick={() => {
+                  navigate('/mypage');
+                }}
+              >
+                {nickname}
+              </St.Nickname>
               <UserInfoModal />
               <St.HeaderMenu2 onClick={handleLogoutClick}>로그아웃</St.HeaderMenu2>
             </>
@@ -80,45 +89,3 @@ const Header = () => {
 };
 
 export default Header;
-
-const St = {
-  Header: styled.header`
-    width: 100vw;
-    height: 70px;
-    background-color: beige;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-  `,
-  LogoWrapper: styled.div`
-    flex: 1;
-    text-align: center;
-  `,
-  Logo: styled.div`
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 25px;
-  `,
-  MenuWrapper: styled.div`
-    display: flex;
-  `,
-  HeaderMenu: styled.div`
-    cursor: pointer;
-  `,
-  HeaderMenu2: styled.div`
-    cursor: pointer;
-    padding: 1px 6px;
-    font-size: 0.8333rem;
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
-  `,
-  Img: styled.img`
-    background-color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    cursor: pointer;
-  `
-};
