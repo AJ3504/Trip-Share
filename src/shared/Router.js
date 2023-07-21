@@ -8,17 +8,10 @@ import { getUserProfile } from '../redux/modules/userInfoSlice';
 import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../service/firebase';
-import { showUser } from '../redux/modules/logSlice';
 import { doc, getDoc } from 'firebase/firestore';
 
 const Router = () => {
   const dispatch = useDispatch();
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      dispatch(showUser(user));
-    } else return;
-  });
 
   useEffect(() => {
     const getProfile = () => {

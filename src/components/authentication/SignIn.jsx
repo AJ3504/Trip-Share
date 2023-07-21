@@ -3,7 +3,8 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signInWithPopup
+  // signInWithPopup,
+  signInWithRedirect
 } from 'firebase/auth';
 import React, { useEffect, useRef, useState } from 'react';
 import { auth, db } from '../../service/firebase';
@@ -43,7 +44,7 @@ const SignIn = () => {
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider(); // provider 구글 설정
     try {
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithRedirect(auth, provider);
       const user = result.user;
 
       const collectionRef = collection(db, 'userInfo');
@@ -70,7 +71,7 @@ const SignIn = () => {
     const provider = new GithubAuthProvider(); // provider 깃허브 설정
 
     try {
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithRedirect(auth, provider);
       const user = result.user;
 
       const collectionRef = collection(db, 'userInfo');
