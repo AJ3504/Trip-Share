@@ -10,7 +10,6 @@ import Layout from './Layout';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../service/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { showUser } from '../redux/modules/logSlice';
 import { getUserProfile } from '../redux/modules/userInfoSlice';
 
 const Router = () => {

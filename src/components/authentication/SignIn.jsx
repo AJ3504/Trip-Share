@@ -9,11 +9,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup
 } from 'firebase/auth';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../service/firebase';
 import { ERR_CODE } from '../../error';
 import { St } from './SignInStyle';
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const SignIn = () => {
   const [userData, setUserData] = useState(null);
