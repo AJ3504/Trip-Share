@@ -19,9 +19,6 @@ const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //useSelector
-  // const data = useSelector((state) => state.postsSlice);
-
   //넘겨받은 값
   const { postId } = useParams();
   const prevTitle = location.state.prevTitle;
@@ -96,9 +93,6 @@ const Detail = () => {
       id: postId
     };
 
-    // const targetPostRef = doc(db, 'posts', targetPost.id);
-    // await updateDoc(targetPostRef, editedPost);
-
     dispatch(__updatePostSlice(editedPost));
 
     resetNewPostTitle('');
@@ -127,9 +121,6 @@ const Detail = () => {
 
     const confirmed = window.confirm('정말 삭제하시겠습니까?');
     if (confirmed) {
-      // const postsRef = doc(db, 'posts', targetPostId);
-      // await deleteDoc(postsRef);
-
       dispatch(__deletePostSlice(targetPostId));
 
       navigate('/');

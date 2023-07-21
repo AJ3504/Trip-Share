@@ -58,13 +58,6 @@ const PostWrite = ({ marker }) => {
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
-    // if (postImg != null) {
-    //   const imageRef = ref(storage, `posts/${postImg.name}`);
-    //   await uploadBytes(imageRef, postImg);
-    //   const downloadURL = await getDownloadURL(imageRef);
-    //   setPostImg(downloadURL);
-    // }
-
     const newPost = {
       uid: auth.currentUser.uid,
       markerId: marker.id,
@@ -75,10 +68,6 @@ const PostWrite = ({ marker }) => {
       category: option
     };
 
-    // const collectionRef = collection(db, 'posts');
-    // const { id } = await addDoc(collectionRef, newPost);
-
-    // const newPostWithId = { ...newPost, id };
     dispatch(__addPostSlice(newPost));
 
     setPostTitle('');

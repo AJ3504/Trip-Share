@@ -105,7 +105,6 @@ export const postsSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.postsData.push(action.payload);
-      // state.postsData = [...state.postsData, action.payload]
       console.log(state);
     },
     [__addPostSlice.rejected]: (state, action) => {
