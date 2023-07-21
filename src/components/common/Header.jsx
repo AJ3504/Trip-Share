@@ -43,7 +43,7 @@ const Header = () => {
               navigate('/');
             }}
           >
-            TripShare
+            <img src="/logo.png" alt="TripShare" style={{ height: '160px', width: '300px', marginTop: '20px' }} />
           </St.Logo>
         </St.LogoWrapper>
         <St.MenuWrapper>
