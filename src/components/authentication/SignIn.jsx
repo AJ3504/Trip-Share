@@ -6,9 +6,11 @@ import {
   signInWithPopup
 } from 'firebase/auth';
 import React, { useEffect, useRef, useState } from 'react';
-import { auth } from '../../service/firebase';
+import { auth, db } from '../../service/firebase';
 import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { ERR_CODE } from '../../error';
+import { St } from './SignInStyle';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 const SignIn = () => {
   const [userData, setUserData] = useState(null);
@@ -31,7 +33,10 @@ const SignIn = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('로그인 된 유저 정보', userCredential);
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -40,11 +45,24 @@ const SignIn = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      const collectionRef = collection(db, 'userInfo');
+      await setDoc(doc(collectionRef, user.uid), {
+        nickname: user.displayName,
+        email: user.email,
+        uid: user.uid,
+        photoURL:
+          'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
+      });
+
       navigate('/');
       setUserData(result.user);
-      console.log(user);
+      console.log('로그인 된 유저', user);
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -54,11 +72,24 @@ const SignIn = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      const collectionRef = collection(db, 'userInfo');
+      await setDoc(doc(collectionRef, user.uid), {
+        nickname: Math.floor(Math.random() * 1000),
+        email: user.email,
+        uid: user.uid,
+        photoURL:
+          'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
+      });
+
       navigate('/');
       setUserData(result.user);
-      console.log(user);
+      console.log('로그인 된 유저', user);
     } catch (error) {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(ERR_CODE[errorCode]);
+      console.log('error', errorCode, errorMessage);
     }
   };
 
@@ -89,34 +120,32 @@ const SignIn = () => {
       {isOpen && (
         <St.ModalBox ref={modalRef}>
           <St.ModalContents>
-            <div>
-              <h3>LOGIN</h3>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
-              >
+            <St.LoginWrap>
+              <St.Login>LOGIN</St.Login>
+              <form onSubmit={handleEmailSignIn}>
+                <St.LoginTitle>이메일</St.LoginTitle>
                 <St.Input
+                  type="email"
                   placeholder="이메일 주소를 입력해주세요"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
+                <St.LoginTitle>비밀번호</St.LoginTitle>
                 <St.Input
+                  type="password"
                   placeholder="비밀번호를 입력해주세요"
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
                 />
-                <button type="submit" onClick={handleEmailSignIn}>
-                  로그인
-                </button>
+                <St.LoginBtn type="submit">로그인</St.LoginBtn>
               </form>
-              <div>
-                <button onClick={handleGoogleSignIn}>Google</button>
-                <button onClick={handleGithubSignIn}>Github</button>
-              </div>
-            </div>
+              <St.SocialLoginWarp>
+                <St.SocialLoginBtn onClick={handleGoogleSignIn}>Google</St.SocialLoginBtn>
+                <St.SocialLoginBtn onClick={handleGithubSignIn}>Github</St.SocialLoginBtn>
+              </St.SocialLoginWarp>
+            </St.LoginWrap>
           </St.ModalContents>
         </St.ModalBox>
       )}
@@ -125,40 +154,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-const St = {
-  ModalBox: styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  `,
-
-  ModalContents: styled.div`
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-  `,
-
-  Input: styled.input`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  Btn: styled.button`
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: gray;
-    height: 40px;
-    width: 120px;
-  `
-};
