@@ -26,7 +26,6 @@ const PostListMain = ({ openSide, option, position }) => {
     return <h1>오류가 발생했어요</h1>;
   }
 
-  //Event Handler
   const onPostClick = (post) => {
     navigate(`/detail/${post.id}`, {
       state: {

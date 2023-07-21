@@ -57,7 +57,7 @@ const KakaoMap = () => {
 
       if (data.documents.length > 0) {
         const thumbnail = data.documents[3].thumbnail;
-        console.log('들어간 순서', thumbnail);
+
         setThumbnails((prevThumbnails) => [...prevThumbnails, thumbnail]);
       } else {
         setThumbnails((prevThumbnails) => [
@@ -108,6 +108,7 @@ const KakaoMap = () => {
       setShowScroll(true);
       setThumbnails([]);
 
+      //마커에 들어갈 내용을
       if (map) {
         const ps = new kakao.maps.services.Places();
         ps.keywordSearch(searchKeyword, async (data, status, pagination) => {
@@ -192,7 +193,7 @@ const KakaoMap = () => {
               </Button2>
             </DetailsContainer>
           ) : (
-            <ul style={{ height: '880px', overflowY: showScroll ? 'scroll' : 'hidden' }}>
+            <ul style={{ height: '880px' }}>
               {searchResults.map((result, index) => (
                 <Li key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
                   <div style={{ display: 'flex' }}>

@@ -45,10 +45,8 @@ const PostWrite = ({ marker }) => {
     setPostImg(e.target.files[0]);
   };
 
-  //hooks
   const dispatch = useDispatch();
 
-  //event Handler
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
