@@ -37,7 +37,7 @@ const SignIn = () => {
       const errorCode = error.code;
       const errorMessage = error.message;
       alert(ERR_CODE[errorCode]);
-      console.log('error', errorCode, errorMessage);
+      console.error('error', errorCode, errorMessage);
     }
   };
 
@@ -60,10 +60,8 @@ const SignIn = () => {
       setUserData(result.user);
       console.log('로그인 된 유저', user);
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(ERR_CODE[errorCode]);
-      console.log('error', errorCode, errorMessage);
+      alert('Google 로그인 실패');
+      console.error('error', error);
     }
   };
 
@@ -87,10 +85,8 @@ const SignIn = () => {
       setUserData(result.user);
       console.log('로그인 된 유저', user);
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(ERR_CODE[errorCode]);
-      console.log('error', errorCode, errorMessage);
+      alert('Github 로그인 실패');
+      console.error('error', error);
     }
   };
 
