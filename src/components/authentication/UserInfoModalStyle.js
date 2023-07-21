@@ -73,7 +73,7 @@ export const St = {
     border-radius: 5px;
     background-color: transparent;
     outline: none;
-    margin-right: 4rem;
+    margin-right: 3rem;
   `,
 
   NicknameChangeBtn: styled.button`
