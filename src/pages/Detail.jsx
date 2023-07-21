@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  __deletePostSlice,
-  __getPostsSlice,
-  __updatePostSlice,
-  deletePost,
-  editPost
-} from '../redux/modules/postsSlice';
-import { auth, db } from '../service/firebase';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { auth } from '../service/firebase';
+import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/modules/postsSlice';
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 
@@ -43,8 +36,7 @@ const Detail = () => {
     fetchData();
   }, [dispatch]);
 
-  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
-
+  const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
   }
@@ -54,8 +46,7 @@ const Detail = () => {
 
   //others
   const targetPost = postsData.find((item) => item.id === postId);
-  console.log(targetPost);
-  //------------------------------------------------------------------------------------------
+
   //event Handler
   //Update
   const editModeHandler = async () => {
@@ -127,11 +118,9 @@ const Detail = () => {
 
   return (
     <>
-      {/* ------수정폼------ */}
       <div>
         {editMode ? (
           <form onSubmit={onSubmitEditHandler}>
-            {/* ---selectArea------------------------------------ */}
             <div>
               <DropdownWrapper>
                 <DropdownHeader
@@ -159,7 +148,6 @@ const Detail = () => {
                 )}
               </DropdownWrapper>
             </div>
-            {/* ---------------------------------------------------- */}
             <div className="editInputArea">
               <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
               <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
@@ -168,7 +156,6 @@ const Detail = () => {
           </form>
         ) : null}
       </div>
-      {/* ------게시글------ */}
       <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
         <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>

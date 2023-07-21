@@ -1,37 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { collection, getDocs, query } from 'firebase/firestore';
-import { db } from '../../service/firebase';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getPostsSlice, __postsSlice, readPost } from '../../redux/modules/postsSlice';
+import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 
 const PostListMain = ({ openSide, option, position }) => {
-  console.log(position);
-
-  //useSelector
-
-  // const posts = useSelector((state) => state.postsSlice);
   //hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const q = query(collection(db, 'posts'));
-  //     const querySnapshot = await getDocs(q);
-  //     const initialTils = [];
-  //     querySnapshot.forEach((doc) => {
-  //       const data = {
-  //         id: doc.id,
-  //         ...doc.data()
-  //       };
-  //       initialTils.push(data);
-  //     });
-  //     dispatch(readPost(initialTils));
-  //   };
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     const fetchData = () => {
@@ -42,8 +18,6 @@ const PostListMain = ({ openSide, option, position }) => {
   }, [dispatch]);
 
   const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
-  // console.log(postsData);
-  // console.log(useSelector((state) => state.postsSlice));
 
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
@@ -62,7 +36,7 @@ const PostListMain = ({ openSide, option, position }) => {
     });
   };
 
-  const statedPosts = posts.filter(
+  const statedPosts = postsData.filter(
     (post) =>
       post.markerPosition.lat > position.swLat &&
       post.markerPosition.lat < position.neLat &&

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import SingUp from '../authentication/SignUp';
-import SignIn from '../authentication/SignIn';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
-import { useSelector } from 'react-redux';
+import SingUp from '../authentication/SignUp';
+import SignIn from '../authentication/SignIn';
 import UserInfoModal from '../authentication/UserInfoModal';
 import { St } from './HeaderStyle';
 

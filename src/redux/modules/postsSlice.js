@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
-import { db, storage } from '../../service/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { db, storage } from '../../service/firebase';
 
 const initialState = {
   postsData: [],
