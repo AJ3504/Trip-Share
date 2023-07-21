@@ -40,7 +40,6 @@ const PostListMain = ({ openSide, option, position }) => {
 
   return (
     <StSideBox>
-      <button onClick={openSide}>닫기</button>
       {statedPosts
         .filter((post) => post.category === `${option}`)
         .map((post) => {

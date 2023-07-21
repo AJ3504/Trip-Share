@@ -6,6 +6,7 @@ export const St = {
     cursor: pointer;
     background-color: transparent;
   `,
+
   ModalBox: styled.div`
     position: fixed;
     top: 0;

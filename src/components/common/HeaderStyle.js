@@ -5,8 +5,7 @@ export const St = {
     width: 100vw;
     min-width: 800px;
     height: 80px;
-    margin: 0 auto;
-    background-color: skyblue;
+    background-color: rgb(236, 249, 255);
     position: relative;
     display: flex;
     justify-content: space-between;
