@@ -247,24 +247,26 @@ const KakaoMap = () => {
               </MapMarker>
             ))}
             {/* 카테고리 장소 마커 */}
-            {postsData.map((post, index) => (
-              <MapMarker
-                key={`${post.postTitle}-${post.markerPosition}`}
-                // 마커를 표시할 위치
-                position={post.markerPosition}
-                image={{
-                  // 마커이미지의 주소입니다
-                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                  // 마커이미지의 크기입니다
-                  size: {
-                    width: 24,
-                    height: 35
-                  }
-                }}
-                // 마커에 마우스를 올리면 타이틀이 표시
-                title={post.postTitle}
-              />
-            ))}
+            {postsData
+              .filter((post) => post.category === `${option}`)
+              .map((post, index) => (
+                <MapMarker
+                  key={`${post.postTitle}-${post.markerPosition}`}
+                  // 마커를 표시할 위치
+                  position={post.markerPosition}
+                  image={{
+                    // 마커이미지의 주소입니다
+                    src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                    // 마커이미지의 크기입니다
+                    size: {
+                      width: 24,
+                      height: 35
+                    }
+                  }}
+                  // 마커에 마우스를 올리면 타이틀이 표시
+                  title={post.postTitle}
+                />
+              ))}
           </Map>
         </MapContainer>
         <div>
