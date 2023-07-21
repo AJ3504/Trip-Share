@@ -82,8 +82,8 @@ const SingUp = () => {
                 <St.SignUpTitle>닉네임*</St.SignUpTitle>
                 <St.Input
                   type="text"
-                  maxLength={10}
-                  placeholder="닉네임은 10자리까지만 입력해주세요"
+                  maxLength={6}
+                  placeholder="닉네임은 6자리까지만 입력해주세요"
                   onChange={(e) => {
                     setNickname(e.target.value);
                   }}

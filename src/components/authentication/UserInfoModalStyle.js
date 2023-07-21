@@ -83,5 +83,6 @@ export const St = {
     margin-top: 10px;
     border-radius: 5px;
     outline: none;
+    cursor: pointer;
   `
 };

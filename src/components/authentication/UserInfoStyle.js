@@ -18,7 +18,7 @@ export const St = {
 
   ProfileWarp: styled.div`
     margin: 0 auto;
-    padding-left: 20px;
+    padding-left: 2.5rem;
   `,
 
   ProfileImageBox: styled.div`
@@ -37,6 +37,7 @@ export const St = {
     margin-top: 20px;
     text-align: right;
     font-size: 25px;
+    cursor: pointer;
   `,
   Nickname: styled.p`
     margin-top: 20px;

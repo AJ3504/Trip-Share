@@ -1,16 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import SingUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
-import UserInfoModal from '../authentication/UserInfoModal';
+import { ref } from 'firebase/storage';
 import { St } from './HeaderStyle';
+import ArrowIcon from './ArrowIcon';
 
 const Header = () => {
+  const getProfile = useSelector((state) => state.userInfo);
+  const { nickname } = getProfile;
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const openDropdwon = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const closeDropdwon = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const clickOutside = (e) => {
+    if (!['마이페이지', '로그아웃'].includes(e.target.innerText)) {
+      closeDropdwon();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -27,14 +53,10 @@ const Header = () => {
   };
 
   const handleLogoutClick = async () => {
-    alert('로그아웃 하시겠습니까?');
     await signOut(auth);
     navigate('/');
     window.location.reload();
   };
-
-  const getProfile = useSelector((state) => state.userInfo);
-  const { nickname } = getProfile;
 
   return (
     <>
@@ -53,15 +75,24 @@ const Header = () => {
                 }}
               />
 
-              <St.Nickname
-                onClick={() => {
-                  navigate('/mypage');
-                }}
-              >
+              <St.Nickname onClick={openDropdwon}>
                 {nickname}
+                <ArrowIcon isOpen={openDropdwon} />
               </St.Nickname>
-              <UserInfoModal />
-              <St.HeaderMenu2 onClick={handleLogoutClick}>로그아웃</St.HeaderMenu2>
+              {isDropdownOpen ? (
+                <St.Dropdown ref={dropdownRef}>
+                  <St.DropdownItem
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                      navigate('/mypage');
+                    }}
+                  >
+                    마이페이지
+                  </St.DropdownItem>
+                  <St.DropdownLine />
+                  <St.DropdownItem onClick={handleLogoutClick}>로그아웃</St.DropdownItem>
+                </St.Dropdown>
+              ) : null}
             </>
           ) : (
             <>

@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 export const St = {
   Btn: styled.button`
     border: none;
+    font-size: 15px;
     cursor: pointer;
     background-color: transparent;
   `,

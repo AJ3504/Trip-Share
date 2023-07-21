@@ -6,7 +6,7 @@ export const St = {
     width: 100%;
     height: 40px;
     display: flex;
-    position: absolute;
+    position: relative;
     padding-left: 15px;
     align-items: center;
     z-index: 999;
@@ -17,8 +17,7 @@ export const St = {
     }
   `,
   P: styled.p`
-    margin-right: 5px;
-    margin-top: 5px;
+    margin: 5px 5px 0 12px;
     display: flex;
     align-items: center;
   `

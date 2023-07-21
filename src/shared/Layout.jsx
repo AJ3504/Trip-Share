@@ -18,6 +18,6 @@ const Layout = ({ children }) => {
 export default Layout;
 
 export const Body = styled.div`
-  /* min-height: calc(100vh - 40px); */
+  min-height: calc(100vh);
   padding-top: 90px;
 `;
