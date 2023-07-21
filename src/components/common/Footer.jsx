@@ -1,6 +1,7 @@
 import React from 'react';
 import { St } from './FooterStyle';
 import { AiFillGithub } from 'react-icons/ai';
+
 const Footer = () => {
   return (
     <St.Footer>

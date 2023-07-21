@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  __deletePostSlice,
-  __getPostsSlice,
-  __updatePostSlice,
-  deletePost,
-  editPost
-} from '../redux/modules/postsSlice';
-import { auth, db } from '../service/firebase';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { auth } from '../service/firebase';
+import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/modules/postsSlice';
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 
@@ -38,8 +31,7 @@ const Detail = () => {
     fetchData();
   }, [dispatch]);
 
-  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
-
+  const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
   }
@@ -49,6 +41,8 @@ const Detail = () => {
 
   const targetPost = postsData.find((item) => item.id === postId);
 
+  //event Handler
+  //Update
   const editModeHandler = async () => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
@@ -81,7 +75,8 @@ const Detail = () => {
       postBody: newPostBody,
       isModified: true,
       category: editSelectedOption,
-      id: postId
+      id: postId,
+      markerPosition: targetPost.markerPosition
     };
 
     dispatch(__updatePostSlice(editedPost));
