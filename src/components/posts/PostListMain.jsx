@@ -27,12 +27,7 @@ const PostListMain = ({ openSide, option, position }) => {
   }
 
   const onPostClick = (post) => {
-    navigate(`/detail/${post.id}`, {
-      state: {
-        prevTitle: post.postTitle,
-        prevBody: post.postBody
-      }
-    });
+    navigate(`/detail/${post.id}`);
   };
 
   const statedPosts = postsData.filter(
