@@ -21,7 +21,7 @@ const Menu = () => {
       {isSide && <PostListMain openSide={openSide} option={options[2]} />}
       <button onClick={openSide}>{options[3]}</button>
       {isSide && <PostListMain openSide={openSide} option={options[3]} />} */}
-      <PostWrite />
+      {/* <PostWrite /> */}
     </div>
   );
 };

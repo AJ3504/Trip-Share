@@ -5,13 +5,10 @@ import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/modules/postsSlice';
-import shortid from 'shortid';
+import { Button } from '../map/KakaoMap-Styled';
+import { __addPostSlice } from '../../redux/modules/postsSlice';
 
 const PostWrite = ({ marker }) => {
-  console.log('작성', marker);
-
-  useEffect(() => {}, [marker]);
-
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [isModal, setIsModal] = useState(false);
@@ -50,15 +47,13 @@ const PostWrite = ({ marker }) => {
     setPostImg(e.target.files[0]);
   };
 
-  //hooks
   const dispatch = useDispatch();
 
-  //event Handler
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
     if (postImg != null) {
-      const imageRef = ref(storage, `posts/${postImg.name}`);
+      const imageRef = ref(storage, `${auth.currentUser.uid}/${postImg.name}`);
       await uploadBytes(imageRef, postImg);
       const downloadURL = await getDownloadURL(imageRef);
       setPostImg(downloadURL);
@@ -67,18 +62,14 @@ const PostWrite = ({ marker }) => {
     const newPost = {
       uid: auth.currentUser.uid,
       markerId: marker.id,
-      markerPsiton: marker.position,
+      markerPosition: marker.position,
       postTitle: postTitle,
       postBody: postBody,
       postImg: postImg,
       category: option
     };
 
-    const collectionRef = collection(db, 'posts');
-    const { id } = await addDoc(collectionRef, newPost);
-
-    const newPostWithId = { ...newPost, id };
-    dispatch(addPost(newPostWithId));
+    dispatch(__addPostSlice(newPost));
 
     setPostTitle('');
     setPostBody('');
@@ -86,7 +77,7 @@ const PostWrite = ({ marker }) => {
 
   return (
     <>
-      <button onClick={openModal}>작성</button>
+      <Button onClick={openModal}>작성</Button>
       {isModal && (
         <StModalBox>
           <StModalContents>
@@ -137,10 +128,11 @@ export default PostWrite;
 export const StModalBox = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
-  top: 0;
-  left: 0;
+  top: '50%';
+  left: '50%';
   width: 100%;
   height: 100%;
+  transform: 'translate(-50%, -50%)';
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,6 +141,7 @@ export const StModalBox = styled.div`
 
 export const StModalContents = styled.div`
   background-color: #fff;
+  padding: 20px;
 `;
 
 export const StOptionWrapper = styled.div`

@@ -1,44 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { deletePost, editPost } from '../redux/modules/postsSlice';
+import {
+  __deletePostSlice,
+  __getPostsSlice,
+  __updatePostSlice,
+  deletePost,
+  editPost
+} from '../redux/modules/postsSlice';
 import { auth, db } from '../service/firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 
 const Detail = () => {
-  //hooks
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //useSelector
-  const data = useSelector((state) => state.postsSlice);
-  console.log(data);
-
-  //넘겨받은 값
   const { postId } = useParams();
   const prevTitle = location.state.prevTitle;
   const prevBody = location.state.prevBody;
 
-  //others
-  const targetPost = data.find((item) => item.id === postId);
-  console.log(targetPost);
-
-  //useStates
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
   const options = ['관광', '식당', '카페', '숙소'];
 
-  //custom hook
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
   const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
 
-  //------------------------------------------------------------------------------------------
-  //event Handler
-  //Update
+  useEffect(() => {
+    const fetchData = () => {
+      dispatch(__getPostsSlice());
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
+
+  if (isLoading) {
+    return <h1>아직 로딩중입니다</h1>;
+  }
+  if (isError) {
+    return <h1>오류가 발생했어요</h1>;
+  }
+
+  const targetPost = postsData.find((item) => item.id === postId);
+
   const editModeHandler = async () => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
@@ -74,10 +84,7 @@ const Detail = () => {
       id: postId
     };
 
-    const targetPostRef = doc(db, 'posts', targetPost.id);
-    await updateDoc(targetPostRef, editedPost);
-
-    dispatch(editPost(editedPost));
+    dispatch(__updatePostSlice(editedPost));
 
     resetNewPostTitle('');
     resetNewPostBody('');
@@ -90,9 +97,6 @@ const Detail = () => {
     setEditSelectAreaIsOpen(false);
   };
 
-  //------------------------------------------------------------------------------------------
-
-  //Delete
   const deleteHandler = async (targetPostId) => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
@@ -105,10 +109,7 @@ const Detail = () => {
 
     const confirmed = window.confirm('정말 삭제하시겠습니까?');
     if (confirmed) {
-      const postsRef = doc(db, 'posts', targetPostId);
-      await deleteDoc(postsRef);
-
-      dispatch(deletePost(targetPostId));
+      dispatch(__deletePostSlice(targetPostId));
 
       navigate('/');
     }
@@ -116,51 +117,44 @@ const Detail = () => {
 
   return (
     <>
-      {/* ------수정폼------ */}
       <div>
         {editMode ? (
-          <>
-            <form onSubmit={onSubmitEditHandler}>
-              {/* ---selectArea------------------------------------ */}
-              <div>
-                <DropdownWrapper>
-                  <DropdownHeader
-                    onClick={() => {
-                      setEditSelectAreaIsOpen((prev) => !prev);
-                    }}
-                  >
-                    <span> {editSelectedOption || '선택해주세요!'} </span>
-                    <span>▼</span>
-                  </DropdownHeader>
-
-                  {editSelectAreaIsOpen && (
-                    <DropdownList>
-                      {options.map((option) => (
-                        <DropdownItem
-                          key={option}
-                          value={editSelectedOption}
-                          onClick={() => {
-                            handleOptionClick(option);
-                          }}
-                        >
-                          {option}
-                        </DropdownItem>
-                      ))}
-                    </DropdownList>
-                  )}
-                </DropdownWrapper>
-              </div>
-              {/* ---------------------------------------------------- */}
-              <div className="editInputArea">
-                <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
-                <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
-                <button>수정 완료</button>
-              </div>
-            </form>
-          </>
+          <form onSubmit={onSubmitEditHandler}>
+            <div>
+              <DropdownWrapper>
+                <DropdownHeader
+                  onClick={() => {
+                    setEditSelectAreaIsOpen((prev) => !prev);
+                  }}
+                >
+                  <span> {editSelectedOption || '선택해주세요!'} </span>
+                  <span>▼</span>
+                </DropdownHeader>
+                {editSelectAreaIsOpen && (
+                  <DropdownList>
+                    {options.map((option) => (
+                      <DropdownItem
+                        key={option}
+                        value={editSelectedOption}
+                        onClick={() => {
+                          handleOptionClick(option);
+                        }}
+                      >
+                        {option}
+                      </DropdownItem>
+                    ))}
+                  </DropdownList>
+                )}
+              </DropdownWrapper>
+            </div>
+            <div className="editInputArea">
+              <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
+              <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
+              <button>수정 완료</button>
+            </div>
+          </form>
         ) : null}
       </div>
-      {/* ------게시글------ */}
       <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
         <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
@@ -201,7 +195,6 @@ const DropdownHeader = styled.div`
 
 const DropdownList = styled.div`
   border-top: 1px solid #ccc;
-  /* 부모영역 바깥으로 삐져나오게 */
   position: absolute;
   width: 200px;
   border: 1px solid #ccc;

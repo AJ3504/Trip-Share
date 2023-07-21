@@ -7,7 +7,7 @@ export const St = {
     padding-left: 15px;
     display: flex;
     align-items: center;
-    background-color: beige;
+    background-color: skyblue;
 
     .github {
       cursor: pointer;
