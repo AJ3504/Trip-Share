@@ -5,7 +5,6 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import SingUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
-import { ref } from 'firebase/storage';
 import { St } from './HeaderStyle';
 import ArrowIcon from './ArrowIcon';
 
@@ -15,7 +14,6 @@ const Header = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
 
   const openDropdwon = () => {
     setIsDropdownOpen(true);
@@ -80,7 +78,7 @@ const Header = () => {
                 <ArrowIcon isOpen={openDropdwon} />
               </St.Nickname>
               {isDropdownOpen ? (
-                <St.Dropdown ref={dropdownRef}>
+                <St.Dropdown>
                   <St.DropdownItem
                     onClick={() => {
                       setIsDropdownOpen(false);
