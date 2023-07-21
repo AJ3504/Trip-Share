@@ -6,13 +6,10 @@ import { styled } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/modules/postsSlice';
 import { Button } from '../map/KakaoMap-Styled';
-import shortid from 'shortid';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
 
 const PostWrite = ({ marker }) => {
   // console.log('작성', marker);
-
-  useEffect(() => {}, [marker]);
 
   const options = ['관광', '식당', '카페', '숙소'];
 
@@ -59,10 +56,17 @@ const PostWrite = ({ marker }) => {
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
+    if (postImg != null) {
+      const imageRef = ref(storage, `${auth.currentUser.uid}/${postImg.name}`);
+      await uploadBytes(imageRef, postImg);
+      const downloadURL = await getDownloadURL(imageRef);
+      setPostImg(downloadURL);
+    }
+
     const newPost = {
       uid: auth.currentUser.uid,
       markerId: marker.id,
-      markerPsiton: marker.position,
+      markerPosition: marker.position,
       postTitle: postTitle,
       postBody: postBody,
       postImg: postImg,

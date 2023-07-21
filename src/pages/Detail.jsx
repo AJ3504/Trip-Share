@@ -106,8 +106,6 @@ const Detail = () => {
     setEditSelectAreaIsOpen(false);
   };
 
-  //------------------------------------------------------------------------------------------
-
   //Delete
   const deleteHandler = async (targetPostId) => {
     if (!auth.currentUser) {
@@ -132,45 +130,42 @@ const Detail = () => {
       {/* ------수정폼------ */}
       <div>
         {editMode ? (
-          <>
-            <form onSubmit={onSubmitEditHandler}>
-              {/* ---selectArea------------------------------------ */}
-              <div>
-                <DropdownWrapper>
-                  <DropdownHeader
-                    onClick={() => {
-                      setEditSelectAreaIsOpen((prev) => !prev);
-                    }}
-                  >
-                    <span> {editSelectedOption || '선택해주세요!'} </span>
-                    <span>▼</span>
-                  </DropdownHeader>
-
-                  {editSelectAreaIsOpen && (
-                    <DropdownList>
-                      {options.map((option) => (
-                        <DropdownItem
-                          key={option}
-                          value={editSelectedOption}
-                          onClick={() => {
-                            handleOptionClick(option);
-                          }}
-                        >
-                          {option}
-                        </DropdownItem>
-                      ))}
-                    </DropdownList>
-                  )}
-                </DropdownWrapper>
-              </div>
-              {/* ---------------------------------------------------- */}
-              <div className="editInputArea">
-                <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
-                <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
-                <button>수정 완료</button>
-              </div>
-            </form>
-          </>
+          <form onSubmit={onSubmitEditHandler}>
+            {/* ---selectArea------------------------------------ */}
+            <div>
+              <DropdownWrapper>
+                <DropdownHeader
+                  onClick={() => {
+                    setEditSelectAreaIsOpen((prev) => !prev);
+                  }}
+                >
+                  <span> {editSelectedOption || '선택해주세요!'} </span>
+                  <span>▼</span>
+                </DropdownHeader>
+                {editSelectAreaIsOpen && (
+                  <DropdownList>
+                    {options.map((option) => (
+                      <DropdownItem
+                        key={option}
+                        value={editSelectedOption}
+                        onClick={() => {
+                          handleOptionClick(option);
+                        }}
+                      >
+                        {option}
+                      </DropdownItem>
+                    ))}
+                  </DropdownList>
+                )}
+              </DropdownWrapper>
+            </div>
+            {/* ---------------------------------------------------- */}
+            <div className="editInputArea">
+              <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
+              <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
+              <button>수정 완료</button>
+            </div>
+          </form>
         ) : null}
       </div>
       {/* ------게시글------ */}
@@ -214,7 +209,6 @@ const DropdownHeader = styled.div`
 
 const DropdownList = styled.div`
   border-top: 1px solid #ccc;
-  /* 부모영역 바깥으로 삐져나오게 */
   position: absolute;
   width: 200px;
   border: 1px solid #ccc;

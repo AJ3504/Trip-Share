@@ -13,6 +13,8 @@ import {
   MapContainer
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
+import PostListMain from '../posts/PostListMain';
+import { useSelector } from 'react-redux';
 
 const { kakao } = window;
 
@@ -27,6 +29,17 @@ const KakaoMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [thumbnails, setThumbnails] = useState([]);
+  // 지도에 표시되는 영역 좌표
+  const [state, setState] = useState({
+    swLat: 0,
+    swLng: 0,
+    neLat: 90,
+    neLng: 180
+  });
+
+  // 카테고리 게시글 data
+  const posts = useSelector((state) => state.postsSlice);
+
   const [showScroll, setShowScroll] = useState(false);
 
   // 블로그 검색 함수
@@ -168,9 +181,7 @@ const KakaoMap = () => {
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
-
                   style={{ width: '800px', height: '800px' }}
-
                 />
               )}
               <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
@@ -195,11 +206,22 @@ const KakaoMap = () => {
           )}
         </LeftContainer>
         <MapContainer>
-          <Map center={currentPosition} style={{ width: '100%', height: '100%' }} onCreate={setMap}>
+          <Map
+            center={currentPosition}
+            style={{ width: '100%', height: '100%' }}
+            onCreate={setMap}
+            onBoundsChanged={(map) =>
+              setState({
+                swLat: map.getBounds().getSouthWest().Ma,
+                swLng: map.getBounds().getSouthWest().La,
+                neLat: map.getBounds().getNorthEast().Ma,
+                neLng: map.getBounds().getNorthEast().La
+              })
+            }
+          >
             <MapMarker position={currentPosition} height="fit-content" width="fit-content">
               125% 모두 화이팅입니다!
             </MapMarker>
-
             {markers.map((marker) => (
               <MapMarker
                 key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
@@ -218,8 +240,28 @@ const KakaoMap = () => {
                 )}
               </MapMarker>
             ))}
+            {/* 카테고리 장소 마커 */}
+            {posts.map((post, index) => (
+              <MapMarker
+                key={`${post.postTitle}-${post.markerPosition}`}
+                // 마커를 표시할 위치
+                position={post.markerPosition}
+                image={{
+                  // 마커이미지의 주소입니다
+                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                  // 마커이미지의 크기입니다
+                  size: {
+                    width: 24,
+                    height: 35
+                  }
+                }}
+                // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                title={post.postTitle}
+              />
+            ))}
           </Map>
         </MapContainer>
+        <PostListMain option={'관광'} position={state} />
       </Container>
     </>
   );

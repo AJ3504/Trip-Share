@@ -122,16 +122,13 @@ const UserInfoModal = () => {
                 <St.ProfileImageBox>
                   <St.ProfileImage src={currentPhotoURL} alt="userInfo" onClick={onClickImageFile} />
                 </St.ProfileImageBox>
-
                 <St.ImageInput type="file" ref={imageFileInput} onChange={changedPhoto} />
-
                 <form onSubmit={profileUpdateHandler}>
                   <St.ProfileBody>
                     <p>EMAIL</p>
                     <St.Input type="email" placeholder={getProfile.email} disabled={true} />
                     <p>NICKNAME</p>
                     <St.Input type="text" maxLength={10} value={currentNickname} onChange={nicknameChangeHandler} />
-
                     <St.NicknameChangeBtn type="submit" onClick={updateProfile}>
                       닉네임 변경
                     </St.NicknameChangeBtn>
