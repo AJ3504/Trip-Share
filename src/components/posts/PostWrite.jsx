@@ -5,7 +5,6 @@ import { auth, db, storage } from '../../service/firebase';
 import { styled } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/modules/postsSlice';
-import shortid from 'shortid';
 
 const PostWrite = ({ marker }) => {
   const options = ['관광', '식당', '카페', '숙소'];
