@@ -36,6 +36,8 @@ const KakaoMap = () => {
     neLat: 90,
     neLng: 180
   });
+  // 카테고리 button 활성화
+  const [option, setOption] = useState('');
 
   // 카테고리 게시글 data
   const { postsData } = useSelector((state) => state.postsSlice);
@@ -265,7 +267,13 @@ const KakaoMap = () => {
             ))}
           </Map>
         </MapContainer>
-        <PostListMain option={'관광'} position={state} />
+        <div>
+          <button onClick={() => setOption('관광')}>관광</button>
+          <button onClick={() => setOption('식당')}>식당</button>
+          <button onClick={() => setOption('카페')}>카페</button>
+          <button onClick={() => setOption('숙소')}>숙소</button>
+          <PostListMain option={option} position={state} />
+        </div>
       </Container>
     </>
   );
