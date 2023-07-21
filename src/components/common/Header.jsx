@@ -30,6 +30,7 @@ const Header = () => {
     alert('로그아웃 하시겠습니까?');
     await signOut(auth);
     navigate('/');
+    window.location.reload();
   };
 
   const getProfile = useSelector((state) => state.userInfo);

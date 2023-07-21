@@ -13,6 +13,8 @@ import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../service/firebase';
 import { ERR_CODE } from '../../error';
 import { St } from './SignInStyle';
+import { FcGoogle } from 'react-icons/fc';
+import { DiGithubAlt } from 'react-icons/di';
 
 const SignIn = () => {
   const [userData, setUserData] = useState(null);
@@ -153,8 +155,12 @@ const SignIn = () => {
                 <St.LoginBtn type="submit">로그인</St.LoginBtn>
               </form>
               <St.SocialLoginWarp>
-                <St.SocialLoginBtn onClick={handleGoogleSignIn}>Google</St.SocialLoginBtn>
-                <St.SocialLoginBtn onClick={handleGithubSignIn}>Github</St.SocialLoginBtn>
+                <St.SocialLoginBtn onClick={handleGoogleSignIn}>
+                  <FcGoogle size="20" />
+                </St.SocialLoginBtn>
+                <St.SocialLoginBtn onClick={handleGithubSignIn}>
+                  <DiGithubAlt size="25" />
+                </St.SocialLoginBtn>
               </St.SocialLoginWarp>
             </St.LoginWrap>
           </St.ModalContents>

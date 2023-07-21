@@ -8,22 +8,22 @@ export const St = {
   `,
 
   ModalBox: styled.div`
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
     display: flex;
+    position: fixed;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
   `,
 
   ModalContents: styled.div`
-    background-color: #fff;
     padding: 20px;
     border-radius: 12px;
+    background-color: #fff;
   `,
 
   SignUPWrap: styled.div`
@@ -31,10 +31,10 @@ export const St = {
   `,
 
   SignUp: styled.p`
-    text-align: center;
     font-size: 25px;
     font-weight: 600;
     margin-bottom: 10px;
+    text-align: center;
   `,
 
   SignUpTitle: styled.p`
@@ -43,23 +43,29 @@ export const St = {
   `,
 
   Input: styled.input`
-    width: 230px;
+    width: 240px;
     height: 30px;
+    border: none;
     outline: none;
-    padding-left: 10px;
-    margin-bottom: 10px;
     display: flex;
+    border-radius: 5px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    align-items: center;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    background-color: rgb(232, 240, 254);
   `,
 
   SignUpBtn: styled.button`
-    width: 245px;
+    width: 257px;
     height: 30px;
-    cursor: pointer;
+    border: none;
     outline: none;
-    margin-top: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
     margin-bottom: 10px;
+    background-color: rgb(255, 255, 205);
   `
 };
