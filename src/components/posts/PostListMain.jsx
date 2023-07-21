@@ -44,10 +44,10 @@ const PostListMain = ({ openSide, option, position }) => {
 
   const statedPosts = posts.filter(
     (post) =>
-      post.markerPsition.lat > position.swLat &&
-      post.markerPsition.lat < position.neLat &&
-      post.markerPsition.lng > position.swLng &&
-      post.markerPsition.lng < position.neLng
+      post.markerPosition.lat > position.swLat &&
+      post.markerPosition.lat < position.neLat &&
+      post.markerPosition.lng > position.swLng &&
+      post.markerPosition.lng < position.neLng
   );
 
   return (
@@ -62,8 +62,8 @@ const PostListMain = ({ openSide, option, position }) => {
                 <li>{post.category}</li>
                 <li>{post.postTitle}</li>
                 <li>{post.postBody}</li>
-                <li>위도{post.markerPsition.lat}</li>
-                <li>경도{post.markerPsition.lng}</li>
+                <li>위도{post.markerPosition.lat}</li>
+                <li>경도{post.markerPosition.lng}</li>
                 <button onClick={() => onPostClick(post)}>상세보기</button>
               </ul>
             </div>

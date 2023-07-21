@@ -3,6 +3,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { Button, Li } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
+import { useSelector } from 'react-redux';
 
 const { kakao } = window;
 
@@ -17,13 +18,16 @@ const KakaoMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [thumbnails, setThumbnails] = useState([]);
-  // 영역
+  // 지도에 표시되는 영역 좌표
   const [state, setState] = useState({
     swLat: 0,
     swLng: 0,
     neLat: 90,
     neLng: 180
   });
+
+  // 카테고리 게시글 data
+  const posts = useSelector((state) => state.postsSlice);
 
   const displayBlogs = (blogData) => {
     return (
@@ -251,6 +255,21 @@ const KakaoMap = () => {
                   </div>
                 )}
               </MapMarker>
+            ))}
+            {/* 카테고리 장소 마커 */}
+            {posts.map((post, index) => (
+              <MapMarker
+                key={`${post.postTitle}-${post.markerPosition}`}
+                position={post.markerPosition} // 마커를 표시할 위치
+                image={{
+                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다
+                  size: {
+                    width: 24,
+                    height: 35
+                  } // 마커이미지의 크기입니다
+                }}
+                title={post.postTitle} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+              />
             ))}
           </Map>
         </div>

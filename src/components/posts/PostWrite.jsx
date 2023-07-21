@@ -63,7 +63,7 @@ const PostWrite = ({ marker }) => {
     const newPost = {
       uid: auth.currentUser.uid,
       markerId: marker.id,
-      markerPsition: marker.position,
+      markerPosition: marker.position,
       postTitle: postTitle,
       postBody: postBody,
       postImg: postImg,
