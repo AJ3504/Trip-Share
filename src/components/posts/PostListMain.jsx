@@ -4,33 +4,53 @@ import { db } from '../../service/firebase';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { readPost } from '../../redux/modules/postsSlice';
+import { __getPostsSlice, __postsSlice, readPost } from '../../redux/modules/postsSlice';
 
 const PostListMain = ({ openSide, option, position }) => {
   console.log(position);
 
   //useSelector
-  const posts = useSelector((state) => state.postsSlice);
+
+  // const posts = useSelector((state) => state.postsSlice);
   //hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const q = query(collection(db, 'posts'));
+  //     const querySnapshot = await getDocs(q);
+  //     const initialTils = [];
+  //     querySnapshot.forEach((doc) => {
+  //       const data = {
+  //         id: doc.id,
+  //         ...doc.data()
+  //       };
+  //       initialTils.push(data);
+  //     });
+  //     dispatch(readPost(initialTils));
+  //   };
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
-    const fetchData = async () => {
-      const q = query(collection(db, 'posts'));
-      const querySnapshot = await getDocs(q);
-      const initialTils = [];
-      querySnapshot.forEach((doc) => {
-        const data = {
-          id: doc.id,
-          ...doc.data()
-        };
-        initialTils.push(data);
-      });
-      dispatch(readPost(initialTils));
+    const fetchData = () => {
+      dispatch(__getPostsSlice());
     };
+
     fetchData();
-  }, []);
+  }, [dispatch]);
+
+  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
+  // console.log(postsData);
+  // console.log(useSelector((state) => state.postsSlice));
+
+  if (isLoading) {
+    return <h1>아직 로딩중입니다</h1>;
+  }
+  if (isError) {
+    return <h1>오류가 발생했어요</h1>;
+  }
 
   //Event Handler
   const onPostClick = (post) => {

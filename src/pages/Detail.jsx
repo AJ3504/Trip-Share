@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { deletePost, editPost } from '../redux/modules/postsSlice';
+import {
+  __deletePostSlice,
+  __getPostsSlice,
+  __updatePostSlice,
+  deletePost,
+  editPost
+} from '../redux/modules/postsSlice';
 import { auth, db } from '../service/firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { styled } from 'styled-components';
@@ -13,18 +19,10 @@ const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //useSelector
-  const data = useSelector((state) => state.postsSlice);
-  console.log(data);
-
   //넘겨받은 값
   const { postId } = useParams();
   const prevTitle = location.state.prevTitle;
   const prevBody = location.state.prevBody;
-
-  //others
-  const targetPost = data.find((item) => item.id === postId);
-  console.log(targetPost);
 
   //useStates
   const [editMode, setEditMode] = useState(false);
@@ -36,6 +34,28 @@ const Detail = () => {
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput(prevTitle);
   const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput(prevBody);
 
+  //
+  useEffect(() => {
+    const fetchData = () => {
+      dispatch(__getPostsSlice());
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
+
+  if (isLoading) {
+    return <h1>아직 로딩중입니다</h1>;
+  }
+  if (isError) {
+    return <h1>오류가 발생했어요</h1>;
+  }
+
+  //others
+  const targetPost = postsData.find((item) => item.id === postId);
+  console.log(targetPost);
+  //------------------------------------------------------------------------------------------
   //event Handler
   //Update
   const editModeHandler = async () => {
@@ -73,10 +93,7 @@ const Detail = () => {
       id: postId
     };
 
-    const targetPostRef = doc(db, 'posts', targetPost.id);
-    await updateDoc(targetPostRef, editedPost);
-
-    dispatch(editPost(editedPost));
+    dispatch(__updatePostSlice(editedPost));
 
     resetNewPostTitle('');
     resetNewPostBody('');
@@ -102,10 +119,7 @@ const Detail = () => {
 
     const confirmed = window.confirm('정말 삭제하시겠습니까?');
     if (confirmed) {
-      const postsRef = doc(db, 'posts', targetPostId);
-      await deleteDoc(postsRef);
-
-      dispatch(deletePost(targetPostId));
+      dispatch(__deletePostSlice(targetPostId));
 
       navigate('/');
     }
