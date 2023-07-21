@@ -9,29 +9,9 @@ import { __getPostsSlice, __postsSlice, readPost } from '../../redux/modules/pos
 const PostListMain = ({ openSide, option, position }) => {
   console.log(position);
 
-  //useSelector
-
-  // const posts = useSelector((state) => state.postsSlice);
   //hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const q = query(collection(db, 'posts'));
-  //     const querySnapshot = await getDocs(q);
-  //     const initialTils = [];
-  //     querySnapshot.forEach((doc) => {
-  //       const data = {
-  //         id: doc.id,
-  //         ...doc.data()
-  //       };
-  //       initialTils.push(data);
-  //     });
-  //     dispatch(readPost(initialTils));
-  //   };
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     const fetchData = () => {
@@ -42,8 +22,6 @@ const PostListMain = ({ openSide, option, position }) => {
   }, [dispatch]);
 
   const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
-  // console.log(postsData);
-  // console.log(useSelector((state) => state.postsSlice));
 
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
@@ -62,7 +40,7 @@ const PostListMain = ({ openSide, option, position }) => {
     });
   };
 
-  const statedPosts = posts.filter(
+  const statedPosts = postsData.filter(
     (post) =>
       post.markerPosition.lat > position.swLat &&
       post.markerPosition.lat < position.neLat &&

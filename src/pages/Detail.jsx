@@ -54,19 +54,20 @@ const Detail = () => {
 
   //others
   const targetPost = postsData.find((item) => item.id === postId);
-  console.log(targetPost);
   //------------------------------------------------------------------------------------------
   //event Handler
+  const isDisabled = targetPost.uid !== auth.currentUser.uid;
+
   //Update
   const editModeHandler = async () => {
     if (!auth.currentUser) {
       alert('로그인 먼저 해주세요!');
       return;
     }
-    if (targetPost.uid !== auth.currentUser.uid) {
-      alert('수정 권한이 없습니다.');
-      return;
-    }
+    // if (targetPost.uid !== auth.currentUser.uid) {
+    //   alert('수정 권한이 없습니다.');
+    //   return;
+    // }
 
     const confirmed = window.confirm('정말 수정하시겠습니까?');
     if (confirmed) {
@@ -176,7 +177,9 @@ const Detail = () => {
             <br />
             {targetPost?.postBody}
             <div>
-              <button onClick={editModeHandler}>수정하기</button>
+              <button onClick={editModeHandler} disabled={isDisabled}>
+                수정하기
+              </button>
               <button onClick={() => deleteHandler(postId)}>삭제하기</button>
               <button onClick={() => navigate('/')}>이전 화면으로</button>
             </div>

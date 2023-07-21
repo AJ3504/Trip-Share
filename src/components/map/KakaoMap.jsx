@@ -38,7 +38,7 @@ const KakaoMap = () => {
   });
 
   // 카테고리 게시글 data
-  const posts = useSelector((state) => state.postsSlice);
+  const { postsData } = useSelector((state) => state.postsSlice);
 
   const [showScroll, setShowScroll] = useState(false);
 
@@ -181,7 +181,7 @@ const KakaoMap = () => {
                 <iframe
                   title="place-details"
                   src={selectedMarker.place_url}
-                  style={{ width: '800px', height: '800px' }}
+                  style={{ width: '300px', height: '800px' }}
                 />
               )}
               <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
@@ -241,7 +241,7 @@ const KakaoMap = () => {
               </MapMarker>
             ))}
             {/* 카테고리 장소 마커 */}
-            {posts.map((post, index) => (
+            {postsData.map((post, index) => (
               <MapMarker
                 key={`${post.postTitle}-${post.markerPosition}`}
                 // 마커를 표시할 위치
