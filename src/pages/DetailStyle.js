@@ -4,7 +4,7 @@ export const St = {
   WholeContainer: styled.div`
     background-color: rgb(236, 249, 255);
   `,
-  // ------수정폼 모달 ------//
+  // ------------------수정폼 모달 ------------------//
   EditModalContainer: styled.div`
     position: fixed;
     top: 0;
@@ -70,7 +70,7 @@ export const St = {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   `,
 
-  //------slect Area: ------ //
+  // ------------------slect Area------------------ //
   DropdownWrapper: styled.div`
     width: 200px;
     position: relative;
@@ -109,33 +109,83 @@ export const St = {
     }
   `,
 
-  // ------상세게시글 ------//
+  //  ------------------상세게시글 ------------------//
   DetailContainer: styled.div`
+    //
     position: relative;
-    left: 50px;
-    top: 50px;
+    left: 10px;
+    top: 30px;
+    //
+
     height: 100vh;
     width: 100vw;
+  `,
+
+  DetailListsWrapper: styled.ul`
+    //
     display: flex;
     flex-direction: column;
+    //
+
+    justify-content: space-between;
     text-align: center;
   `,
 
-  DetailListsWrapper: styled.ul``,
-
   DetailList: styled.li`
-    display: flex;
-    justify-content: space-between;
     border-radius: 7px;
     box-shadow: 5px 5px 10px #eee;
     margin: 15px;
     margin-right: 50px;
-    padding: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 25px;
+    padding-bottom: 20px;
     background-color: #fafafa;
-    height: 200px;
+    height: 300px;
   `,
 
-  DetailBody: styled.div`
+  // section className="writerInfo"
+  WriterInfoSection: styled.section`
+    position: absolute;
+    right: 470px;
+  `,
+
+  WriterInfoImageWrapper: styled.div`
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    position: relative;
+    right: 690px;
+  `,
+
+  WriterInfoImage: styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  `,
+
+  WriterInfoNickName: styled.p`
+    font-size: 13px;
+    color: #a8b0c4da;
+    padding-top: 5px;
+
+    position: relative;
+    right: 690px;
+  `,
+
+  // section className="content"
+  ContentSection: styled.section`
+    //
+    display: flex;
+    justify-content: space-between;
+    //
+    margin-top: 80px;
+  `,
+
+  Article: styled.div`
     position: relative;
     left: 10px;
     top: 10px;
@@ -145,13 +195,15 @@ export const St = {
     height: 30px;
   `,
 
-  DetailButton: styled.button``,
+  TitleLetter: styled.p`
+    font-size: 18px;
+    font-weight: 1000;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  `,
 
-  DetailImg: styled.div`
+  Img: styled.div`
     position: relative;
     right: 20px;
     margin-left: 10px;
   `
 };
-
-//git push용 변경사항

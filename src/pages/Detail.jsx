@@ -172,32 +172,42 @@ const Detail = () => {
       <St.DetailContainer>
         <St.DetailListsWrapper key={targetPost?.id}>
           <St.DetailList>
-            <section className="writerInfo" style={{ display: 'block', flexShrink: 0 }}>
-              <img src={photoURL} alt="writerInfo" width={'30px'} />
-              <p style={{ fontSize: '13px' }}>{nickName}</p>
-            </section>
+            <St.WriterInfoSection>
+              <St.WriterInfoImageWrapper>
+                <St.WriterInfoImage src={photoURL} alt="writerInfo" />
+              </St.WriterInfoImageWrapper>
+              <St.WriterInfoNickName>{nickName}</St.WriterInfoNickName>
+            </St.WriterInfoSection>
             {/* ---------------------------------------------------- */}
-            <St.DetailBody>
-              <div style={{ fontSize: '20px', fontWeight: 'bold' }}>{targetPost?.postTitle}</div>
-              <br />
-              <div>{targetPost?.postBody}</div>
-              <div style={{ marginTop: '20px' }}>
-                {isSignedIn ? (
-                  <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
-                    수정하기
-                  </PostStButton>
-                ) : null}
-                {isSignedIn ? (
-                  <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
-                    삭제하기
-                  </PostStButton>
-                ) : null}
-                <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
-              </div>
-            </St.DetailBody>
-            <St.DetailImg>
-              <img src={targetPost?.postImg} alt="이미지 없음" width={'200px'} height={'200px'} />
-            </St.DetailImg>
+            <St.ContentSection>
+              <St.Article>
+                <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
+                <br />
+                <div>{targetPost?.postBody}</div>
+                <div style={{ marginTop: '20px' }}>
+                  {isSignedIn ? (
+                    <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
+                      수정하기
+                    </PostStButton>
+                  ) : null}
+                  {isSignedIn ? (
+                    <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
+                      삭제하기
+                    </PostStButton>
+                  ) : null}
+                  <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
+                </div>
+              </St.Article>
+              <St.Img>
+                <img
+                  src={targetPost?.postImg}
+                  alt="이미지 없음"
+                  width={'200px'}
+                  height={'200px'}
+                  style={{ boxShadow: '0 0 4px rgba(0, 0, 0, 0.2)' }}
+                />
+              </St.Img>
+            </St.ContentSection>
           </St.DetailList>
         </St.DetailListsWrapper>
       </St.DetailContainer>
