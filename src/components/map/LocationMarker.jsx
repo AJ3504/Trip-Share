@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MapMarker } from 'react-kakao-maps-sdk';
 import { ThumbnailImage, MarkerContent, MarkerContentContainer } from './KakaoMap-Styled';
+import { PostButton } from '../posts/PostWrite';
 
 const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, setIsModal }) => {
   const handleWriteButtonClick = () => {
@@ -14,10 +15,11 @@ const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, setIsMod
           <>
             <MarkerContentContainer>
               <ThumbnailImage src={thumbnail} alt={`thumbnail-${selectedMarker.content}`} />
-              <button onClick={handleWriteButtonClick}>작성</button>
+
               <MarkerContent>
                 <h3>{selectedMarker.content}</h3>
                 <p>{selectedMarker.address}</p>
+                <PostButton onClick={handleWriteButtonClick}>✍️</PostButton>
               </MarkerContent>
             </MarkerContentContainer>
           </>
