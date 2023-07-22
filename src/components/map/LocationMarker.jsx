@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MapMarker } from 'react-kakao-maps-sdk';
 import { ThumbnailImage, MarkerContent, MarkerContentContainer } from './KakaoMap-Styled';
-import { PostButton } from '../posts/PostWrite';
+import { PostButton } from '../posts/PostStyle';
 
 const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, setIsModal }) => {
   const handleWriteButtonClick = () => {
