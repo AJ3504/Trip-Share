@@ -8,12 +8,6 @@ import { styled } from 'styled-components';
 const PostWrite = ({ marker, setIsModal }) => {
   const options = ['관광', '식당', '카페', '숙소'];
 
-  // const [isModal, setIsModal] = useState(false);
-
-  // const closeModal = () => {
-  //   setIsModal(false);
-  // };
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [option, setOption] = useState('');
@@ -132,7 +126,6 @@ export const StModalBox = styled.div`
   left: '50%';
   width: 100%;
   height: 100%;
-  /* transform: 'translate(-50%, -50%)'; */
   display: flex;
   align-items: center;
   justify-content: center;
