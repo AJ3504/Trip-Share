@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
 import { MapMarker } from 'react-kakao-maps-sdk';
 import { ThumbnailImage, MarkerContent, MarkerContentContainer } from './KakaoMap-Styled';
-import PostWrite from '../posts/PostWrite';
-import PostListMain from '../posts/PostListMain';
 
-const LocationMarker = ({ position, onClick, selectedMarker, thumbnail }) => {
+const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, set }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [option, setOption] = useState('');
-  const [state, setState] = useState({
-    swLat: 0,
-    swLng: 0,
-    neLat: 90,
-    neLng: 180
-  });
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -21,8 +12,6 @@ const LocationMarker = ({ position, onClick, selectedMarker, thumbnail }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  console.log('나 LocationMarker 안에있어요', selectedMarker);
 
   return (
     <>
@@ -39,7 +28,6 @@ const LocationMarker = ({ position, onClick, selectedMarker, thumbnail }) => {
                 <p>{selectedMarker.address}</p>
               </MarkerContent>
             </MarkerContentContainer>
-            {isModalOpen && <PostWrite marker={selectedMarker} setIsModal={closeModal} />}
           </>
         ) : null}
       </MapMarker>

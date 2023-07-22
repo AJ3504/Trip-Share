@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { MapMarker } from 'react-kakao-maps-sdk';
 import { useSelector } from 'react-redux';
 import { Button2, Container, DetailsContainer, MapContainer, StyledIframe, LeftContainer } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
@@ -160,6 +159,8 @@ const KakaoMap = () => {
     map.setLevel(1);
   };
 
+  console.log('나는 KaKaoMap컴포넌트', option);
+
   return (
     <>
       <Container>
@@ -186,6 +187,7 @@ const KakaoMap = () => {
             showDetails={showDetails}
             thumbnails={thumbnails}
             setMap={setMap}
+            setIsModal={setIsModal}
           />
         </MapContainer>
         <div>

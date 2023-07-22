@@ -2,8 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import LocationMarker from './LocationMarker';
 import { useSelector } from 'react-redux';
+import PostListMain from '../posts/PostListMain';
 
-const LocationMap = ({ currentPosition, markers, onMarkerClick, selectedMarker, showDetails, thumbnails, setMap }) => {
+const LocationMap = ({
+  currentPosition,
+  markers,
+  onMarkerClick,
+  selectedMarker,
+  showDetails,
+  thumbnails,
+  setMap,
+  setIsModal
+}) => {
   const { postsData } = useSelector((state) => state.postsSlice);
   const [state, setState] = useState({
     swLat: 0,
@@ -27,6 +37,8 @@ const LocationMap = ({ currentPosition, markers, onMarkerClick, selectedMarker, 
     setMap(map); // map 객체를 설정
   };
 
+  console.log(option);
+
   return (
     <Map
       center={currentPosition}
@@ -49,6 +61,7 @@ const LocationMap = ({ currentPosition, markers, onMarkerClick, selectedMarker, 
           onClick={() => onMarkerClick(marker)}
           selectedMarker={selectedMarker === marker && showDetails ? selectedMarker : null}
           thumbnail={thumbnails[markers.indexOf(marker)]}
+          setIsModal={setIsModal}
         />
       ))}
       {postsData
