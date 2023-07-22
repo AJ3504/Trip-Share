@@ -94,7 +94,7 @@ export const St = {
   Dropdown: styled.div`
     width: 100px;
     position: absolute;
-    top: 60px;
+    top: 65px;
     margin-left: 4.125rem;
     background-color: white;
     border: 1px solid #ccc;
