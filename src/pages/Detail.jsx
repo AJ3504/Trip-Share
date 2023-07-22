@@ -17,6 +17,10 @@ const Detail = () => {
   // const prevTitle = location.state.prevTitle;
   // const prevBody = location.state.prevBody;
 
+  const getProfile = useSelector((state) => state.userInfo);
+  const nickName = useSelector((state) => state.userInfo.nickname);
+  const photoURL = useSelector((state) => state.userInfo.photoURL);
+
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
@@ -43,19 +47,6 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
-
-  //게시글 속 닉네임 Data fetch
-
-  // const q = query(
-  //   collection(db, 'userInfo'),
-  //   where('nickname', '==', currentNickname),
-  //   where('email', '!=', getProfile.email)
-  // );
-  // const result = await getDocs(q);
-  // const findData = result.docs[0]?.data();
-
-  // const userDocRef = doc(db, 'userInfo', uid);
-  //   await updateDoc(userDocRef, { nickname: currentNickname });
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -181,6 +172,11 @@ const Detail = () => {
       <St.DetailContainer>
         <St.DetailListsWrapper key={targetPost?.id}>
           <St.DetailList>
+            <section className="writerInfo" style={{ display: 'block', flexShrink: 0 }}>
+              <img src={photoURL} alt="writerInfo" width={'30px'} />
+              <p style={{ fontSize: '13px' }}>{nickName}</p>
+            </section>
+            {/* ---------------------------------------------------- */}
             <St.DetailBody>
               <div style={{ fontSize: '20px', fontWeight: 'bold' }}>{targetPost?.postTitle}</div>
               <br />
