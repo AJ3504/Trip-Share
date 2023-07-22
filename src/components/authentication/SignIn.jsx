@@ -35,7 +35,6 @@ const SignIn = () => {
     e.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('로그인 된 유저 정보', userCredential);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -67,7 +66,6 @@ const SignIn = () => {
       // 로그인 성공 시 메인으로 이동 + 사용자 정보 State에 저장
       navigate('/');
       setUserData(result.user);
-      console.log('로그인 된 유저', user);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -101,7 +99,6 @@ const SignIn = () => {
       // 로그인 성공 시 메인으로 이동 + 사용자 정보 State에 저장
       navigate('/');
       setUserData(result.user);
-      console.log('로그인 된 유저', user);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;

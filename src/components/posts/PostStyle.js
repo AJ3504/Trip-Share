@@ -38,7 +38,6 @@ export const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: #f0f0f0;
   }
@@ -71,18 +70,18 @@ export const StOptionItem = styled.div`
 `;
 
 export const PostButton = styled.button`
-  /* padding: 10px 20px; */
+  cursor: pointer;
   margin-top: 10px;
   font-size: 16px;
   width: 80px;
-  /* background-color: #4caf50; */
-  /* color: #ffffff; */
-  /* border: none;
-  border-radius: 5px; */
-  cursor: pointer;
-  /* transition: background-color 0.3s ease; */
 
-  /* &:hover {
+  /* padding: 10px 20px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  &:hover {
     background-color: #45a049;
   } */
 `;
@@ -107,16 +106,17 @@ export const StSideBox = styled.ul`
   position: absolute;
   transition: 1s;
   z-index: 1;
-  overflow-y: hidden; /* Hide scrollbar by default */
-
-  scrollbar-width: none; /* Firefox scrollbar hidden */
-  -ms-overflow-style: none; /* IE/Edge scrollbar hidden */
-
+  /* Hide scrollbar by default */
+  overflow-y: hidden;
+  /* Firefox scrollbar hidden */
+  scrollbar-width: none;
+  /* IE/Edge scrollbar hidden */
+  -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
-
+  /* Show scrollbar when hovering */
   &:hover {
-    overflow-y: scroll; /* Show scrollbar when hovering */
+    overflow-y: scroll;
   }
 `;

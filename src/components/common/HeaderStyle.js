@@ -41,6 +41,7 @@ export const St = {
   //   height: 100%;
   //   margin: 0 auto;
   // `,
+
   Img: styled.img`
     background-color: white;
     width: 50px;
@@ -57,7 +58,7 @@ export const St = {
   `,
 
   LogoImg: styled.img`
-    width: 130px;
+    width: auto;
     height: 90px;
     cursor: pointer;
     margin-top: 5px;

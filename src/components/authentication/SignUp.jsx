@@ -20,7 +20,6 @@ const SingUp = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       // 사용자의 닉네임을 Firebase Auth에 업데이트
       await updateProfile(auth.currentUser, { nickname: nickname });
-      console.log('가입된 유저 정보', userCredential);
 
       // Firestore userInfo 컬렉션에 사용자 정보 저장
       const collectionRef = collection(db, 'userInfo');
@@ -38,7 +37,6 @@ const SingUp = () => {
       const errorCode = error.code;
       const errorMessage = error.message;
       alert(ERR_CODE[errorCode]);
-      console.log('error', errorCode, errorMessage);
     }
   };
   // 회원가입 폼 & 유효성 검사
