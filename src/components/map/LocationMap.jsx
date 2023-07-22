@@ -37,6 +37,7 @@ const LocationMap = ({
   return (
     <Map
       center={currentPosition}
+      level={4}
       style={{ width: '100%', height: '100%' }}
       onCreate={handleCreateMap}
       onBoundsChanged={(map) =>
@@ -48,7 +49,7 @@ const LocationMap = ({
         })
       }
     >
-      <MapMarker position={currentPosition} height="fit-content" width="fit-content"></MapMarker>
+      <MapMarker position={currentPosition} height="fit-content" width="fit-content" />
       {markers.map((marker) => (
         <LocationMarker
           key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}

@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, storage } from '../../service/firebase';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
-import { styled } from 'styled-components';
-import { StButton } from '../map/KakaoMap-Styled';
 import { St } from '../../pages/DetailStyle';
 import {
   StModalBox,
@@ -58,7 +56,7 @@ const PostWrite = ({ marker, setIsModal }) => {
     e.preventDefault();
 
     if (postTitle.trim() === '' || postBody.trim() === '') {
-      alert('제목과 내용을 입력해주세요');
+      alert('제목과 내용을 입력해주세요.');
       return;
     }
 
@@ -97,8 +95,15 @@ const PostWrite = ({ marker, setIsModal }) => {
           >
             ❌
           </CloseButton>
-          <h3 style={{ textAlign: 'center', fontSize: '30px', marginBottom: '30px' }}>게시글 작성</h3>
-
+          <h3
+            style={{
+              textAlign: 'center',
+              fontSize: '30px',
+              marginBottom: '30px'
+            }}
+          >
+            게시글 작성
+          </h3>
           <form onSubmit={onSubmitNewPost}>
             <StOptionWrapper>
               <StOptionHeader
@@ -133,11 +138,11 @@ const PostWrite = ({ marker, setIsModal }) => {
               value={postBody}
               name="body"
               onChange={onChangePost}
-            ></St.EditTextarea>
+            />
             <div style={{ marginLeft: '200px', marginBottom: '10px' }}>
               <StLabel>사진</StLabel>
             </div>
-            <StInput style={{ width: '250px', marginLeft: '80px' }} type="file" onChange={imgSelect}></StInput>
+            <StInput style={{ width: '250px', marginLeft: '80px' }} type="file" onChange={imgSelect} />
             <PostStButton type="submit" style={{ marginLeft: '150px' }}>
               글 작성하기
             </PostStButton>

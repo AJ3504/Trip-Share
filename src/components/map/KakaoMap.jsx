@@ -4,14 +4,15 @@ import {
   StButton,
   Container,
   StPlaceContainer,
-  MapContainer,
+  StMapContainer,
   StIframe,
   StSearchResult,
   CategoryButton,
   StLeftContainer,
   StMainBody,
   StPlaceDetail,
-  StIframeContainer
+  StIframeContainer,
+  StSearchContainer
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
@@ -165,7 +166,7 @@ const KakaoMap = () => {
     setSelectedMarker(marker);
     setCurrentPosition(marker.position);
     setShowDetails(true);
-    map.setLevel(1);
+    map.setLevel(3);
   };
 
   const togglePostList = () => {
@@ -203,7 +204,7 @@ const KakaoMap = () => {
             </>
           )}
         </StLeftContainer>
-        <MapContainer>
+        <StMapContainer>
           <LocationMap
             currentPosition={currentPosition}
             markers={markers}
@@ -215,7 +216,7 @@ const KakaoMap = () => {
             setState={setState}
             setIsModal={setIsModal}
           />
-        </MapContainer>
+        </StMapContainer>
         <div>
           <CategoryButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</CategoryButton>
           <CategoryButton onClick={() => setOption('관광')}>관광</CategoryButton>

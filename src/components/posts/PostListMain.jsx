@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 import { StSideBox } from './PostStyle';
 
-const PostListMain = ({ openSide, option, position }) => {
+const PostListMain = ({ option, position }) => {
   const [] = useState();
 
   //hooks
@@ -23,7 +22,7 @@ const PostListMain = ({ openSide, option, position }) => {
   const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
 
   if (isLoading) {
-    return <h1>아직 로딩중입니다</h1>;
+    return <h1>아직 로딩 중입니다</h1>;
   }
   if (isError) {
     return <h1>오류가 발생했어요</h1>;
@@ -48,17 +47,13 @@ const PostListMain = ({ openSide, option, position }) => {
       {(option ? filteredPosts : statedPosts).map((post) => {
         const truncatedTitle = post.postTitle.length > 5 ? post.postTitle.substring(0, 5) + '...' : post.postTitle;
         const truncatedBody = post.postBody.length > 10 ? post.postBody.substring(0, 10) + '...' : post.postBody;
-
         return (
           <div key={post.id} style={{ border: 'solid', margin: '10px', padding: '10px', display: 'flex' }}>
             <div style={{ flex: 1 }}>
               <ul>
                 <li>{post.category}</li>
-                <br />
                 <li>{truncatedTitle}</li>
-                <br />
                 <li>{truncatedBody}</li>
-                <br />
                 <button onClick={() => onPostClick(post)}>상세보기</button>
               </ul>
             </div>

@@ -14,10 +14,8 @@ font-family: 'NanumSquareNeo-Variable', sans-serif;
 font-size: 16px;
 word-break: keep-all;
 
-
 color: #000000c1;
 width: 100%;
-
 }
 
 @font-face {

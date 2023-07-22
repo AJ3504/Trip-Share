@@ -42,7 +42,7 @@ export const StButton = styled.button`
 `;
 
 export const StSearchInputContainer = styled.div`
-  height: 50px;
+  height: 5vh;
   padding: 6px;
 
   display: flex;
@@ -60,7 +60,7 @@ export const StSearchInput = styled.input`
 `;
 
 export const StSearchResultContainer = styled.div`
-  height: 100vh;
+  height: 95vh;
   overflow: auto;
 
   scrollbar-width: none;
@@ -92,7 +92,7 @@ export const StSearchImage = styled.img`
 export const StSearchInfo = styled.div`
   width: 100%;
   height: 100%;
-  padding: 14px;
+  padding: 12px;
 
   display: flex;
   flex-direction: column;
@@ -116,25 +116,37 @@ export const StSearchPhone = styled.div`
   font-style: oblique;
 `;
 
-export const MarkerContentContainer = styled.div`
-  background-color: transparent;
-
-  width: 400px;
-  background-color: wheat;
-  text-align: center;
-  align-items: center;
-  display: flex;
+export const StMapContainer = styled.div`
+  width: 80%;
+  height: 100vh;
 `;
 
-export const MarkerContent = styled.div`
+export const StMarkerContents = styled.div`
+  height: 80px;
+  padding: 8px;
+
   display: flex;
-  align-items: center;
   flex-direction: column;
 `;
 
-export const MapContainer = styled.div`
-  width: 60%;
-  height: 874px;
+export const StMarkerInfo = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const StMarkerName = styled.div`
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: bold;
+`;
+
+export const StMarkerAddress = styled.div`
+  font-size: 12px;
+  /* white-space: nowrap; */
+  display: flex;
 `;
 
 export const ContentWrapper = styled.div`

@@ -41,6 +41,7 @@ export const St = {
   //   height: 100%;
   //   margin: 0 auto;
   // `,
+
   Img: styled.img`
     background-color: white;
     width: 50px;

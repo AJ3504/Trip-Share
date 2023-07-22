@@ -24,7 +24,7 @@ const MyPosts = () => {
   const myPostsData = postsData.filter((item) => item.uid === auth.currentUser.uid);
 
   if (isLoading) {
-    return <h1>아직 로딩중입니다</h1>;
+    return <h1>아직 로딩 중입니다</h1>;
   }
   if (isError) {
     return <h1>오류가 발생했어요</h1>;
