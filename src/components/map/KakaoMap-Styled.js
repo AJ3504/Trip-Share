@@ -58,12 +58,13 @@ export const DetailsContainer = styled.div`
 
 export const MarkerContentContainer = styled.div`
   background-color: transparent;
-  width: 360px;
+  width: 400px;
   background-color: wheat;
   text-align: center;
   align-items: center;
   display: flex;
 `;
+
 export const MarkerContent = styled.div`
   display: flex;
   align-items: center;

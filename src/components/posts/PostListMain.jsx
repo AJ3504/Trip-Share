@@ -48,22 +48,24 @@ const PostListMain = ({ openSide, option, position }) => {
     <StSideBox>
       {(option ? filteredPosts : statedPosts).map((post) => {
         return (
-          <div key={post.id} style={{ border: 'solid', margin: '10px', padding: '10px' }}>
-            <ul>
-              <li>{post.category}</li>
-              <li>{post.postTitle}</li>
-              <li>{post.postBody}</li>
-              {/* <li>위도{post.markerPosition.lat}</li>
-              <li>경도{post.markerPosition.lng}</li> */}
-              <button onClick={() => onPostClick(post)}>상세보기</button>
-            </ul>
+          <div key={post.id} style={{ border: 'solid', margin: '10px', padding: '10px', display: 'flex' }}>
+            <div style={{ flex: 1 }}>
+              <ul>
+                <li>{post.category}</li>
+                <li>{post.postTitle}</li>
+                <li>{post.postBody}</li>
+                <button onClick={() => onPostClick(post)}>상세보기</button>
+              </ul>
+            </div>
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <img src={post.postImg} alt="Post Image" style={{ width: '80px', height: '80px' }} />
+            </div>
           </div>
         );
       })}
     </StSideBox>
   );
 };
-
 export default PostListMain;
 
 export const StSideBox = styled.ul`
