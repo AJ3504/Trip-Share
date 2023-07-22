@@ -58,12 +58,13 @@ export const DetailsContainer = styled.div`
 
 export const MarkerContentContainer = styled.div`
   background-color: transparent;
-  width: 360px;
+  width: 400px;
   background-color: wheat;
   text-align: center;
   align-items: center;
   display: flex;
 `;
+
 export const MarkerContent = styled.div`
   display: flex;
   align-items: center;
@@ -108,4 +109,10 @@ export const StyledIframe = styled.iframe`
   width: 300px; //원래 900
   height: 800px;
   overflow-y: hidden;
+`;
+
+export const CategoryButton = styled.button`
+  background-color: transparent;
+
+  cursor: pointer;
 `;
