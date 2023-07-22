@@ -29,14 +29,61 @@ export const St = {
     justify-content: center;
     z-index: 999;
   `,
+  TitleLabel: styled.label`
+    font-size: 14px;
+    color: #555;
+  `,
+  EditInput: styled.input`
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    &:hover {
+      border-color: #888;
+    }
+    background-color: #f8f8f8;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  `,
+  BodyLabel: styled.label`
+    font-size: 14px;
+    color: #555;
+  `,
+  EditTextarea: styled.textarea`
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    &:hover {
+      border-color: #888;
+    }
+    background-color: #f8f8f8;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  `,
 
   //------slect Area: ------ //
   DropdownWrapper: styled.div`
     width: 200px;
-    border: 1px solid #ccc;
     position: relative;
-    bottom: 60px;
+    bottom: 20px;
     margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    &:hover {
+      border-color: #888;
+    }
+    background-color: #f8f8f8;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   `,
 
   DropdownHeader: styled.div`

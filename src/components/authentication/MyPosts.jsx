@@ -3,7 +3,7 @@ import { auth, db } from '../../service/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice } from '../../redux/modules/postsSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { St } from './MyPostsStyle';
+import { St } from '../authentication/MyPostsStyle';
 import { PostStButton } from '../common/PostStButton';
 
 const MyPosts = () => {

@@ -25,6 +25,7 @@ const Detail = () => {
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
   const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
 
+  //게시글 Data fetch
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
@@ -42,6 +43,20 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
+
+  //게시글 속 닉네임 Data fetch
+
+  // const q = query(
+  //   collection(db, 'userInfo'),
+  //   where('nickname', '==', currentNickname),
+  //   where('email', '!=', getProfile.email)
+  // );
+  // const result = await getDocs(q);
+  // const findData = result.docs[0]?.data();
+
+  // const userDocRef = doc(db, 'userInfo', uid);
+  //   await updateDoc(userDocRef, { nickname: currentNickname });
+
   //------------------------------------------------------------------------------------------
   //event Handler
   const isSignedIn = auth.currentUser && targetPost.uid === auth.currentUser.uid;
@@ -87,15 +102,6 @@ const Detail = () => {
 
   //Delete
   const deleteHandler = async (targetPostId) => {
-    if (!auth.currentUser) {
-      alert('로그인 먼저 해주세요!');
-      return;
-    }
-    if (targetPost.uid !== auth.currentUser.uid) {
-      alert('삭제 권한이 없습니다.');
-      return;
-    }
-
     const confirmed = window.confirm('정말 삭제하시겠습니까?');
     if (confirmed) {
       dispatch(__deletePostSlice(targetPostId));
@@ -140,22 +146,31 @@ const Detail = () => {
               </div>
               {/* ---------------------------------------------------- */}
               <div className="editInputArea">
-                <input
+                <St.TitleLabel>제목</St.TitleLabel>
+                <St.EditInput
                   type="text"
                   value={newPostTitle}
                   onChange={onChangeNewPostTitleHandler}
                   placeholder="제목을 5글자 이상 입력해주세요!"
                 />
                 <br />
-                <textarea
+                <St.BodyLabel>내용</St.BodyLabel>
+                <St.EditTextarea
                   type="text"
                   value={newPostBody}
                   onChange={onChangeNewPostBodyHandler}
                   placeholder="본문 내용을 5글자 이상 입력해주세요!"
                 />
                 <br />
-                <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
-                <PostStButton onClick>수정 완료</PostStButton>
+                <div style={{ display: 'flex' }}>
+                  <div style={{ marginLeft: 'auto' }}>
+                    <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
+                    <PostStButton onClick style={{ marginLeft: '5px' }}>
+                      수정 완료
+                    </PostStButton>
+                  </div>
+                </div>
+
                 <br />
               </div>
             </St.EditForm>
