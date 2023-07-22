@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { MapMarker } from 'react-kakao-maps-sdk';
 import { useSelector } from 'react-redux';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import {
-  Button2,
-  Container,
-  DetailsContainer,
-  MarkerContentContainer,
-  MapContainer,
-  StyledIframe,
-  MarkerContent,
-  LeftContainer,
-  ThumbnailImage
-} from './KakaoMap-Styled';
+import { Button2, Container, DetailsContainer, MapContainer, StyledIframe, LeftContainer } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
 import Search from './Search';
 import SearchResult from './SearchResult';
+import LocationMap from './LocationMap';
 
 const { kakao } = window;
 
@@ -118,8 +109,8 @@ const KakaoMap = () => {
       setMarkers([]); // 기존 마커 초기화
       setThumbnails([]);
 
-      //마커에 들어갈 내용을
       if (map) {
+        // map 객체가 올바르게 설정되었는지 확인
         const ps = new kakao.maps.services.Places();
         ps.keywordSearch(searchKeyword, async (data, status, pagination) => {
           if (status === kakao.maps.services.Status.OK) {
@@ -142,7 +133,7 @@ const KakaoMap = () => {
             }
 
             setMarkers(markers);
-            map.setBounds(bounds);
+            map.setBounds(bounds); // map 객체가 설정되었으므로 setBounds 함수 사용 가능
 
             // 검색 결과를 state에 저장하여 옆에 표시
             setSearchResults(data);
@@ -187,61 +178,15 @@ const KakaoMap = () => {
           </LeftContainer>
         )}
         <MapContainer>
-          <Map
-            center={currentPosition}
-            style={{ width: '100%', height: '100%' }}
-            onCreate={setMap}
-            onBoundsChanged={(map) =>
-              setState({
-                swLat: map.getBounds().getSouthWest().Ma,
-                swLng: map.getBounds().getSouthWest().La,
-                neLat: map.getBounds().getNorthEast().Ma,
-                neLng: map.getBounds().getNorthEast().La
-              })
-            }
-          >
-            <MapMarker position={currentPosition} height="fit-content" width="fit-content"></MapMarker>
-            {markers.map((marker) => (
-              <MapMarker
-                key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-                position={marker.position}
-                onClick={() => handleMarkerClick(marker)}
-              >
-                {selectedMarker === marker && showDetails && (
-                  <MarkerContentContainer>
-                    <ThumbnailImage src={thumbnails[markers.indexOf(marker)]} alt={`thumbnail-${marker.content}`} />
-                    {/* 게시글 작성 */}
-                    <button onClick={openModal}>
-                      <img src={'/animation-write.gif'} alt="버튼 이미지" style={{ width: '30px', height: '30px' }} />
-                    </button>
-                    <MarkerContent>
-                      <h3>{marker.content}</h3>
-                      <p>{marker.address}</p>
-                    </MarkerContent>
-                  </MarkerContentContainer>
-                )}
-              </MapMarker>
-            ))}
-            {/* 카테고리 장소 마커 */}
-            {(option ? filteredPosts : postsData).map((post, index) => (
-              <MapMarker
-                key={`${post.postTitle}-${post.markerPosition}`}
-                // 마커를 표시할 위치
-                position={post.markerPosition}
-                image={{
-                  // 마커이미지의 주소입니다
-                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                  // 마커이미지의 크기입니다
-                  size: {
-                    width: 24,
-                    height: 35
-                  }
-                }}
-                // 마커에 마우스를 올리면 타이틀이 표시
-                title={post.postTitle}
-              />
-            ))}
-          </Map>
+          <LocationMap
+            currentPosition={currentPosition}
+            markers={markers}
+            onMarkerClick={handleMarkerClick}
+            selectedMarker={selectedMarker}
+            showDetails={showDetails}
+            thumbnails={thumbnails}
+            setMap={setMap}
+          />
         </MapContainer>
         <div>
           <button onClick={() => setOption('관광')}>관광</button>
