@@ -70,7 +70,7 @@ export const StSideBox = styled.ul`
   background-color: lightblue;
   width: 20%;
   height: 100%;
-  right: 0px;
+  left: 0px;
   position: absolute;
   transition: 1s;
   z-index: 999; // 1로 수정 필요(박제이)
