@@ -74,17 +74,18 @@ export const St = {
     text-align: center;
   `,
 
-  DetailListsWrapper: styled.ul`
-    border-radius: 7px;
-    margin: 15px;
-    margin-right: 50px;
-    padding: 30px;
-    background-color: #fafafa;
-  `,
+  DetailListsWrapper: styled.ul``,
 
   DetailList: styled.li`
     display: flex;
     justify-content: space-between;
+    border-radius: 7px;
+    box-shadow: 5px 5px 10px #eee;
+    margin: 15px;
+    margin-right: 50px;
+    padding: 30px;
+    background-color: #fafafa;
+    height: 200px;
   `,
 
   DetailBody: styled.div`
@@ -93,7 +94,8 @@ export const St = {
     top: 10px;
     line-height: 1.5;
     text-align: justify;
-    overflow: hidden;
+    width: 500px;
+    height: 30px;
   `,
 
   DetailButton: styled.button``,
@@ -101,5 +103,6 @@ export const St = {
   DetailImg: styled.div`
     position: relative;
     right: 20px;
+    margin-left: 10px;
   `
 };

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice } from '../../redux/modules/postsSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { St } from './MyPostsStyle';
+import { PostStButton } from '../common/PostStButton';
 
 const MyPosts = () => {
   //hooks
@@ -53,7 +54,7 @@ const MyPosts = () => {
                 </p>
                 <br />
                 <div>
-                  <St.MyPostButton onClick={() => navigate(`/detail/${myPostData.id}`)}>자세히 보기</St.MyPostButton>
+                  <PostStButton onClick={() => navigate(`/detail/${myPostData.id}`)}>자세히 보기</PostStButton>
                 </div>
               </St.MyPostBody>
               <St.MyPostImg>

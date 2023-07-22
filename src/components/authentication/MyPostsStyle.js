@@ -35,8 +35,6 @@ export const St = {
     overflow: hidden;
   `,
 
-  MyPostButton: styled.button``,
-
   MyPostImg: styled.div`
     position: relative;
     right: 20px;

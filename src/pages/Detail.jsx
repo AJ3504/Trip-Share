@@ -6,6 +6,7 @@ import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 import { St } from './DetailStyle';
+import { PostStButton } from '../components/common/PostStButton';
 
 const Detail = () => {
   const location = useLocation();
@@ -77,8 +78,6 @@ const Detail = () => {
 
     resetNewPostTitle('');
     resetNewPostBody('');
-
-    setEditMode(false);
   };
 
   const handleOptionClick = (option) => {
@@ -155,8 +154,8 @@ const Detail = () => {
                   placeholder="본문 내용을 5글자 이상 입력해주세요!"
                 />
                 <br />
-                <button>취소</button>
-                <button onClick>수정 완료</button>
+                <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
+                <PostStButton onClick>수정 완료</PostStButton>
                 <br />
               </div>
             </St.EditForm>
@@ -168,23 +167,21 @@ const Detail = () => {
         <St.DetailListsWrapper key={targetPost?.id}>
           <St.DetailList>
             <St.DetailBody>
-              <p style={{ fontSize: '20px', fontWeight: 'bold' }}>{targetPost?.postTitle}</p>
+              <div style={{ fontSize: '20px', fontWeight: 'bold' }}>{targetPost?.postTitle}</div>
               <br />
-              <p
-                style={{
-                  width: '350px',
-                  height: '50px',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {targetPost?.postBody}
-              </p>
-              <div>
-                {isSignedIn ? <St.DetailButton onClick={editModeHandler}>수정하기</St.DetailButton> : null}
-                {isSignedIn ? <St.DetailButton onClick={() => deleteHandler(postId)}>삭제하기</St.DetailButton> : null}
-                <St.DetailButton onClick={() => navigate('/')}>이전 화면으로</St.DetailButton>
+              <div>{targetPost?.postBody}</div>
+              <div style={{ marginTop: '20px' }}>
+                {isSignedIn ? (
+                  <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
+                    수정하기
+                  </PostStButton>
+                ) : null}
+                {isSignedIn ? (
+                  <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
+                    삭제하기
+                  </PostStButton>
+                ) : null}
+                <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
               </div>
             </St.DetailBody>
             <St.DetailImg>
