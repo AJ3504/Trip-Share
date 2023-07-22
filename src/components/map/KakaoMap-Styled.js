@@ -110,3 +110,8 @@ export const StyledIframe = styled.iframe`
   height: 800px;
   overflow-y: hidden;
 `;
+
+export const CategoryButton = styled.button`
+  background-color: transparent;
+  cursor: pointer;
+`;

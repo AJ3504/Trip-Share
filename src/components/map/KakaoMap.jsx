@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Button2, Container, DetailsContainer, MapContainer, StyledIframe, LeftContainer } from './KakaoMap-Styled';
+import {
+  Button2,
+  Container,
+  DetailsContainer,
+  MapContainer,
+  StyledIframe,
+  LeftContainer,
+  CategoryButton
+} from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
 import Search from './Search';
@@ -27,6 +35,7 @@ const KakaoMap = () => {
     neLng: 180
   });
   const [option, setOption] = useState('');
+  const [showPostList, setShowPostList] = useState(true);
 
   // 게시글 작성 modal
   const [isModal, setIsModal] = useState(false);
@@ -154,13 +163,23 @@ const KakaoMap = () => {
     map.setLevel(1);
   };
 
+  const togglePostList = () => {
+    setShowPostList((prevShowPostList) => !prevShowPostList);
+  };
+
   return (
     <>
       <Container>
         {isModal && <PostWrite marker={selectedMarker} setIsModal={setIsModal} />}
         {showDetails ? (
           <DetailsContainer>
-            {selectedMarker && <StyledIframe title="place-details" src={selectedMarker.place_url} scrolling="no" />}
+            {selectedMarker && (
+              <StyledIframe
+                title="place-details"
+                src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
+                scrolling="no"
+              />
+            )}
             <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
               ⬅️
             </Button2>
@@ -185,11 +204,13 @@ const KakaoMap = () => {
           />
         </MapContainer>
         <div>
-          <button onClick={() => setOption('관광')}>관광</button>
-          <button onClick={() => setOption('식당')}>식당</button>
-          <button onClick={() => setOption('카페')}>카페</button>
-          <button onClick={() => setOption('숙소')}>숙소</button>
-          <PostListMain option={option} position={state} />
+          <CategoryButton onClick={togglePostList}>{showPostList ? '⬆️' : '⬇️'}</CategoryButton>
+          <CategoryButton onClick={() => setOption('관광')}>관광</CategoryButton>
+          <CategoryButton onClick={() => setOption('식당')}>식당</CategoryButton>
+          <CategoryButton onClick={() => setOption('카페')}>카페</CategoryButton>
+          <CategoryButton onClick={() => setOption('숙소')}>숙소</CategoryButton>
+
+          {showPostList && <PostListMain option={option} position={state} />}
         </div>
       </Container>
     </>
