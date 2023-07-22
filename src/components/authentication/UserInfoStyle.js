@@ -32,6 +32,7 @@ export const St = {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    image-rendering: -webkit-optimize-contrast !important ;
   `,
   ProfileEditBtn: styled.div`
     margin-top: 20px;

@@ -6,7 +6,7 @@ import { auth } from '../../service/firebase';
 import SingUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
 import { St } from './HeaderStyle';
-import { BiSolidDownArrow } from 'react-icons/bi';
+import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi';
 
 const Header = () => {
   const getProfile = useSelector((state) => state.userInfo);
@@ -15,17 +15,17 @@ const Header = () => {
   const [currentUser, setCurrentUser] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const openDropdwon = () => {
+  const openDropdown = () => {
     setIsDropdownOpen(true);
   };
 
-  const closeDropdwon = () => {
+  const closeDropdown = () => {
     setIsDropdownOpen(false);
   };
 
   const clickOutside = (e) => {
     if (!['마이페이지', '로그아웃'].includes(e.target.innerText)) {
-      closeDropdwon();
+      closeDropdown();
     }
   };
 
@@ -68,15 +68,18 @@ const Header = () => {
                     ? getProfile.photoURL
                     : 'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
                 }
+              />
+
+              <St.Nickname
                 onClick={() => {
                   navigate('/mypage');
                 }}
-              />
-
-              <St.Nickname onClick={openDropdwon}>
+              >
                 {nickname}
-                <BiSolidDownArrow />
               </St.Nickname>
+              <St.ArrowIcons onClick={openDropdown}>
+                {isDropdownOpen ? <BiSolidUpArrow /> : <BiSolidDownArrow />}
+              </St.ArrowIcons>
               {isDropdownOpen ? (
                 <St.Dropdown>
                   <St.DropdownItem
