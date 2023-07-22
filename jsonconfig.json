@@ -2,6 +2,5 @@
   "compilerOptions": {
     "baseUrl": "src"
   },
-  "include": ["src"],
-  "125%": []
+  "include": ["src"]
 }
