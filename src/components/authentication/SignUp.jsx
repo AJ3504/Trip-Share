@@ -18,9 +18,11 @@ const SingUp = () => {
   const handleEmailSignUp = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // 사용자의 닉네임을 Firebase Auth에 업데이트
       await updateProfile(auth.currentUser, { nickname: nickname });
       console.log('가입된 유저 정보', userCredential);
 
+      // Firestore userInfo 컬렉션에 사용자 정보 저장
       const collectionRef = collection(db, 'userInfo');
       await setDoc(doc(collectionRef, userCredential.user.uid), {
         nickname: nickname,
@@ -39,14 +41,14 @@ const SingUp = () => {
       console.log('error', errorCode, errorMessage);
     }
   };
-
+  // 회원가입 폼 & 유효성 검사
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
     if (nickname && email && password && checkPassword && password === checkPassword) {
       await handleEmailSignUp();
     } else if (nickname && email && password && checkPassword && password !== checkPassword) {
-      alert('입력하신 비밀번호가 다릅니다.');
-    } else alert('모든 항목을 입력해주세요!');
+      alert('비밀번호가 일치하지 않습니다.');
+    } else alert('필수 값을 모두 입력해주세요!');
   };
 
   const openModal = () => {
@@ -57,6 +59,7 @@ const SingUp = () => {
     setIsOpen(false);
   };
 
+  // 모달 바깥영역 클릭 시 모달 닫기
   const clickOutside = (e) => {
     if (modalRef.current === e.target) {
       closeModal();

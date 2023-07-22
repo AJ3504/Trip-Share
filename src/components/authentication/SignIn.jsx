@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  getAuth,
-  getRedirectResult,
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -25,12 +23,14 @@ const SignIn = () => {
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef();
 
+  // 컴포넌트가 처음 마운트될 때 firebase 인증 상태를 확인하고 현재 사용자의 이메일을 업데이트
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setCurrentUser(user?.email);
     });
   }, []);
 
+  // 이메일 로그인
   const handleEmailSignIn = async (e) => {
     e.preventDefault();
     try {
@@ -44,15 +44,16 @@ const SignIn = () => {
     }
   };
 
+  // 구글 소셜 로그인
   const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider(); // provider 구글 설정
+    const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
       const docRef = doc(db, 'userInfo', user.uid);
       const docSnap = await getDoc(docRef);
-
+      // firestore에 사용자 정보가 없는 경우에만 정보 추가
       if (!docSnap.data()) {
         const collectionRef = collection(db, 'userInfo');
         await setDoc(doc(collectionRef, user.uid), {
@@ -63,6 +64,7 @@ const SignIn = () => {
             'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
         });
       }
+      // 로그인 성공 시 메인으로 이동 + 사용자 정보 State에 저장
       navigate('/');
       setUserData(result.user);
       console.log('로그인 된 유저', user);
@@ -74,8 +76,8 @@ const SignIn = () => {
     }
   };
 
+  // 깃허브 소셜 로그인
   const handleGithubSignIn = async () => {
-    // provider 깃허브 설정
     const provider = new GithubAuthProvider();
 
     try {
@@ -84,10 +86,11 @@ const SignIn = () => {
 
       const docRef = doc(db, 'userInfo', user.uid);
       const docSnap = await getDoc(docRef);
-
+      // firestore에 사용자 정보가 없는 경우에만 정보 추가
       if (!docSnap.data()) {
         const collectionRef = collection(db, 'userInfo');
         await setDoc(doc(collectionRef, user.uid), {
+          // ~1000 랜덤 정수
           nickname: Math.floor(Math.random() * 1000),
           email: user.email,
           uid: user.uid,
@@ -95,6 +98,7 @@ const SignIn = () => {
             'https://us.123rf.com/450wm/yupiramos/yupiramos1707/yupiramos170727142/83106510-%EC%97%AC%ED%96%89-%EA%B0%80%EB%B0%A9-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%97%AC%ED%96%89.jpg'
         });
       }
+      // 로그인 성공 시 메인으로 이동 + 사용자 정보 State에 저장
       navigate('/');
       setUserData(result.user);
       console.log('로그인 된 유저', user);
@@ -114,6 +118,7 @@ const SignIn = () => {
     setIsOpen(false);
   };
 
+  // 모달 바깥영역 클릭 시 모달 닫기
   const clickOutside = (e) => {
     if (modalRef.current === e.target) {
       closeModal();

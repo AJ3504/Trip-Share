@@ -23,6 +23,7 @@ const Header = () => {
     setIsDropdownOpen(false);
   };
 
+  // 드롭다운 바깥영역 클릭 시 드롭다운 닫기
   const clickOutside = (e) => {
     if (!['마이페이지', '로그아웃'].includes(e.target.innerText)) {
       closeDropdown();
@@ -36,6 +37,7 @@ const Header = () => {
     };
   }, []);
 
+  // 현재 사용자의 로그인 상태를 확인하고 저장
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setCurrentUser(user?.email);
