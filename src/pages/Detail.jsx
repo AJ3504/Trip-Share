@@ -17,6 +17,10 @@ const Detail = () => {
   // const prevTitle = location.state.prevTitle;
   // const prevBody = location.state.prevBody;
 
+  const getProfile = useSelector((state) => state.userInfo);
+  const nickName = useSelector((state) => state.userInfo.nickname);
+  const photoURL = useSelector((state) => state.userInfo.photoURL);
+
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
   const [editSelectedOption, setEditSelectedOption] = useState(null);
@@ -43,19 +47,6 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
-
-  //게시글 속 닉네임 Data fetch
-
-  // const q = query(
-  //   collection(db, 'userInfo'),
-  //   where('nickname', '==', currentNickname),
-  //   where('email', '!=', getProfile.email)
-  // );
-  // const result = await getDocs(q);
-  // const findData = result.docs[0]?.data();
-
-  // const userDocRef = doc(db, 'userInfo', uid);
-  //   await updateDoc(userDocRef, { nickname: currentNickname });
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -181,27 +172,42 @@ const Detail = () => {
       <St.DetailContainer>
         <St.DetailListsWrapper key={targetPost?.id}>
           <St.DetailList>
-            <St.DetailBody>
-              <div style={{ fontSize: '20px', fontWeight: 'bold' }}>{targetPost?.postTitle}</div>
-              <br />
-              <div>{targetPost?.postBody}</div>
-              <div style={{ marginTop: '20px' }}>
-                {isSignedIn ? (
-                  <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
-                    수정하기
-                  </PostStButton>
-                ) : null}
-                {isSignedIn ? (
-                  <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
-                    삭제하기
-                  </PostStButton>
-                ) : null}
-                <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
-              </div>
-            </St.DetailBody>
-            <St.DetailImg>
-              <img src={targetPost?.postImg} alt="이미지 없음" width={'200px'} height={'200px'} />
-            </St.DetailImg>
+            <St.WriterInfoSection>
+              <St.WriterInfoImageWrapper>
+                <St.WriterInfoImage src={photoURL} alt="writerInfo" />
+              </St.WriterInfoImageWrapper>
+              <St.WriterInfoNickName>{nickName}</St.WriterInfoNickName>
+            </St.WriterInfoSection>
+            {/* ---------------------------------------------------- */}
+            <St.ContentSection>
+              <St.Article>
+                <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
+                <br />
+                <div>{targetPost?.postBody}</div>
+                <div style={{ marginTop: '20px' }}>
+                  {isSignedIn ? (
+                    <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
+                      수정하기
+                    </PostStButton>
+                  ) : null}
+                  {isSignedIn ? (
+                    <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
+                      삭제하기
+                    </PostStButton>
+                  ) : null}
+                  <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
+                </div>
+              </St.Article>
+              <St.Img>
+                <img
+                  src={targetPost?.postImg}
+                  alt="이미지 없음"
+                  width={'200px'}
+                  height={'200px'}
+                  style={{ boxShadow: '0 0 4px rgba(0, 0, 0, 0.2)' }}
+                />
+              </St.Img>
+            </St.ContentSection>
           </St.DetailList>
         </St.DetailListsWrapper>
       </St.DetailContainer>

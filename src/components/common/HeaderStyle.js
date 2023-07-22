@@ -2,9 +2,8 @@ import { styled } from 'styled-components';
 
 export const St = {
   Header: styled.header`
-    width: 100vw;
-    min-width: 800px;
-    height: 80px;
+    width: 100%;
+    height: 90px;
     background-color: rgb(236, 249, 255);
     display: flex;
     justify-content: space-between;
@@ -58,10 +57,10 @@ export const St = {
   `,
 
   LogoImg: styled.img`
-    width: 280px;
-    height: 200px;
+    width: 130px;
+    height: 90px;
     cursor: pointer;
-    margin-top: 35px;
+    margin-top: 5px;
   `,
 
   HeaderMenu: styled.div`

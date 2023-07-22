@@ -4,8 +4,11 @@ import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
 ${reset}
 
+*{
+    font-family: 'NanumSquareNeo-Variable', sans-serif;
+}
+
 body {
-overflow-x:hidden; /* 페이지 가로 스크롤 없애기 */
 background-color: rgb(236, 249, 255);
 font-family: 'NanumSquareNeo-Variable', sans-serif;
 font-size: 16px;
@@ -14,7 +17,6 @@ word-break: keep-all;
 
 color: #000000c1;
 width: 100%;
-min-width: 800px;
 
 }
 

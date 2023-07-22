@@ -204,7 +204,7 @@ const KakaoMap = () => {
           />
         </MapContainer>
         <div>
-          <CategoryButton onClick={togglePostList}>{showPostList ? '⬆️' : '⬇️'}</CategoryButton>
+          <CategoryButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</CategoryButton>
           <CategoryButton onClick={() => setOption('관광')}>관광</CategoryButton>
           <CategoryButton onClick={() => setOption('식당')}>식당</CategoryButton>
           <CategoryButton onClick={() => setOption('카페')}>카페</CategoryButton>

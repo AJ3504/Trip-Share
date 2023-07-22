@@ -113,5 +113,6 @@ export const StyledIframe = styled.iframe`
 
 export const CategoryButton = styled.button`
   background-color: transparent;
+
   cursor: pointer;
 `;

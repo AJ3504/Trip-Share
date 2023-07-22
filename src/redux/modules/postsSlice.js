@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../../service/firebase';
 
@@ -12,6 +12,7 @@ const initialState = {
 
 export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (payload, thunkAPI) => {
   try {
+    //게시글 data
     const q = query(collection(db, 'posts'));
     const querySnapshot = await getDocs(q);
 
@@ -21,6 +22,16 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
         ...doc.data()
       };
     });
+
+    // //작성자 닉네임 data
+    // //collection ref
+    // const colRef = collection(db, 'userInfo');
+    // //queries
+    // const nicknameQ = query(colRef, where('nickname', '==', currentNickname));
+    // //query Results
+    // const result = await getDocs(nicknameQ);
+    // const nData = result.docs[0]?.data();
+
     return thunkAPI.fulfillWithValue(posts);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);

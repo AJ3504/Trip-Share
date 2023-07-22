@@ -19,5 +19,5 @@ export default Layout;
 
 export const Body = styled.div`
   min-height: calc(100vh);
-  padding-top: 90px;
+  padding-top: 100px;
 `;
