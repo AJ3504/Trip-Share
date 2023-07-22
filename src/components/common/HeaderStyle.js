@@ -24,6 +24,33 @@ export const St = {
     margin-left: 10px;
     image-rendering: -webkit-optimize-contrast !important ;
   `,
+
+  // //이안진
+  // Header: styled.header`
+  //   position: relative;
+  //   width: 100%;
+  //   min-width: 800px;
+  //   height: 80px;
+  //   margin: 0 auto;
+  //   background-color: skyblue;
+  //   z-index: 999;
+  // `,
+  // MenuWrapper: styled.div`
+  //   display: flex;
+  //   align-items: center;
+  //   width: 90%;
+  //   height: 100%;
+  //   margin: 0 auto;
+  // `,
+  Img: styled.img`
+    background-color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    cursor: pointer;
+    margin-left: 10px;
+  `,
+
   LogoWrapper: styled.div`
     position: absolute;
     left: 50%;
@@ -95,25 +122,4 @@ export const St = {
   DropdownLine: styled.div`
     border-top: 1px solid #ccc;
   `
-
-  //이안진
-  // Header: styled.header`
-  //   position: fixed;
-  //   width: 100%;
-  //   min-width: 800px;
-  //   height: 80px;
-  //   margin: 0 auto;
-  //   background-color: skyblue;
-  //   z-index: 999;
-  // `,
-  // MenuWrapper: styled.div`
-  //   display: flex;
-  //   align-items: center;
-  //   width: 90%;
-  //   height: 100%;
-  //   margin: 0 auto;
-  // `,
-  // Img: styled.img`
-
-  // `
 };

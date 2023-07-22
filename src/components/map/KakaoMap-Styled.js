@@ -103,7 +103,7 @@ export const StyledUl = styled.ul`
 `;
 
 export const StyledIframe = styled.iframe`
-  width: 900px;
+  width: 300px; //원래 900
   height: 800px;
   overflow-y: hidden;
 `;

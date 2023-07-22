@@ -43,7 +43,7 @@ const UserInfo = () => {
   }, [getProfile.nickname]);
 
   return (
-    <St.wholeContainer>
+    <St.WholeContainer>
       <div key={uid}>
         <St.ProfileContainer>
           <St.ProfileWarp>
@@ -57,13 +57,12 @@ const UserInfo = () => {
           </St.ProfileWarp>
         </St.ProfileContainer>
       </div>
-      {/* ------------------------내가쓴글 목록-------------------------------- */}
-      <div>
-        <St.MyPostContainer>
+      <div className="myPosts">
+        <div>
           <MyPosts />
-        </St.MyPostContainer>
+        </div>
       </div>
-    </St.wholeContainer>
+    </St.WholeContainer>
   );
 };
 
