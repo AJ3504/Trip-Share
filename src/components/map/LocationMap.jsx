@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import LocationMarker from './LocationMarker';
 import { useSelector } from 'react-redux';
-import PostListMain from '../posts/PostListMain';
 
 const LocationMap = ({
   currentPosition,

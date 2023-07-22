@@ -53,8 +53,8 @@ const PostListMain = ({ openSide, option, position }) => {
               <li>{post.category}</li>
               <li>{post.postTitle}</li>
               <li>{post.postBody}</li>
-              <li>위도{post.markerPosition.lat}</li>
-              <li>경도{post.markerPosition.lng}</li>
+              {/* <li>위도{post.markerPosition.lat}</li>
+              <li>경도{post.markerPosition.lng}</li> */}
               <button onClick={() => onPostClick(post)}>상세보기</button>
             </ul>
           </div>
@@ -69,9 +69,9 @@ export default PostListMain;
 export const StSideBox = styled.ul`
   background-color: lightblue;
   width: 20%;
-  height: 100%;
-  left: 0px;
+  height: 97.3%;
+  right: 0;
   position: absolute;
   transition: 1s;
-  z-index: 999; // 1로 수정 필요(박제이)
+  z-index: 1; // 1로 수정 필요(박제이)
 `;

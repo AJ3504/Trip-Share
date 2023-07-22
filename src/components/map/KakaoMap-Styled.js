@@ -58,14 +58,16 @@ export const DetailsContainer = styled.div`
 
 export const MarkerContentContainer = styled.div`
   background-color: transparent;
+  width: 360px;
+  background-color: wheat;
   text-align: center;
   align-items: center;
   display: flex;
 `;
 export const MarkerContent = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
-  flex: 1;
 `;
 
 export const ThumbnailImage = styled.img`
@@ -78,7 +80,7 @@ export const ThumbnailImage = styled.img`
 
 export const MapContainer = styled.div`
   width: 60%;
-  height: 800px;
+  height: 874px;
 `;
 
 export const ContentWrapper = styled.div`
@@ -87,7 +89,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const StyledUl = styled.ul`
-  height: 760px;
+  height: 832px;
   overflow-y: hidden;
 
   scrollbar-width: none; /* Firefox 스크롤바 숨김 */
