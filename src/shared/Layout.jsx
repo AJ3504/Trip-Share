@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <Body>{children}</Body>
+      <StBody>{children}</StBody>
       <Footer />
     </>
   );
@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
 
 export default Layout;
 
-export const Body = styled.div`
+export const StBody = styled.div`
   min-height: calc(100vh);
   padding-top: 100px;
 `;
