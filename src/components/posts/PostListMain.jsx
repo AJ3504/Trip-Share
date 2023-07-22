@@ -6,8 +6,6 @@ import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 import { StSideBox } from './PostStyle';
 
 const PostListMain = ({ openSide, option, position }) => {
-  console.log(position);
-
   const [] = useState();
 
   //hooks

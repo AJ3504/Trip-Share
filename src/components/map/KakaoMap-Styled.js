@@ -1,63 +1,124 @@
 import styled from 'styled-components';
 
-export const Button = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: transparent;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+export const StMainBody = styled.div`
+  display: flex;
+`;
 
-  &:hover {
-    background-color: yellowgreen;
+export const StLeftContainer = styled.div`
+  width: 20%;
+  height: 100%;
+`;
+
+export const StPlaceContainer = styled.div`
+  height: 100%;
+  align-items: center;
+`;
+
+export const StPlaceDetail = styled.div`
+  display: flex;
+`;
+
+export const StIframeContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  overflow: auto;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
-export const Button2 = styled.button`
-  padding: 10px 20px;
-  margin-top: 300px;
-  margin-right: 50px;
-  width: 30px;
-  height: 40px;
-  font-size: 16px;
+export const StIframe = styled.iframe`
+  width: 100%;
+  height: 4200px;
+`;
+
+export const StButton = styled.button`
+  cursor: pointer;
   background-color: transparent;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 `;
 
-export const Li = styled.li`
-  padding: 18px;
-  border: 1px solid yellowgreen;
-  cursor: pointer;
-`;
+export const StSearchInputContainer = styled.div`
+  height: 50px;
+  padding: 6px;
 
-export const Container = styled.div`
   display: flex;
-  background-size: cover;
-  background-position: center center;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const LeftContainer = styled.div`
+export const StSearchInput = styled.input`
+  width: 100%;
+  height: 30px;
+  margin: 10px;
+  border-radius: 8px;
+
   text-align: center;
-  flex: 1;
 `;
 
-export const SearchInput = styled.input`
-  text-align: center;
-  margin-right: 10px;
+export const StSearchResultContainer = styled.div`
+  height: 100vh;
+  overflow: auto;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-export const DetailsContainer = styled.div`
+export const StSearchResultList = styled.div`
+  cursor: pointer;
+
   display: flex;
+  align-items: center;
+  margin: 16px;
+  border-radius: 10px;
+
+  background-color: rgb(230, 241, 245);
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.18);
+`;
+
+export const StSearchImage = styled.img`
+  width: 30%;
+  height: 30%;
+  object-fit: cover;
+  border-radius: 10px 0 0 10px;
+`;
+
+export const StSearchInfo = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StSearchName = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+
+  margin: 0 0 10px 0;
+`;
+
+export const StSearchAddress = styled.div`
+  font-size: 14px;
+
+  margin: 0 0 10px 0;
+`;
+
+export const StSearchPhone = styled.div`
+  font-size: 14px;
+  font-style: oblique;
 `;
 
 export const MarkerContentContainer = styled.div`
   background-color: transparent;
+
   width: 400px;
   background-color: wheat;
   text-align: center;
@@ -71,14 +132,6 @@ export const MarkerContent = styled.div`
   flex-direction: column;
 `;
 
-export const ThumbnailImage = styled.img`
-  width: 110px;
-  height: 110px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-right: 12px;
-`;
-
 export const MapContainer = styled.div`
   width: 60%;
   height: 874px;
@@ -87,28 +140,6 @@ export const MapContainer = styled.div`
 export const ContentWrapper = styled.div`
   background-color: transparent;
   padding: 20px;
-`;
-
-export const StyledUl = styled.ul`
-  height: 832px;
-  overflow-y: hidden;
-
-  scrollbar-width: none; /* Firefox 스크롤바 숨김 */
-  -ms-overflow-style: none; /* IE/Edge 스크롤바 숨김 */
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  &:hover {
-    overflow-y: scroll;
-  }
-`;
-
-export const StyledIframe = styled.iframe`
-  width: 300px; //원래 900
-  height: 800px;
-  overflow-y: hidden;
 `;
 
 export const CategoryButton = styled.button`

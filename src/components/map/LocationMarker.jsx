@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MapMarker } from 'react-kakao-maps-sdk';
-import { ThumbnailImage, MarkerContent, MarkerContentContainer } from './KakaoMap-Styled';
+import { StSearchImage, MarkerContent, MarkerContentContainer } from './KakaoMap-Styled';
 import { PostButton } from '../posts/PostStyle';
 
 const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, setIsModal }) => {
@@ -14,8 +14,7 @@ const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, setIsMod
         {selectedMarker ? (
           <>
             <MarkerContentContainer>
-              <ThumbnailImage src={thumbnail} alt={`thumbnail-${selectedMarker.content}`} />
-
+              <StSearchImage src={thumbnail} alt={`thumbnail-${selectedMarker.content}`} />
               <MarkerContent>
                 <h3>{selectedMarker.content}</h3>
                 <p>{selectedMarker.address}</p>

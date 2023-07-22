@@ -21,9 +21,7 @@ const MyPosts = () => {
   }, [dispatch]);
 
   const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
-  console.log(postsData);
   const myPostsData = postsData.filter((item) => item.uid === auth.currentUser.uid);
-  console.log(myPostsData);
 
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;

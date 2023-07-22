@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  Button2,
+  StButton,
   Container,
-  DetailsContainer,
+  StPlaceContainer,
   MapContainer,
-  StyledIframe,
-  LeftContainer,
-  CategoryButton
+  StIframe,
+  StSearchResult,
+  CategoryButton,
+  StLeftContainer,
+  StMainBody,
+  StPlaceDetail,
+  StIframeContainer
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
 import Search from './Search';
 import SearchResult from './SearchResult';
 import LocationMap from './LocationMap';
+import { PostStButton } from '../common/PostStButton';
 
 const { kakao } = window;
 
@@ -169,27 +174,35 @@ const KakaoMap = () => {
 
   return (
     <>
-      <Container>
+      <StMainBody>
         {isModal && <PostWrite marker={selectedMarker} setIsModal={setIsModal} />}
-        {showDetails ? (
-          <DetailsContainer>
-            {selectedMarker && (
-              <StyledIframe
-                title="place-details"
-                src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
-                scrolling="no"
+        <StLeftContainer>
+          {showDetails ? (
+            <StPlaceContainer>
+              {selectedMarker && (
+                <StPlaceDetail>
+                  <StIframeContainer>
+                    <StIframe
+                      title="place-details"
+                      src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
+                      scrolling="no"
+                    />
+                  </StIframeContainer>
+                  <PostStButton onClick={() => setShowDetails(false)}>숨김</PostStButton>
+                </StPlaceDetail>
+              )}
+            </StPlaceContainer>
+          ) : (
+            <>
+              <Search searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleSearch={handleSearch} />
+              <SearchResult
+                searchResults={searchResults}
+                handleResultClick={handleResultClick}
+                thumbnails={thumbnails}
               />
-            )}
-            <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
-              ⬅️
-            </Button2>
-          </DetailsContainer>
-        ) : (
-          <LeftContainer>
-            <Search searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleSearch={handleSearch} />
-            <SearchResult searchResults={searchResults} handleResultClick={handleResultClick} thumbnails={thumbnails} />
-          </LeftContainer>
-        )}
+            </>
+          )}
+        </StLeftContainer>
         <MapContainer>
           <LocationMap
             currentPosition={currentPosition}
@@ -209,10 +222,9 @@ const KakaoMap = () => {
           <CategoryButton onClick={() => setOption('식당')}>식당</CategoryButton>
           <CategoryButton onClick={() => setOption('카페')}>카페</CategoryButton>
           <CategoryButton onClick={() => setOption('숙소')}>숙소</CategoryButton>
-
           {showPostList && <PostListMain option={option} position={state} />}
         </div>
-      </Container>
+      </StMainBody>
     </>
   );
 };

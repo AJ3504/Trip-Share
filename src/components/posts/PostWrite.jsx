@@ -4,7 +4,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, storage } from '../../service/firebase';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
 import { styled } from 'styled-components';
-import { Button } from '../map/KakaoMap-Styled';
+import { StButton } from '../map/KakaoMap-Styled';
 import { St } from '../../pages/DetailStyle';
 import {
   StModalBox,
@@ -17,6 +17,7 @@ import {
   StLabel,
   StInput
 } from './PostStyle';
+import { PostStButton } from '../common/PostStButton';
 
 const PostWrite = ({ marker, setIsModal }) => {
   const options = ['관광', '식당', '카페', '숙소'];
@@ -137,9 +138,9 @@ const PostWrite = ({ marker, setIsModal }) => {
               <StLabel>사진</StLabel>
             </div>
             <StInput style={{ width: '250px', marginLeft: '80px' }} type="file" onChange={imgSelect}></StInput>
-            <Button type="submit" style={{ marginLeft: '150px' }}>
+            <PostStButton type="submit" style={{ marginLeft: '150px' }}>
               글 작성하기
-            </Button>
+            </PostStButton>
           </form>
         </StModalContents>
       </StModalBox>
