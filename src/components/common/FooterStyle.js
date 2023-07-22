@@ -11,6 +11,7 @@ export const St = {
     align-items: center;
     z-index: 999;
     background-color: rgba(0, 194, 255, 0.7);
+    position: fixed;
 
     .github {
       cursor: pointer;
