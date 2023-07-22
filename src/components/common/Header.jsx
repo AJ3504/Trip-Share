@@ -5,12 +5,36 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import SingUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
-import UserInfoModal from '../authentication/UserInfoModal';
 import { St } from './HeaderStyle';
+import { BiSolidDownArrow } from 'react-icons/bi';
 
 const Header = () => {
+  const getProfile = useSelector((state) => state.userInfo);
+  const { nickname } = getProfile;
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const openDropdwon = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const closeDropdwon = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const clickOutside = (e) => {
+    if (!['마이페이지', '로그아웃'].includes(e.target.innerText)) {
+      closeDropdwon();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -27,13 +51,10 @@ const Header = () => {
   };
 
   const handleLogoutClick = async () => {
-    alert('로그아웃 하시겠습니까?');
     await signOut(auth);
     navigate('/');
+    window.location.reload();
   };
-
-  const getProfile = useSelector((state) => state.userInfo);
-  const { nickname } = getProfile;
 
   return (
     <>
@@ -41,7 +62,7 @@ const Header = () => {
         <St.MenuWrapper>
           {currentUser ? (
             <>
-              <St.Img
+              <St.ProfileImg
                 src={
                   getProfile.photoURL
                     ? getProfile.photoURL
@@ -52,15 +73,24 @@ const Header = () => {
                 }}
               />
 
-              <St.Nickname
-                onClick={() => {
-                  navigate('/mypage');
-                }}
-              >
+              <St.Nickname onClick={openDropdwon}>
                 {nickname}
+                <BiSolidDownArrow />
               </St.Nickname>
-              <UserInfoModal />
-              <St.HeaderMenu2 onClick={handleLogoutClick}>로그아웃</St.HeaderMenu2>
+              {isDropdownOpen ? (
+                <St.Dropdown>
+                  <St.DropdownItem
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                      navigate('/mypage');
+                    }}
+                  >
+                    마이페이지
+                  </St.DropdownItem>
+                  <St.DropdownLine />
+                  <St.DropdownItem onClick={handleLogoutClick}>로그아웃</St.DropdownItem>
+                </St.Dropdown>
+              ) : null}
             </>
           ) : (
             <>
@@ -74,13 +104,13 @@ const Header = () => {
           )}
         </St.MenuWrapper>
         <St.LogoWrapper>
-          <St.Logo
+          <div
             onClick={() => {
               navigate('/');
             }}
           >
-            <img src="/Logo.png" alt="TripShare Logo" style={{ width: '300px', height: '200px', marginTop: '30px' }} />
-          </St.Logo>
+            <St.LogoImg src="/Logo.png" alt="TripShare Logo" />
+          </div>
         </St.LogoWrapper>
       </St.Header>
     </>

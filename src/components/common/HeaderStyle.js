@@ -6,16 +6,17 @@ export const St = {
     min-width: 800px;
     height: 80px;
     background-color: rgb(236, 249, 255);
-    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    z-index: 2;
   `,
   MenuWrapper: styled.div`
     display: flex;
   `,
 
-  Img: styled.img`
+  ProfileImg: styled.img`
     background-color: white;
     width: 50px;
     height: 50px;
@@ -28,11 +29,12 @@ export const St = {
     left: 50%;
     transform: translateX(-50%);
   `,
-  Logo: styled.div`
-    text-align: center;
+
+  LogoImg: styled.img`
+    width: 280px;
+    height: 200px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 25px;
+    margin-top: 35px;
   `,
 
   HeaderMenu: styled.div`
@@ -49,10 +51,38 @@ export const St = {
   `,
   Nickname: styled.div`
     cursor: pointer;
-    font-size: 0.8333rem;
+    font-size: 15px;
     display: flex;
+    gap: 5px;
     align-items: center;
-    margin-left: 5px;
+    margin-left: 10px;
+  `,
+  Dropdown: styled.div`
+    width: 100px;
+    position: absolute;
+    top: 60px;
+    margin-left: 4.125rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  `,
+  DropdownItem: styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  `,
+
+  DropdownLine: styled.div`
+    border-top: 1px solid #ccc;
   `
 
   //이안진

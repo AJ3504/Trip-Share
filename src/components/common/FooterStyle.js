@@ -2,11 +2,14 @@ import { styled } from 'styled-components';
 
 export const St = {
   Footer: styled.footer`
-    width: 100vw;
+    bottom: 0;
+    width: 100%;
     height: 40px;
-    padding-left: 15px;
     display: flex;
+    position: relative;
+    padding-left: 15px;
     align-items: center;
+    z-index: 999;
     background-color: rgba(0, 194, 255, 0.7);
 
     .github {
@@ -14,8 +17,7 @@ export const St = {
     }
   `,
   P: styled.p`
-    margin-right: 5px;
-    margin-top: 5px;
+    margin: 5px 5px 0 12px;
     display: flex;
     align-items: center;
   `

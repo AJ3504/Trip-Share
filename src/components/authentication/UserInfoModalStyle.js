@@ -62,6 +62,7 @@ export const St = {
     display: flex;
     flex-direction: column;
     text-align: left;
+    font-size: 15px;
     gap: 15px;
   `,
   Input: styled.input`
@@ -72,7 +73,7 @@ export const St = {
     border-radius: 5px;
     background-color: transparent;
     outline: none;
-    margin-right: 20px;
+    margin-right: 3rem;
   `,
 
   NicknameChangeBtn: styled.button`
@@ -82,5 +83,6 @@ export const St = {
     margin-top: 10px;
     border-radius: 5px;
     outline: none;
+    cursor: pointer;
   `
 };

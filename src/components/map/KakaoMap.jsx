@@ -38,7 +38,20 @@ const KakaoMap = () => {
   });
   const [option, setOption] = useState('');
 
+  // 게시글 작성 modal
+  const [isModal, setIsModal] = useState(false);
+
+  const openModal = () => {
+    setIsModal(true);
+  };
+
+  // 카테고리 게시글 data
   const { postsData } = useSelector((state) => state.postsSlice);
+
+  // 카테고리 click 시 filter
+  const filteredPosts = postsData.filter((post) => post.category === `${option}`);
+
+  // 블로그 검색 함수
 
   const searchBlogs = async (keyword) => {
     const apiUrl = `https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=15&query=${encodeURIComponent(
@@ -78,6 +91,8 @@ const KakaoMap = () => {
       (position) => {
         const { latitude, longitude } = position.coords;
         setCurrentPosition({ lat: latitude, lng: longitude });
+        // 사용자 현재 위치로 카테고리 게시글 기준 설정
+        // setState();
       },
       (error) => {
         console.error('유저 정보를 가져오지 못했습니다:', error);
@@ -157,6 +172,7 @@ const KakaoMap = () => {
   return (
     <>
       <Container>
+        {isModal && <PostWrite marker={selectedMarker} setIsModal={setIsModal} />}
         {showDetails ? (
           <DetailsContainer>
             {selectedMarker && <StyledIframe title="place-details" src={selectedMarker.place_url} scrolling="no" />}
@@ -170,7 +186,6 @@ const KakaoMap = () => {
             <SearchResult searchResults={searchResults} handleResultClick={handleResultClick} thumbnails={thumbnails} />
           </LeftContainer>
         )}
-
         <MapContainer>
           <Map
             center={currentPosition}
@@ -195,7 +210,10 @@ const KakaoMap = () => {
                 {selectedMarker === marker && showDetails && (
                   <MarkerContentContainer>
                     <ThumbnailImage src={thumbnails[markers.indexOf(marker)]} alt={`thumbnail-${marker.content}`} />
-                    <PostWrite marker={marker} />
+                    {/* 게시글 작성 */}
+                    <button onClick={openModal}>
+                      <img src={'/animation-write.gif'} alt="버튼 이미지" style={{ width: '30px', height: '30px' }} />
+                    </button>
                     <MarkerContent>
                       <h3>{marker.content}</h3>
                       <p>{marker.address}</p>
@@ -204,22 +222,25 @@ const KakaoMap = () => {
                 )}
               </MapMarker>
             ))}
-            {postsData
-              .filter((post) => post.category === `${option}`)
-              .map((post, index) => (
-                <MapMarker
-                  key={`${post.postTitle}-${post.markerPosition}`}
-                  position={post.markerPosition}
-                  image={{
-                    src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                    size: {
-                      width: 24,
-                      height: 35
-                    }
-                  }}
-                  title={post.postTitle}
-                />
-              ))}
+            {/* 카테고리 장소 마커 */}
+            {(option ? filteredPosts : postsData).map((post, index) => (
+              <MapMarker
+                key={`${post.postTitle}-${post.markerPosition}`}
+                // 마커를 표시할 위치
+                position={post.markerPosition}
+                image={{
+                  // 마커이미지의 주소입니다
+                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                  // 마커이미지의 크기입니다
+                  size: {
+                    width: 24,
+                    height: 35
+                  }
+                }}
+                // 마커에 마우스를 올리면 타이틀이 표시
+                title={post.postTitle}
+              />
+            ))}
           </Map>
         </MapContainer>
         <div>
