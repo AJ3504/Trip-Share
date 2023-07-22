@@ -38,8 +38,17 @@ export const Li = styled.li`
 
 export const Container = styled.div`
   display: flex;
+  /* background-image: url('/배경.jpg'); */
   background-size: cover;
   background-position: center center;
+`;
+
+export const StyledIframe = styled.iframe`
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  height: 533px;
 `;
 
 export const LeftContainer = styled.div`
@@ -104,10 +113,4 @@ export const StyledUl = styled.ul`
   &:hover {
     overflow-y: scroll;
   }
-`;
-
-export const StyledIframe = styled.iframe`
-  width: 900px;
-  height: 800px;
-  overflow-y: hidden;
 `;
