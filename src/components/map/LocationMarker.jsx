@@ -2,15 +2,9 @@ import React, { useState } from 'react';
 import { MapMarker } from 'react-kakao-maps-sdk';
 import { ThumbnailImage, MarkerContent, MarkerContentContainer } from './KakaoMap-Styled';
 
-const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, set }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, setIsModal }) => {
+  const handleWriteButtonClick = () => {
+    setIsModal(true);
   };
 
   return (
@@ -20,9 +14,7 @@ const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, set }) =
           <>
             <MarkerContentContainer>
               <ThumbnailImage src={thumbnail} alt={`thumbnail-${selectedMarker.content}`} />
-              <button onClick={openModal}>
-                <img src={'/animation-write.gif'} alt="버튼 이미지" style={{ width: '30px', height: '30px' }} />
-              </button>
+              <button onClick={handleWriteButtonClick}>작성</button>
               <MarkerContent>
                 <h3>{selectedMarker.content}</h3>
                 <p>{selectedMarker.address}</p>

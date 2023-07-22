@@ -31,10 +31,6 @@ const KakaoMap = () => {
   // 게시글 작성 modal
   const [isModal, setIsModal] = useState(false);
 
-  const openModal = () => {
-    setIsModal(true);
-  };
-
   // 카테고리 게시글 data
   const { postsData } = useSelector((state) => state.postsSlice);
 
@@ -42,7 +38,6 @@ const KakaoMap = () => {
   const filteredPosts = postsData.filter((post) => post.category === `${option}`);
 
   // 블로그 검색 함수
-
   const searchBlogs = async (keyword) => {
     const apiUrl = `https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=15&query=${encodeURIComponent(
       keyword
@@ -159,8 +154,6 @@ const KakaoMap = () => {
     map.setLevel(1);
   };
 
-  console.log('나는 KaKaoMap컴포넌트', option);
-
   return (
     <>
       <Container>
@@ -187,6 +180,7 @@ const KakaoMap = () => {
             showDetails={showDetails}
             thumbnails={thumbnails}
             setMap={setMap}
+            setState={setState}
             setIsModal={setIsModal}
           />
         </MapContainer>

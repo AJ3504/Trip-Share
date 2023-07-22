@@ -63,16 +63,12 @@ export const MarkerContentContainer = styled.div`
   display: flex;
 `;
 export const MarkerContent = styled.div`
-  /* margin-top: 30px; */
   display: flex;
   flex-direction: column;
   flex: 1;
 `;
 
 export const ThumbnailImage = styled.img`
-  /* width: 100px;
-  height: 100px;
-  margin: 5px; */
   width: 110px;
   height: 110px;
   object-fit: cover;
@@ -92,15 +88,15 @@ export const ContentWrapper = styled.div`
 
 export const StyledUl = styled.ul`
   height: 760px;
-  overflow-y: hidden; /* 숨김 */
+  overflow-y: hidden;
+
   scrollbar-width: none; /* Firefox 스크롤바 숨김 */
   -ms-overflow-style: none; /* IE/Edge 스크롤바 숨김 */
 
-  /* Webkit 스크롤바 숨김 */
   &::-webkit-scrollbar {
     display: none;
   }
-  /* 마우스 오버시 스크롤 표시  */
+
   &:hover {
     overflow-y: scroll;
   }

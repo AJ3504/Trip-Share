@@ -12,15 +12,11 @@ const LocationMap = ({
   showDetails,
   thumbnails,
   setMap,
+  setState,
   setIsModal
 }) => {
   const { postsData } = useSelector((state) => state.postsSlice);
-  const [state, setState] = useState({
-    swLat: 0,
-    swLng: 0,
-    neLat: 90,
-    neLng: 180
-  });
+
   const [option, setOption] = useState('');
 
   useEffect(() => {
@@ -37,7 +33,7 @@ const LocationMap = ({
     setMap(map); // map 객체를 설정
   };
 
-  console.log(option);
+  const filteredPosts = postsData.filter((post) => post.category === `${option}`);
 
   return (
     <Map
@@ -64,22 +60,20 @@ const LocationMap = ({
           setIsModal={setIsModal}
         />
       ))}
-      {postsData
-        .filter((post) => post.category === `${option}`)
-        .map((post, index) => (
-          <MapMarker
-            key={`${post.postTitle}-${post.markerPosition}`}
-            position={post.markerPosition}
-            image={{
-              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-              size: {
-                width: 24,
-                height: 35
-              }
-            }}
-            title={post.postTitle}
-          />
-        ))}
+      {(option ? filteredPosts : postsData).map((post, index) => (
+        <MapMarker
+          key={`${post.postTitle}-${post.markerPosition}`}
+          position={post.markerPosition}
+          image={{
+            src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+            size: {
+              width: 24,
+              height: 35
+            }
+          }}
+          title={post.postTitle}
+        />
+      ))}
     </Map>
   );
 };
