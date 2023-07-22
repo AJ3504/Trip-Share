@@ -26,6 +26,7 @@ const UserInfoModal = () => {
     setIsOpen(false);
   };
 
+  // 모달 바깥영역 클릭 시 모달 닫기
   const clickOutside = (e) => {
     if (modalRef.current === e.target) {
       closeModal();
@@ -39,6 +40,7 @@ const UserInfoModal = () => {
     };
   }, []);
 
+  // Redux 스토어의 사용자 정보가 변경되면 해당 정보를 상태에 반영
   useEffect(() => {
     setCurrentPhotoURL(getProfile.photoURL);
   }, [getProfile.photoURL]);
@@ -55,6 +57,7 @@ const UserInfoModal = () => {
     imageFileInput.current.click();
   };
 
+  // 닉네임 입력값이 변경될 때마다 상태 업데이트
   const nicknameChangeHandler = (e) => {
     setCurrentNickname(e.target.value);
   };
@@ -68,6 +71,7 @@ const UserInfoModal = () => {
 
     if (!currentNickname) return alert('닉네임을 입력해주세요');
     const q = query(
+      // 닉네임 중복 확인
       collection(db, 'userInfo'),
       where('nickname', '==', currentNickname),
       where('email', '!=', getProfile.email)
@@ -77,11 +81,13 @@ const UserInfoModal = () => {
 
     if (findData) return alert('이미 사용중인 닉네임 입니다.');
 
+    // Firestore에 닉네임 업데이트
     const userDocRef = doc(db, 'userInfo', uid);
     await updateDoc(userDocRef, { nickname: currentNickname });
 
     alert('닉네임 수정 완료');
 
+    // 업데이트된 사용자 정보를 Redux 스토어에 반영
     const updateProfileData = { ...getProfile, nickname: currentNickname };
     dispatch(getUserProfile(updateProfileData));
   };
@@ -96,9 +102,11 @@ const UserInfoModal = () => {
       await uploadBytes(storageRef, file);
       const resultPhotoURL = await getDownloadURL(storageRef);
       setCurrentPhotoURL(resultPhotoURL);
+      // Firestore에 프로필 사진 URL 업데이트
       const userDocRef = doc(db, 'userInfo', uid);
       await updateDoc(userDocRef, { photoURL: resultPhotoURL });
       alert('프로필 사진 변경 완료');
+      // 업데이트된 사용자 정보를 Redux 스토어에 반영
       const updateProfileData = { ...getProfile, photoURL: resultPhotoURL };
       dispatch(getUserProfile(updateProfileData));
     } catch (error) {
