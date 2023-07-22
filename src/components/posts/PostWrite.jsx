@@ -5,6 +5,7 @@ import { auth, storage } from '../../service/firebase';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
 import { styled } from 'styled-components';
 import { Button } from '../map/KakaoMap-Styled';
+import { St } from '../../pages/DetailStyle';
 
 const PostWrite = ({ marker, setIsModal }) => {
   const options = ['관광', '식당', '카페', '숙소'];
@@ -114,10 +115,20 @@ const PostWrite = ({ marker, setIsModal }) => {
             <StLabel>제목</StLabel>
             <StInput type="text" value={postTitle} name="title" onChange={onChangePost} />
             <StLabel>내용</StLabel>
-            <StInput type="text" value={postBody} name="body" onChange={onChangePost}></StInput>
-            <StLabel>사진</StLabel>
-            <StInput type="file" onChange={imgSelect}></StInput>
-            <Button type="submit">확인</Button>
+            <St.EditTextarea
+              style={{ width: '425px' }}
+              type="text"
+              value={postBody}
+              name="body"
+              onChange={onChangePost}
+            ></St.EditTextarea>
+            <div style={{ marginLeft: '200px', marginBottom: '10px' }}>
+              <StLabel>사진</StLabel>
+            </div>
+            <StInput style={{ width: '250px', marginLeft: '80px' }} type="file" onChange={imgSelect}></StInput>
+            <Button type="submit" style={{ marginLeft: '150px' }}>
+              글 작성하기
+            </Button>
           </form>
         </StModalContents>
       </StModalBox>
@@ -130,8 +141,8 @@ export default PostWrite;
 export const StModalBox = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
-  top: '50%';
-  left: '50%';
+  top: '0%';
+  left: '0%';
   width: 100%;
   height: 100%;
   display: flex;
@@ -145,19 +156,20 @@ export const StModalContents = styled.div`
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
+  max-width: 450px;
   width: 90%;
 `;
 
 export const StOptionWrapper = styled.div`
   width: 100%;
+  text-align: center;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 20px;
 `;
 
 export const CloseButton = styled.button`
-  margin-left: 370px;
+  margin-left: 420px;
   font-size: 16px;
   background-color: transparent;
   color: black;
@@ -173,16 +185,17 @@ export const CloseButton = styled.button`
 export const StOptionHeader = styled.div`
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 8px;
   font-weight: bold;
   background-color: #f0f0f0;
   border-radius: 5px;
+  align-items: center;
+  text-align: center;
 `;
 
 export const StOptionList = styled.div`
-  text-align: center;
-  width: 23.1%;
+  width: 26%;
   background-color: gray;
   position: absolute;
 `;
@@ -196,25 +209,24 @@ export const StOptionItem = styled.div`
 `;
 
 export const PostButton = styled.button`
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
+  margin-top: 10px;
   font-size: 16px;
-  background-color: #4caf50;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
+  width: 80px;
+  /* background-color: #4caf50; */
+  /* color: #ffffff; */
+  /* border: none;
+  border-radius: 5px; */
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  /* transition: background-color 0.3s ease; */
 
-  &:hover {
+  /* &:hover {
     background-color: #45a049;
-  }
+  } */
 `;
 
 export const StInput = styled.input`
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;

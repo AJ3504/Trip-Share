@@ -15,10 +15,11 @@ const LocationMarker = ({ position, onClick, selectedMarker, thumbnail, setIsMod
           <>
             <MarkerContentContainer>
               <ThumbnailImage src={thumbnail} alt={`thumbnail-${selectedMarker.content}`} />
-              <PostButton onClick={handleWriteButtonClick}>글 작성</PostButton>
+
               <MarkerContent>
                 <h3>{selectedMarker.content}</h3>
                 <p>{selectedMarker.address}</p>
+                <PostButton onClick={handleWriteButtonClick}>✍️</PostButton>
               </MarkerContent>
             </MarkerContentContainer>
           </>
