@@ -5,7 +5,7 @@ export const StMainBody = styled.div`
 `;
 
 export const StLeftContainer = styled.div`
-  width: 20%;
+  width: 22%;
   height: 100%;
 `;
 
@@ -42,7 +42,7 @@ export const StButton = styled.button`
 `;
 
 export const StSearchInputContainer = styled.div`
-  height: 5vh;
+  height: 4vh;
   padding: 6px;
 
   display: flex;
@@ -51,7 +51,7 @@ export const StSearchInputContainer = styled.div`
 `;
 
 export const StSearchInput = styled.input`
-  width: 100%;
+  width: 80%;
   height: 30px;
   margin: 10px;
   border-radius: 8px;
@@ -60,7 +60,7 @@ export const StSearchInput = styled.input`
 `;
 
 export const StSearchResultContainer = styled.div`
-  height: 95vh;
+  height: 96vh;
   overflow: auto;
 
   scrollbar-width: none;
@@ -90,9 +90,9 @@ export const StSearchImage = styled.img`
 `;
 
 export const StSearchInfo = styled.div`
-  width: 100%;
+  width: 70%;
   height: 100%;
-  padding: 12px;
+  padding: 10px;
 
   display: flex;
   flex-direction: column;
@@ -108,11 +108,11 @@ export const StSearchName = styled.div`
 export const StSearchAddress = styled.div`
   font-size: 14px;
 
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
 `;
 
 export const StSearchPhone = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   font-style: oblique;
 `;
 

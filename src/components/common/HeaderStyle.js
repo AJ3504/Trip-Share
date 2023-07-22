@@ -58,7 +58,7 @@ export const St = {
   `,
 
   LogoImg: styled.img`
-    width: 130px;
+    width: auto;
     height: 90px;
     cursor: pointer;
     margin-top: 5px;
