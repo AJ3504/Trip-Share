@@ -1,16 +1,12 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import postsSlice from '../modules/postsSlice';
-import logReducer from '../modules/logSlice';
-import userInfoReducer from '../modules/userInfoSlice';
+import userInfoSlice, { getUserProfile } from '../modules/userInfoSlice';
 
 const store = configureStore({
   reducer: {
     postsSlice,
-    log: logReducer,
-    userInfo: userInfoReducer
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
-  devTools: true
+    userInfo: userInfoSlice
+  }
 });
 
 export default store;

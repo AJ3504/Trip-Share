@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialStateUserInfo = { displayName: '', email: '', photoURL: '', uid: '' };
+const initialStateUserInfo = { nickkname: '', email: '', photoURL: '', uid: '' };
 
 const userInfoSlice = createSlice({
   name: 'userInfo',
