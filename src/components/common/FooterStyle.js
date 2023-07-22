@@ -8,6 +8,7 @@ export const St = {
     display: flex;
     align-items: center;
     background-color: rgba(0, 194, 255, 0.7);
+    position: fixed;
 
     .github {
       cursor: pointer;
