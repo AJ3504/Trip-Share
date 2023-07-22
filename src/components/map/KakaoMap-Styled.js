@@ -38,7 +38,6 @@ export const Li = styled.li`
 
 export const Container = styled.div`
   display: flex;
-  /* background-image: url('/배경.jpg'); */
   background-size: cover;
   background-position: center center;
 `;

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 
 const PostListMain = ({ openSide, option, position }) => {
+  console.log(position);
+
   const [] = useState();
 
   //hooks
