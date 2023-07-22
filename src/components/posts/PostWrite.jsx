@@ -4,6 +4,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, storage } from '../../service/firebase';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
 import { styled } from 'styled-components';
+import { Button } from '../map/KakaoMap-Styled';
 
 const PostWrite = ({ marker, setIsModal }) => {
   const options = ['관광', '식당', '카페', '숙소'];
@@ -43,6 +44,11 @@ const PostWrite = ({ marker, setIsModal }) => {
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
+    if (postTitle.trim() === '' || postBody.trim() === '') {
+      alert('제목과 내용을 입력해주세요');
+      return;
+    }
+
     if (postImg != null) {
       const imageRef = ref(storage, `${auth.currentUser.uid}/${postImg.name}`);
       await uploadBytes(imageRef, postImg);
@@ -64,20 +70,22 @@ const PostWrite = ({ marker, setIsModal }) => {
 
     setPostTitle('');
     setPostBody('');
+    setIsModal(false);
   };
 
   return (
     <>
       <StModalBox>
         <StModalContents>
-          <h3>게시글 작성</h3>
-          <button
+          <CloseButton
             onClick={() => {
               setIsModal(false);
             }}
           >
-            닫기
-          </button>
+            ❌
+          </CloseButton>
+          <h3 style={{ textAlign: 'center', fontSize: '30px', marginBottom: '30px' }}>게시글 작성</h3>
+
           <form onSubmit={onSubmitNewPost}>
             <StOptionWrapper>
               <StOptionHeader
@@ -103,13 +111,13 @@ const PostWrite = ({ marker, setIsModal }) => {
                 </StOptionList>
               )}
             </StOptionWrapper>
-            <label>제목</label>
-            <input type="text" value={postTitle} name="title" onChange={onChangePost} required />
-            <label>내용</label>
-            <input type="text" value={postBody} name="body" onChange={onChangePost} required></input>
-            <label>사진</label>
-            <input type="file" onChange={imgSelect}></input>
-            <button type="submit">확인</button>
+            <StLabel>제목</StLabel>
+            <StInput type="text" value={postTitle} name="title" onChange={onChangePost} />
+            <StLabel>내용</StLabel>
+            <StInput type="text" value={postBody} name="body" onChange={onChangePost}></StInput>
+            <StLabel>사진</StLabel>
+            <StInput type="file" onChange={imgSelect}></StInput>
+            <Button type="submit">확인</Button>
           </form>
         </StModalContents>
       </StModalBox>
@@ -135,42 +143,84 @@ export const StModalBox = styled.div`
 export const StModalContents = styled.div`
   background-color: #fff;
   padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
 `;
 
 export const StOptionWrapper = styled.div`
-  width: 100px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+`;
+
+export const CloseButton = styled.button`
+  margin-left: 370px;
+  font-size: 16px;
+  background-color: transparent;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
 `;
 
 export const StOptionHeader = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  padding: 8px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  border-radius: 5px;
 `;
 
 export const StOptionList = styled.div`
-  width: 100px;
-  background-color: #ffffff;
+  text-align: center;
+  width: 23.1%;
+  background-color: gray;
   position: absolute;
 `;
 
 export const StOptionItem = styled.div`
+  padding: 8px;
   cursor: pointer;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
   }
 `;
 
 export const PostButton = styled.button`
-  position: absolute;
-  top: 0;
-  right: 0;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: transparent;
-  color: black;
+  background-color: #4caf50;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+export const StInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+`;
+
+export const StLabel = styled.label`
+  font-weight: bold;
 `;
