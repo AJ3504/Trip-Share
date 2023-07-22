@@ -5,6 +5,8 @@ import { auth } from '../service/firebase';
 import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/modules/postsSlice';
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
+import { St } from './DetailStyle';
+import { PostStButton } from '../components/common/PostStButton';
 
 const Detail = () => {
   const location = useLocation();
@@ -23,6 +25,7 @@ const Detail = () => {
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
   const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
 
+  //게시글 Data fetch
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
@@ -40,6 +43,20 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
+
+  //게시글 속 닉네임 Data fetch
+
+  // const q = query(
+  //   collection(db, 'userInfo'),
+  //   where('nickname', '==', currentNickname),
+  //   where('email', '!=', getProfile.email)
+  // );
+  // const result = await getDocs(q);
+  // const findData = result.docs[0]?.data();
+
+  // const userDocRef = doc(db, 'userInfo', uid);
+  //   await updateDoc(userDocRef, { nickname: currentNickname });
+
   //------------------------------------------------------------------------------------------
   //event Handler
   const isSignedIn = auth.currentUser && targetPost.uid === auth.currentUser.uid;
@@ -76,8 +93,6 @@ const Detail = () => {
 
     resetNewPostTitle('');
     resetNewPostBody('');
-
-    setEditMode(false);
   };
 
   const handleOptionClick = (option) => {
@@ -87,15 +102,6 @@ const Detail = () => {
 
   //Delete
   const deleteHandler = async (targetPostId) => {
-    if (!auth.currentUser) {
-      alert('로그인 먼저 해주세요!');
-      return;
-    }
-    if (targetPost.uid !== auth.currentUser.uid) {
-      alert('삭제 권한이 없습니다.');
-      return;
-    }
-
     const confirmed = window.confirm('정말 삭제하시겠습니까?');
     if (confirmed) {
       dispatch(__deletePostSlice(targetPostId));
@@ -105,97 +111,102 @@ const Detail = () => {
   };
 
   return (
-    <>
+    <St.WholeContainer>
       <div>
         {editMode ? (
-          <form onSubmit={onSubmitEditHandler}>
-            {/* ---selectArea------------------------------------ */}
-            <div>
-              <DropdownWrapper>
-                <DropdownHeader
-                  onClick={() => {
-                    setEditSelectAreaIsOpen((prev) => !prev);
-                  }}
-                >
-                  <span> {editSelectedOption || '선택해주세요!'} </span>
-                  <span>▼</span>
-                </DropdownHeader>
-                {editSelectAreaIsOpen && (
-                  <DropdownList>
-                    {options.map((option) => (
-                      <DropdownItem
-                        key={option}
-                        value={editSelectedOption}
-                        onClick={() => {
-                          handleOptionClick(option);
-                        }}
-                      >
-                        {option}
-                      </DropdownItem>
-                    ))}
-                  </DropdownList>
-                )}
-              </DropdownWrapper>
-            </div>
-            {/* ---------------------------------------------------- */}
-            <div className="editInputArea">
-              <input type="text" value={newPostTitle} onChange={onChangeNewPostTitleHandler} />
-              <input type="text" value={newPostBody} onChange={onChangeNewPostBodyHandler} />
-              <button>수정 완료</button>
-            </div>
-          </form>
+          <St.EditModalContainer>
+            <St.EditForm onSubmit={onSubmitEditHandler}>
+              {/* ---selectArea------------------------------------ */}
+              <div>
+                <St.DropdownWrapper>
+                  <St.DropdownHeader
+                    onClick={() => {
+                      setEditSelectAreaIsOpen((prev) => !prev);
+                    }}
+                  >
+                    <span> {editSelectedOption || '선택해주세요!'} </span>
+                    <span>▼</span>
+                  </St.DropdownHeader>
+                  {editSelectAreaIsOpen && (
+                    <St.DropdownList>
+                      {options.map((option) => (
+                        <St.DropdownItem
+                          key={option}
+                          value={editSelectedOption}
+                          onClick={() => {
+                            handleOptionClick(option);
+                          }}
+                        >
+                          {option}
+                        </St.DropdownItem>
+                      ))}
+                    </St.DropdownList>
+                  )}
+                </St.DropdownWrapper>
+              </div>
+              {/* ---------------------------------------------------- */}
+              <div className="editInputArea">
+                <St.TitleLabel>제목</St.TitleLabel>
+                <St.EditInput
+                  type="text"
+                  value={newPostTitle}
+                  onChange={onChangeNewPostTitleHandler}
+                  placeholder="제목을 5글자 이상 입력해주세요!"
+                />
+                <br />
+                <St.BodyLabel>내용</St.BodyLabel>
+                <St.EditTextarea
+                  type="text"
+                  value={newPostBody}
+                  onChange={onChangeNewPostBodyHandler}
+                  placeholder="본문 내용을 5글자 이상 입력해주세요!"
+                />
+                <br />
+                <div style={{ display: 'flex' }}>
+                  <div style={{ marginLeft: 'auto' }}>
+                    <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
+                    <PostStButton onClick style={{ marginLeft: '5px' }}>
+                      수정 완료
+                    </PostStButton>
+                  </div>
+                </div>
+
+                <br />
+              </div>
+            </St.EditForm>
+          </St.EditModalContainer>
         ) : null}
       </div>
-      <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
-        <li key={targetPost?.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            {targetPost?.postTitle}
-            <br />
-            {targetPost?.postBody}
-            <div>
-              {isSignedIn ? <button onClick={editModeHandler}>수정하기</button> : null}
-              {isSignedIn ? <button onClick={() => deleteHandler(postId)}>삭제하기</button> : null}
-              <button onClick={() => navigate('/')}>이전 화면으로</button>
-            </div>
-          </div>
-          <div>
-            <img src={targetPost?.postImg} alt="이미지 없음" />
-          </div>
-        </li>
-      </ul>
-    </>
+
+      <St.DetailContainer>
+        <St.DetailListsWrapper key={targetPost?.id}>
+          <St.DetailList>
+            <St.DetailBody>
+              <div style={{ fontSize: '20px', fontWeight: 'bold' }}>{targetPost?.postTitle}</div>
+              <br />
+              <div>{targetPost?.postBody}</div>
+              <div style={{ marginTop: '20px' }}>
+                {isSignedIn ? (
+                  <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
+                    수정하기
+                  </PostStButton>
+                ) : null}
+                {isSignedIn ? (
+                  <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
+                    삭제하기
+                  </PostStButton>
+                ) : null}
+                <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
+              </div>
+            </St.DetailBody>
+            <St.DetailImg>
+              <img src={targetPost?.postImg} alt="이미지 없음" width={'200px'} height={'200px'} />
+            </St.DetailImg>
+          </St.DetailList>
+        </St.DetailListsWrapper>
+      </St.DetailContainer>
+    </St.WholeContainer>
   );
 };
 
 export default Detail;
-
-//selectArea
-const DropdownWrapper = styled.div`
-  width: 200px;
-  border: 1px solid #ccc;
-  position: relative;
-  margin-bottom: 10px;
-`;
-
-const DropdownHeader = styled.div`
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const DropdownList = styled.div`
-  border-top: 1px solid #ccc;
-  position: absolute;
-  width: 200px;
-  border: 1px solid #ccc;
-  background-color: #ffffff;
-`;
-
-const DropdownItem = styled.div`
-  padding: 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: lightgray;
-  }
-`;

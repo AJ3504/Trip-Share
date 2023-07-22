@@ -48,6 +48,7 @@ export const St = {
     height: 100%;
     cursor: pointer;
     object-fit: cover;
+    image-rendering: -webkit-optimize-contrast !important ;
   `,
 
   ImageUploadBox: styled.div`

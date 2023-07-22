@@ -3,15 +3,14 @@ import { auth, db } from '../../service/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice } from '../../redux/modules/postsSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import { St } from '../authentication/MyPostsStyle';
+import { PostStButton } from '../common/PostStButton';
 
 const MyPosts = () => {
   //hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postId } = useParams();
-
-  //useSelector
-  // const myContents = useSelector((state) => state.)
 
   useEffect(() => {
     const fetchData = () => {
@@ -34,28 +33,38 @@ const MyPosts = () => {
   }
 
   return (
-    <div className="글목록">
-      <div>
-        {myPostsData?.map((myPostData) => {
-          return (
-            <ul style={{ border: 'solid', margin: '10px', padding: '10px' }}>
-              <li key={myPostData.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <St.MyPostContainer>
+      {myPostsData?.map((myPostData) => {
+        return (
+          <St.MyPostListsWrapper key={myPostData.id}>
+            <St.MyPostList>
+              <St.MyPostBody>
+                <p style={{ fontSize: '20px', fontWeight: 'bold' }}>{myPostData.postTitle}</p>
+                <br />
+                <p
+                  style={{
+                    width: '350px',
+                    height: '50px',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {myPostData.postBody}
+                </p>
+                <br />
                 <div>
-                  <li>{myPostData.postTitle}</li>
-                  <li>{myPostData.postBody}</li>
-                  <div>
-                    <button onClick={() => navigate(`/detail/${myPostData.id}`)}>자세히 보기</button>
-                  </div>
+                  <PostStButton onClick={() => navigate(`/detail/${myPostData.id}`)}>자세히 보기</PostStButton>
                 </div>
-                <div>
-                  <img src={myPostData.postImg} alt="이미지 없음" width={'70px'} height={'90px'} />
-                </div>
-              </li>
-            </ul>
-          );
-        })}
-      </div>
-    </div>
+              </St.MyPostBody>
+              <St.MyPostImg>
+                <img src={myPostData.postImg} alt="이미지 없음" width={'150px'} height={'150px'} />
+              </St.MyPostImg>
+            </St.MyPostList>
+          </St.MyPostListsWrapper>
+        );
+      })}
+    </St.MyPostContainer>
   );
 };
 
