@@ -5,6 +5,7 @@ import { db, storage } from '../../service/firebase';
 
 const initialState = {
   postsData: [],
+  nickNamesData: [], // nickNamesData를 초기 상태에 추가
   isLoading: false,
   isError: false,
   error: null
@@ -23,16 +24,17 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
       };
     });
 
-    // //작성자 닉네임 data
-    // //collection ref
-    // const colRef = collection(db, 'userInfo');
-    // //queries
-    // const nicknameQ = query(colRef, where('nickname', '==', currentNickname));
-    // //query Results
-    // const result = await getDocs(nicknameQ);
-    // const nData = result.docs[0]?.data();
+    //작성자 닉네임 data
+    //'userInfo' 컬렉션 내에서, 'nickname' 필드가 있는 모든 문서를 쿼리
+    const nicknameQ = query(collection(db, 'userInfo'));
+    const querySnapshotObj = await getDocs(nicknameQ);
 
-    return thunkAPI.fulfillWithValue(posts);
+    // querySnapshotObj으로부터 모든 문서들의 데이터를 배열로 변환
+    const result = querySnapshotObj.docs?.map((doc) => doc.data());
+
+    const nickNames = result.map((item) => item.nickname);
+
+    return thunkAPI.fulfillWithValue({ posts, nickNames });
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -89,7 +91,8 @@ export const postsSlice = createSlice({
     [__getPostsSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.postsData = action.payload;
+      state.postsData = action.payload.posts; //.posts 추가
+      state.nickNamesData = action.payload.nickNames; // nickNamesData를 업데이트
     },
 
     [__getPostsSlice.rejected]: (state, action) => {

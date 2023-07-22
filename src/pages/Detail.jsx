@@ -17,8 +17,6 @@ const Detail = () => {
   // const prevTitle = location.state.prevTitle;
   // const prevBody = location.state.prevBody;
 
-  const getProfile = useSelector((state) => state.userInfo);
-  const nickName = useSelector((state) => state.userInfo.nickname);
   const photoURL = useSelector((state) => state.userInfo.photoURL);
 
   const [editMode, setEditMode] = useState(false);
@@ -38,7 +36,28 @@ const Detail = () => {
     fetchData();
   }, [dispatch]);
 
-  const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
+  const { postsData, nickNamesData, isLoading, isError } = useSelector((state) => state.postsSlice);
+  console.log(postsData);
+  console.log(nickNamesData);
+
+  const getProfile = useSelector((state) => state.userInfo);
+  console.log(getProfile);
+
+  //postsData[i].uid === nickNamesData[i].uid인 nickNamesData[i]를 찾아야 함
+  const writerId = [];
+
+  for (const postData of postsData) {
+    for (const nicknameData of nickNamesData) {
+      if (postData.uid === nicknameData.uid) {
+        // 매칭된 데이터를 찾았을 때, nickname 프로퍼티를 추가하여 writerId 배열에 push
+        writerId.push({ ...postData, nickname: nicknameData.nickname });
+        break; // 중첩된 루프에서 더이상 탐색하지 않도록 break
+      }
+    }
+  }
+
+  console.log(writerId);
+
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
   }
@@ -176,7 +195,7 @@ const Detail = () => {
               <St.WriterInfoImageWrapper>
                 <St.WriterInfoImage src={photoURL} alt="writerInfo" />
               </St.WriterInfoImageWrapper>
-              <St.WriterInfoNickName>{nickName}</St.WriterInfoNickName>
+              <St.WriterInfoNickName>{nickNamesData}</St.WriterInfoNickName>
             </St.WriterInfoSection>
             {/* ---------------------------------------------------- */}
             <St.ContentSection>
