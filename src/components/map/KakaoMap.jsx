@@ -160,7 +160,13 @@ const KakaoMap = () => {
         {isModal && <PostWrite marker={selectedMarker} setIsModal={setIsModal} />}
         {showDetails ? (
           <DetailsContainer>
-            {selectedMarker && <StyledIframe title="place-details" src={selectedMarker.place_url} scrolling="no" />}
+            {selectedMarker && (
+              <StyledIframe
+                title="place-details"
+                src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
+                scrolling="no"
+              />
+            )}
             <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
               ⬅️
             </Button2>
