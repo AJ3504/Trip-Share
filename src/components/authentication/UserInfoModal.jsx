@@ -127,7 +127,7 @@ const UserInfoModal = () => {
                     <p>EMAIL</p>
                     <St.Input type="email" placeholder={getProfile.email} disabled={true} />
                     <p>NICKNAME</p>
-                    <St.Input type="text" maxLength={10} value={currentNickname} onChange={nicknameChangeHandler} />
+                    <St.Input type="text" maxLength={6} value={currentNickname} onChange={nicknameChangeHandler} />
 
                     <St.NicknameChangeBtn type="submit" onClick={updateProfile}>
                       닉네임 변경
