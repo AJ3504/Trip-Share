@@ -106,7 +106,7 @@ export const StSideBox = styled.ul`
   right: 0px;
   position: absolute;
   transition: 1s;
-  z-index: 999;
+  z-index: 1;
   overflow-y: hidden; /* Hide scrollbar by default */
 
   scrollbar-width: none; /* Firefox scrollbar hidden */

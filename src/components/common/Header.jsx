@@ -72,16 +72,9 @@ const Header = () => {
                 }
               />
 
-              <St.Nickname
-                onClick={() => {
-                  navigate('/mypage');
-                }}
-              >
-                {nickname}
+              <St.Nickname onClick={openDropdown}>
+                {nickname} {isDropdownOpen ? <BiSolidUpArrow /> : <BiSolidDownArrow />}
               </St.Nickname>
-              <St.ArrowIcons onClick={openDropdown}>
-                {isDropdownOpen ? <BiSolidUpArrow /> : <BiSolidDownArrow />}
-              </St.ArrowIcons>
               {isDropdownOpen ? (
                 <St.Dropdown>
                   <St.DropdownItem

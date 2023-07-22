@@ -85,12 +85,6 @@ export const St = {
     margin-left: 10px;
   `,
 
-  ArrowIcons: styled.div`
-    cursor: pointer;
-    margin-top: 16px;
-    margin-left: 5px;
-  `,
-
   Dropdown: styled.div`
     width: 100px;
     position: absolute;

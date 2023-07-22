@@ -4,7 +4,8 @@ export const St = {
   MyPostContainer: styled.div`
     position: relative;
     left: 230px;
-    height: 100vh;
+    /* height: 100vh; 이거 지워주시면 됩니다! (박제이) */
+    min-height: 100%;
     width: 100vw;
     display: flex;
     flex-direction: column;
