@@ -3,14 +3,24 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import LocationMarker from './LocationMarker';
 import { useSelector } from 'react-redux';
 
-const LocationMap = ({ currentPosition, markers, onMarkerClick, selectedMarker, showDetails, thumbnails, setMap }) => {
+const LocationMap = ({
+  currentPosition,
+  markers,
+  onMarkerClick,
+  selectedMarker,
+  showDetails,
+  thumbnails,
+  setMap,
+  setState,
+  setIsModal
+}) => {
   const { postsData } = useSelector((state) => state.postsSlice);
-  const [state, setState] = useState({
-    swLat: 0,
-    swLng: 0,
-    neLat: 90,
-    neLng: 180
-  });
+  // const [state, setState] = useState({
+  //   swLat: 0,
+  //   swLng: 0,
+  //   neLat: 90,
+  //   neLng: 180
+  // });
   const [option, setOption] = useState('');
 
   useEffect(() => {
@@ -26,6 +36,8 @@ const LocationMap = ({ currentPosition, markers, onMarkerClick, selectedMarker, 
   const handleCreateMap = (map) => {
     setMap(map); // map 객체를 설정
   };
+
+  const filteredPosts = postsData.filter((post) => post.category === `${option}`);
 
   return (
     <Map
@@ -49,24 +61,23 @@ const LocationMap = ({ currentPosition, markers, onMarkerClick, selectedMarker, 
           onClick={() => onMarkerClick(marker)}
           selectedMarker={selectedMarker === marker && showDetails ? selectedMarker : null}
           thumbnail={thumbnails[markers.indexOf(marker)]}
+          setIsModal={setIsModal}
         />
       ))}
-      {postsData
-        .filter((post) => post.category === `${option}`)
-        .map((post, index) => (
-          <MapMarker
-            key={`${post.postTitle}-${post.markerPosition}`}
-            position={post.markerPosition}
-            image={{
-              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-              size: {
-                width: 24,
-                height: 35
-              }
-            }}
-            title={post.postTitle}
-          />
-        ))}
+      {(option ? filteredPosts : postsData).map((post, index) => (
+        <MapMarker
+          key={`${post.postTitle}-${post.markerPosition}`}
+          position={post.markerPosition}
+          image={{
+            src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+            size: {
+              width: 24,
+              height: 35
+            }
+          }}
+          title={post.postTitle}
+        />
+      ))}
     </Map>
   );
 };

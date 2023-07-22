@@ -30,11 +30,8 @@ const KakaoMap = () => {
   const [option, setOption] = useState('');
 
   // 게시글 작성 modal
-  const [isModal, setIsModal] = useState(false);
 
-  const openModal = () => {
-    setIsModal(true);
-  };
+  const [isModal, setIsModal] = useState(false);
 
   // 카테고리 게시글 data
   const { postsData } = useSelector((state) => state.postsSlice);
@@ -186,6 +183,8 @@ const KakaoMap = () => {
             showDetails={showDetails}
             thumbnails={thumbnails}
             setMap={setMap}
+            setState={setState}
+            setIsModal={setIsModal}
           />
         </MapContainer>
         <div>

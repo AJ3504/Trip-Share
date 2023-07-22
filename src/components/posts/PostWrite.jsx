@@ -8,12 +8,6 @@ import { styled } from 'styled-components';
 const PostWrite = ({ marker, setIsModal }) => {
   const options = ['관광', '식당', '카페', '숙소'];
 
-  // const [isModal, setIsModal] = useState(false);
-
-  // const closeModal = () => {
-  //   setIsModal(false);
-  // };
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [option, setOption] = useState('');
