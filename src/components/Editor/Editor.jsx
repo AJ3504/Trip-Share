@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 
-const Editor = ({ value, onChange, onChangeNewPostBodyHandler }) => {
+const Editor = ({ value, onChange }) => {
   const quillRef = useRef();
   const [content, setContent] = useState(value);
 
@@ -16,7 +16,6 @@ const Editor = ({ value, onChange, onChangeNewPostBodyHandler }) => {
           [{ list: 'ordered' }, { list: 'bullet' }],
           [{ color: [] }, { background: [] }],
           [{ align: [] }, 'link']
-          //   [{ align: [] }, 'link', 'image'] 이미지를 추가하려면 이렇게 넣으면됩니다
         ]
       }
     };
@@ -29,7 +28,6 @@ const Editor = ({ value, onChange, onChangeNewPostBodyHandler }) => {
 
   return (
     <div>
-      {/* <button onClick={() => console.log(content)}>Value</button> */}
       <ReactQuill
         style={{ width: '450px', height: '300px' }}
         placeholder="내용을 입력해주세요"

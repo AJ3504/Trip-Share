@@ -18,7 +18,7 @@ const sanitizeHtml = (html) => {
   return { __html: sanitizedHtml };
 };
 
-const Detail = () => {
+const Detail = React.memo(() => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +31,6 @@ const Detail = () => {
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
-  // const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
   const [newPostBody, setNewPostBody] = useState('');
 
   //게시글 Data fetch
@@ -92,7 +91,6 @@ const Detail = () => {
 
     resetNewPostTitle('');
     setNewPostBody('');
-    // resetNewPostBody('');
   };
 
   const handleOptionClick = (option) => {
@@ -133,6 +131,21 @@ const Detail = () => {
                   PostStButton={PostStButton}
                   setEditMode={setEditMode}
                 />
+
+                <br />
+                <St.BodyLabel>내용</St.BodyLabel>
+                {/* 에디터로 변경 */}
+                <Editor value={newPostBody} onChange={(value) => setNewPostBody(value)} />
+                <br />
+                <div style={{ display: 'flex' }}>
+                  <div style={{ marginLeft: '150px', marginTop: '50px' }}>
+                    <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
+                    <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
+                  </div>
+                </div>
+
+                <br />
+
               </St.EditInputWrapper>
             </St.EditForm>
           </St.EditModalContainer>
@@ -160,7 +173,6 @@ const Detail = () => {
                 <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
                 <br />
                 {/* 에디터때문에 이 부분 수정했습니다  */}
-                {/* <div>{targetPost?.postBody}</div> */}
                 <div dangerouslySetInnerHTML={sanitizeHtml(targetPost?.postBody)} />
                 <div style={{ marginTop: '20px' }}></div>
               </St.Article>
@@ -179,6 +191,5 @@ const Detail = () => {
       </St.DetailContainer>
     </St.WholeContainer>
   );
-};
-
+});
 export default Detail;
