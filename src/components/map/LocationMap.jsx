@@ -67,8 +67,8 @@ const LocationMap = ({
           image={{
             src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
             size: {
-              width: 24,
-              height: 35
+              width: 26,
+              height: 38
             }
           }}
           title={post.postTitle}

@@ -149,13 +149,13 @@ export const StMarkerAddress = styled.div`
   display: flex;
 `;
 
-export const ContentWrapper = styled.div`
-  background-color: transparent;
-  padding: 20px;
+export const StRightContainer = styled.div`
+  width: 20%;
+  height: 100%;
 `;
 
-export const CategoryButton = styled.button`
-  background-color: transparent;
-
-  cursor: pointer;
+export const StMenuWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

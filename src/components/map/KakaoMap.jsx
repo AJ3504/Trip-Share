@@ -7,12 +7,14 @@ import {
   StMapContainer,
   StIframe,
   StSearchResult,
-  CategoryButton,
+  StCategoryMenu,
   StLeftContainer,
   StMainBody,
   StPlaceDetail,
   StIframeContainer,
-  StSearchContainer
+  StSearchContainer,
+  StRightContainer,
+  StMenuWrapper
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
@@ -41,7 +43,7 @@ const KakaoMap = () => {
     neLng: 180
   });
   const [option, setOption] = useState('');
-  const [showPostList, setShowPostList] = useState(true);
+  const [showPostList, setShowPostList] = useState(false);
 
   // 게시글 작성 modal
   const [isModal, setIsModal] = useState(false);
@@ -217,14 +219,53 @@ const KakaoMap = () => {
             setIsModal={setIsModal}
           />
         </StMapContainer>
-        <div>
-          <CategoryButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</CategoryButton>
-          <CategoryButton onClick={() => setOption('관광')}>관광</CategoryButton>
-          <CategoryButton onClick={() => setOption('식당')}>식당</CategoryButton>
-          <CategoryButton onClick={() => setOption('카페')}>카페</CategoryButton>
-          <CategoryButton onClick={() => setOption('숙소')}>숙소</CategoryButton>
+        {/* component 분리 */}
+        <StRightContainer>
+          <StMenuWrapper>
+            <PostStButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption(false);
+                setShowPostList(true);
+              }}
+            >
+              전체
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('관광');
+                setShowPostList(true);
+              }}
+            >
+              관광
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('식당');
+                setShowPostList(true);
+              }}
+            >
+              식당
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('카페');
+                setShowPostList(true);
+              }}
+            >
+              카페
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('숙소');
+                setShowPostList(true);
+              }}
+            >
+              숙소
+            </PostStButton>
+          </StMenuWrapper>
           {showPostList && <PostListMain option={option} position={state} />}
-        </div>
+        </StRightContainer>
       </StMainBody>
     </>
   );
