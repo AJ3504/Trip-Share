@@ -86,6 +86,8 @@ const PostWrite = ({ marker, setIsModal }) => {
     setIsModal(false);
   };
 
+  console.log(postBody);
+
   return (
     <StModalBox>
       <StModalContents>

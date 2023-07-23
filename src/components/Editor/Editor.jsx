@@ -1,10 +1,9 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill, { Quill } from 'react-quill';
-import ImageResize from 'quill-image-resize-module-react';
+import ImageResize from 'quill-image-resize';
 
-// 이미지 리사이즈를 위해 모듈을 Quill에 등록
-Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/ImageResize', ImageResize);
 
 const Editor = ({ value, onChange }) => {
   const quillRef = useRef();
@@ -28,7 +27,7 @@ const Editor = ({ value, onChange }) => {
         ]
       },
       imageResize: {
-        modules: ['Resize', 'DisplaySize', 'Toolbar']
+        parchment: Quill.import('parchment')
       }
     };
   }, []);

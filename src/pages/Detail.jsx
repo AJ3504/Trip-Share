@@ -154,11 +154,7 @@ const Detail = React.memo(() => {
                 <br />
                 <St.BodyLabel>내용</St.BodyLabel>
                 {/* 에디터로 변경 */}
-                <Editor
-                  style={{ width: '100%', height: '500px' }}
-                  value={newPostBody}
-                  onChange={(value) => setNewPostBody(value)}
-                />
+                <Editor value={newPostBody} onChange={(value) => setNewPostBody(value)} />
                 {/* <St.EditTextarea
                   type="text"
                   value={newPostBody}
@@ -182,7 +178,7 @@ const Detail = React.memo(() => {
 
       <St.DetailContainer>
         <St.DetailListsWrapper key={targetPost?.id}>
-          <St.DetailList>
+          <St.DetailList style={{ marginLeft: '400px' }}>
             <St.WriterInfoSection>
               <St.WriterInfoImageWrapper>
                 <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />

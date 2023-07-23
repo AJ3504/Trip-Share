@@ -39,7 +39,7 @@ export const St = {
     color: #555;
   `,
   EditInput: styled.input`
-    width: 90%;
+    width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -123,7 +123,7 @@ export const St = {
     //
 
     height: 100vh;
-    width: 100vw;
+    width: 60vw;
   `,
 
   DetailListsWrapper: styled.ul`
@@ -148,8 +148,8 @@ export const St = {
     padding-bottom: 20px;
     background-color: #fafafa;
     overflow: auto;
-    width: 900px;
-    height: 400px;
+    width: 1000px;
+    height: 550px;
   `,
 
   // section className="writerInfo"
