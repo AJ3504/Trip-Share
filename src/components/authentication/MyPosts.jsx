@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { auth, db } from '../../service/firebase';
+import { auth } from '../../service/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice } from '../../redux/modules/postsSlice';
 import { useNavigate, useParams } from 'react-router-dom';

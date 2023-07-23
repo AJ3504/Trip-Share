@@ -28,7 +28,6 @@ const Detail = React.memo(() => {
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
-  // const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
   const [newPostBody, setNewPostBody] = useState('');
 
   //게시글 Data fetch
@@ -90,7 +89,6 @@ const Detail = React.memo(() => {
 
     resetNewPostTitle('');
     setNewPostBody('');
-    // resetNewPostBody('');
   };
 
   const handleOptionClick = (option) => {
@@ -155,12 +153,6 @@ const Detail = React.memo(() => {
                 <St.BodyLabel>내용</St.BodyLabel>
                 {/* 에디터로 변경 */}
                 <Editor value={newPostBody} onChange={(value) => setNewPostBody(value)} />
-                {/* <St.EditTextarea
-                  type="text"
-                  value={newPostBody}
-                  onChange={onChangeNewPostBodyHandler}
-                  placeholder="본문 내용을 5글자 이상 입력해주세요!"
-                /> */}
                 <br />
                 <div style={{ display: 'flex' }}>
                   <div style={{ marginLeft: '150px', marginTop: '50px' }}>
@@ -202,7 +194,6 @@ const Detail = React.memo(() => {
                 <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
                 <br />
                 {/* 에디터때문에 이 부분 수정했습니다  */}
-                {/* <div>{targetPost?.postBody}</div> */}
                 <div dangerouslySetInnerHTML={sanitizeHtml(targetPost?.postBody)} />
                 <div style={{ marginTop: '20px' }}></div>
               </St.Article>
