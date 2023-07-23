@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const StPostContainer = styled.div`
-  background-color: bisque;
+  /* background-color: bisque; */
 
   right: 0px;
+  height: 824px;
   /* display: flex; */
 
   scrollbar-width: none;
@@ -19,20 +20,20 @@ export const StPostContainer = styled.div`
 `;
 
 export const StPostList = styled.div`
-  /* cursor: pointer; */
+  cursor: pointer;
 
-  /* display: flex;
+  display: flex;
   align-items: center;
   margin: 16px;
   border-radius: 10px;
 
   background-color: rgb(230, 241, 245);
-  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.18); */
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.18);
 
-  /* border: solid;
+  border: solid;
   margin: 10px;
   padding: 10px;
-  display: flex; */
+  display: flex;
 `;
 
 export const StModalBox = styled.div`
@@ -55,6 +56,7 @@ export const StModalContents = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-width: 450px;
   width: 90%;
+  margin-bottom: 6.25rem;
 `;
 
 export const StOptionWrapper = styled.div`

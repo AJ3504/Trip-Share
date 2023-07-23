@@ -85,5 +85,6 @@ export const St = {
     border-radius: 5px;
     outline: none;
     cursor: pointer;
+    background-color: rgb(255, 255, 205);
   `
 };

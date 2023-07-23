@@ -191,7 +191,7 @@ const KakaoMap = () => {
                       scrolling="no"
                     />
                   </StIframeContainer>
-                  <PostStButton onClick={() => setShowDetails(false)}>숨김</PostStButton>
+                  <StButton onClick={() => setShowDetails(false)}>←</StButton>
                 </StPlaceDetail>
               )}
             </StPlaceContainer>
@@ -222,7 +222,10 @@ const KakaoMap = () => {
         {/* component 분리 */}
         <StRightContainer>
           <StMenuWrapper>
-            <PostStButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</PostStButton>
+            {/* <PostStButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</PostStButton> */}
+            <PostStButton style={{ fontSize: '8px' }} onClick={togglePostList}>
+              {showPostList ? '⬆️' : '⬇️'}
+            </PostStButton>
             <PostStButton
               onClick={() => {
                 setOption(false);
