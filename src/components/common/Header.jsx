@@ -62,6 +62,7 @@ const Header = () => {
     <>
       <St.Header>
         <St.MenuWrapper>
+          {/* 로그인된 상태인 경우 프로필 + 드롭다운 / 로그아웃 상태인 경우 로그인 + 회원가입 노출 */}
           {currentUser ? (
             <>
               <St.ProfileImg
@@ -73,6 +74,7 @@ const Header = () => {
               />
 
               <St.Nickname onClick={openDropdown}>
+                {/* 드롭다운 오픈 유무에 따라 아이콘 변경 */}
                 {nickname} {isDropdownOpen ? <BiSolidUpArrow /> : <BiSolidDownArrow />}
               </St.Nickname>
               {isDropdownOpen ? (
