@@ -16,6 +16,6 @@ const Layout = ({ children }) => {
 export default Layout;
 
 export const StBody = styled.div`
-  min-height: calc(100vh);
-  padding-top: 100px;
+  /* min-height: calc(100vh); */
+  /* padding-top: 100px; */
 `;

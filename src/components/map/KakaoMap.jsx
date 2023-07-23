@@ -14,7 +14,8 @@ import {
   StIframeContainer,
   StSearchContainer,
   StRightContainer,
-  StMenuWrapper
+  StMenuWrapper,
+  StPlaceSearch
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
@@ -196,14 +197,14 @@ const KakaoMap = () => {
               )}
             </>
           ) : (
-            <>
+            <StPlaceSearch>
               <Search searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleSearch={handleSearch} />
               <SearchResult
                 searchResults={searchResults}
                 handleResultClick={handleResultClick}
                 thumbnails={thumbnails}
               />
-            </>
+            </StPlaceSearch>
           )}
         </StLeftContainer>
         <StMapContainer>

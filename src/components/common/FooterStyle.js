@@ -4,7 +4,7 @@ export const St = {
   Footer: styled.footer`
     bottom: 0;
     width: 100%;
-    height: 40px;
+    /* height: 100%; */
     display: flex;
     position: relative;
     align-items: center;
@@ -16,7 +16,8 @@ export const St = {
     }
   `,
   P: styled.p`
-    margin: 5px 5px 0 12px;
+    margin: 10px;
+    font-size: 13px;
     display: flex;
     align-items: center;
   `

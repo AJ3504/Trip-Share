@@ -6,7 +6,7 @@ export const St = {
     left: 230px;
     /* height: 100vh; 이거 지워주시면 됩니다! (박제이) */
     min-height: 100%;
-    width: 100vw;
+    width: 100vh;
     display: flex;
     flex-direction: column;
     text-align: center;

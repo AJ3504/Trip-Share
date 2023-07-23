@@ -1,21 +1,13 @@
 import styled from 'styled-components';
 
 export const StPostContainer = styled.div`
-  /* background-color: bisque; */
-
-  right: 0px;
-  height: 824px;
-  /* display: flex; */
+  height: 79vh;
+  overflow: auto;
 
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
-  }
-
-  overflow-y: hidden;
-  &:hover {
-    overflow-y: scroll;
   }
 `;
 
@@ -33,7 +25,7 @@ export const StPostList = styled.div`
   border: solid;
   margin: 10px;
   padding: 10px;
-  display: flex;
+  height: 100px;
 `;
 
 export const StModalBox = styled.div`

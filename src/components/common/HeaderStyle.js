@@ -3,12 +3,12 @@ import { styled } from 'styled-components';
 export const St = {
   Header: styled.header`
     width: 100%;
-    height: 90px;
+    height: 113px;
     background-color: rgb(236, 249, 255);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
+    /* position: fixed; */
     z-index: 2;
   `,
   MenuWrapper: styled.div`

@@ -9,9 +9,20 @@ export const StLeftContainer = styled.div`
   height: 100%;
 `;
 
+export const StPlaceSearch = styled.div`
+  width: 100%;
+  height: 85vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
 export const StSearchInputContainer = styled.div`
+  width: 100%;
   height: 4vh;
-  padding: 6px;
+  padding: 10px;
 
   display: flex;
   align-items: center;
@@ -41,6 +52,8 @@ export const StSearchResultContainer = styled.div`
 export const StSearchResultList = styled.div`
   cursor: pointer;
 
+  height: 100px;
+
   display: flex;
   align-items: center;
   margin: 16px;
@@ -51,8 +64,8 @@ export const StSearchResultList = styled.div`
 `;
 
 export const StSearchImage = styled.img`
-  width: 30%;
-  height: 30%;
+  width: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 10px 0 0 10px;
 `;
@@ -86,6 +99,7 @@ export const StSearchPhone = styled.div`
 
 export const StPlaceDetail = styled.div`
   width: 100%;
+  height: 85vh;
 
   display: flex;
   align-items: center;
@@ -94,7 +108,7 @@ export const StPlaceDetail = styled.div`
 
 export const StIframeContainer = styled.div`
   flex: 1;
-  height: 100vh;
+  height: 85vh;
 
   overflow: auto;
   scrollbar-width: none;
@@ -125,7 +139,7 @@ export const StButton = styled.button`
 
 export const StMapContainer = styled.div`
   width: 80%;
-  height: 100vh;
+  height: 85vh;
 `;
 
 export const StMarkerContents = styled.div`
@@ -158,11 +172,15 @@ export const StMarkerAddress = styled.div`
 `;
 
 export const StRightContainer = styled.div`
-  width: 20%;
+  width: 22%;
   height: 100%;
 `;
 
 export const StMenuWrapper = styled.div`
+  width: auto;
+  height: 4vh;
+  padding: 10px;
+
   display: flex;
   align-items: center;
   justify-content: center;
