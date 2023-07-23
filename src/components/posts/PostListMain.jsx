@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
-import { StSideBox } from './PostStyle';
+import { StPostContainer, StPostList } from './PostStyle';
 
 const PostListMain = ({ option, position }) => {
   const [] = useState();
@@ -43,12 +43,12 @@ const PostListMain = ({ option, position }) => {
   const filteredPosts = statedPosts.filter((post) => post.category === `${option}`);
 
   return (
-    <StSideBox>
+    <StPostContainer>
       {(option ? filteredPosts : statedPosts).map((post) => {
         const truncatedTitle = post.postTitle.length > 5 ? post.postTitle.substring(0, 5) + '...' : post.postTitle;
         const truncatedBody = post.postBody.length > 10 ? post.postBody.substring(0, 10) + '...' : post.postBody;
         return (
-          <div key={post.id} style={{ border: 'solid', margin: '10px', padding: '10px', display: 'flex' }}>
+          <StPostList key={post.id}>
             <div style={{ flex: 1 }}>
               <ul>
                 <li>{post.category}</li>
@@ -60,10 +60,10 @@ const PostListMain = ({ option, position }) => {
             <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
               <img src={post.postImg} alt="Post Image" style={{ width: '80px', height: '80px' }} />
             </div>
-          </div>
+          </StPostList>
         );
       })}
-    </StSideBox>
+    </StPostContainer>
   );
 };
 
