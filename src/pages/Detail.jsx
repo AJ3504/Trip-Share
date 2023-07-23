@@ -15,7 +15,7 @@ const sanitizeHtml = (html) => {
   return { __html: sanitizedHtml };
 };
 
-const Detail = () => {
+const Detail = React.memo(() => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,8 +50,6 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
-  // console.log(targetPost.writerNickname);
-  // console.log(targetPost.writerPhotoURL);
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -85,7 +83,7 @@ const Detail = () => {
       markerPosition: targetPost.markerPosition,
       writerNickname: targetPost.writerNickname,
       writerPhotoURL: targetPost.writerPhotoURL,
-      postImg: targetPost.postImg
+      postImg: targetPost.postImg || null
     };
 
     dispatch(__updatePostSlice(editedPost));
@@ -227,6 +225,5 @@ const Detail = () => {
       </St.DetailContainer>
     </St.WholeContainer>
   );
-};
-
+});
 export default Detail;

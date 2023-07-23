@@ -39,7 +39,7 @@ export const St = {
     color: #555;
   `,
   EditInput: styled.input`
-    width: 100%;
+    width: 90%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;

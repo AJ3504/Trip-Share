@@ -57,10 +57,10 @@ const PostWrite = ({ marker, setIsModal }) => {
   const onSubmitNewPost = async (e) => {
     e.preventDefault();
 
-    // if (postTitle.trim() === '' || postBody.trim() === '') {
-    //   alert('제목과 내용을 입력해주세요.');
-    //   return;
-    // }
+    if (postTitle.trim() === '' || postBody.trim() === '') {
+      alert('제목과 내용을 입력해주세요.');
+      return;
+    }
 
     if (postImg != null) {
       const imageRef = ref(storage, `${auth.currentUser.uid}/${postImg.name}`);
@@ -86,8 +86,6 @@ const PostWrite = ({ marker, setIsModal }) => {
     setIsModal(false);
   };
 
-  console.log('제목부분', postTitle);
-  console.log('내용부분', postBody);
   return (
     <StModalBox>
       <StModalContents>
