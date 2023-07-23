@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { auth } from '../service/firebase';
 import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/modules/postsSlice';
-import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 import { St } from './DetailStyle';
 import { PostStButton } from '../components/common/PostStButton';
@@ -14,10 +13,6 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   const { postId } = useParams();
-  // const prevTitle = location.state.prevTitle;
-  // const prevBody = location.state.prevBody;
-
-  const photoURL = useSelector((state) => state.userInfo.photoURL);
 
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
@@ -37,8 +32,6 @@ const Detail = () => {
   }, [dispatch]);
 
   const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
-  // const getProfile = useSelector((state) => state.userInfo);
-  // console.log(getProfile);
 
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
