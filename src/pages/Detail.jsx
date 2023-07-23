@@ -69,10 +69,10 @@ const Detail = () => {
     e.preventDefault();
 
     if (!newPostTitle || !newPostBody) {
-      alert('제목과 본문을 모두 입력해주세요!');
+      alert('제목과 본문을 입력해주세요!');
       return;
-    } else if (newPostTitle.length < 5 || newPostBody.length < 5) {
-      alert('제목과 본문을 5글자 이상 입력해주세요!');
+    } else if (newPostTitle.length < 0 || newPostBody.length < 0) {
+      alert('제목과 본문을 입력해주세요!');
       return;
     }
 
