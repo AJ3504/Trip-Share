@@ -146,7 +146,8 @@ export const St = {
     padding-top: 25px;
     padding-bottom: 20px;
     background-color: #fafafa;
-    height: 300px;
+    overflow: auto;
+    height: 400px;
   `,
 
   // section className="writerInfo"
@@ -190,8 +191,9 @@ export const St = {
     top: 10px;
     line-height: 1.5;
     text-align: justify;
-    width: 500px;
+    width: 700px;
     height: 30px;
+    padding-bottom: 50px;
   `,
 
   TitleLetter: styled.p`

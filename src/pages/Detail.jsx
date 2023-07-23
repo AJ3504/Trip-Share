@@ -76,7 +76,7 @@ const Detail = () => {
       markerPosition: targetPost.markerPosition,
       writerNickname: targetPost.writerNickname,
       writerPhotoURL: targetPost.writerPhotoURL,
-      postImg: targetPost.postImg
+      postImg: targetPost.postImg || null
     };
 
     dispatch(__updatePostSlice(editedPost));
