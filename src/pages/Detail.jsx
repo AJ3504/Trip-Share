@@ -9,6 +9,9 @@ import { PostStButton } from '../components/common/PostStButton';
 import DOMPurify from 'dompurify';
 
 import Editor from '../components/Editor/Editor';
+import PostEditSelectArea from '../components/posts/PostEditSelectArea';
+import PostEditInputArea from '../components/posts/PostEditInputArea';
+import PostEditButtonArea from '../components/posts/PostEditButtonArea';
 
 const sanitizeHtml = (html) => {
   const sanitizedHtml = DOMPurify.sanitize(html);
@@ -50,10 +53,7 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
-  // console.log(targetPost.writerNickname);
-  // console.log(targetPost.writerPhotoURL);
 
-  //------------------------------------------------------------------------------------------
   //event Handler
   const isSignedIn = auth.currentUser && targetPost.uid === auth.currentUser.uid;
 
@@ -116,66 +116,23 @@ const Detail = () => {
         {editMode ? (
           <St.EditModalContainer>
             <St.EditForm onSubmit={onSubmitEditHandler}>
-              {/* ---selectArea------------------------------------ */}
-              <div>
-                <St.DropdownWrapper>
-                  <St.DropdownHeader
-                    onClick={() => {
-                      setEditSelectAreaIsOpen((prev) => !prev);
-                    }}
-                  >
-                    <span> {editSelectedOption || '선택해주세요!'} </span>
-                    <span>▼</span>
-                  </St.DropdownHeader>
-                  {editSelectAreaIsOpen && (
-                    <St.DropdownList>
-                      {options.map((option) => (
-                        <St.DropdownItem
-                          key={option}
-                          value={editSelectedOption}
-                          onClick={() => {
-                            handleOptionClick(option);
-                          }}
-                        >
-                          {option}
-                        </St.DropdownItem>
-                      ))}
-                    </St.DropdownList>
-                  )}
-                </St.DropdownWrapper>
-              </div>
-              {/* ---------------------------------------------------- */}
+              <PostEditSelectArea
+                handleOptionClick={handleOptionClick}
+                setEditSelectAreaIsOpen={setEditSelectAreaIsOpen}
+                editSelectedOption={editSelectedOption}
+                editSelectAreaIsOpen={editSelectAreaIsOpen}
+                options={options}
+              />
               <St.EditInputWrapper>
-                <St.TitleLabel>제목</St.TitleLabel>
-                <St.EditInput
-                  type="text"
-                  value={newPostTitle}
-                  onChange={onChangeNewPostTitleHandler}
-                  placeholder="제목을 5글자 이상 입력해주세요!"
+                <PostEditInputArea
+                  newPostTitle={newPostTitle}
+                  onChangeNewPostTitleHandler={onChangeNewPostTitleHandler}
+                  Editor={Editor}
+                  newPostBody={newPostBody}
+                  setNewPostBody={setNewPostBody}
+                  PostStButton={PostStButton}
+                  setEditMode={setEditMode}
                 />
-                <br />
-                <St.BodyLabel>내용</St.BodyLabel>
-                {/* 에디터로 변경 */}
-                <Editor
-                  style={{ width: '100%', height: '500px' }}
-                  value={newPostBody}
-                  onChange={(value) => setNewPostBody(value)}
-                />
-                {/* <St.EditTextarea
-                  type="text"
-                  value={newPostBody}
-                  onChange={onChangeNewPostBodyHandler}
-                  placeholder="본문 내용을 5글자 이상 입력해주세요!"
-                /> */}
-                <br />
-                <div style={{ display: 'flex' }}>
-                  <div style={{ marginLeft: '150px', marginTop: '50px' }}>
-                    <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
-                    <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
-                  </div>
-                </div>
-
-                <br />
               </St.EditInputWrapper>
             </St.EditForm>
           </St.EditModalContainer>
@@ -191,20 +148,15 @@ const Detail = () => {
               </St.WriterInfoImageWrapper>
               <St.WriterInfoNickName>{targetPost?.writerNickname}</St.WriterInfoNickName>
             </St.WriterInfoSection>
-            {/* ---------------------------------------------------- */}
             <St.ContentSection>
               <St.Article>
-                {isSignedIn ? (
-                  <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
-                    수정하기
-                  </PostStButton>
-                ) : null}
-                {isSignedIn ? (
-                  <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
-                    삭제하기
-                  </PostStButton>
-                ) : null}
-                <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
+                <PostEditButtonArea
+                  isSignedIn={isSignedIn}
+                  PostStButton={PostStButton}
+                  editModeHandler={editModeHandler}
+                  deleteHandler={deleteHandler}
+                  postId={postId}
+                />
                 <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
                 <br />
                 {/* 에디터때문에 이 부분 수정했습니다  */}
