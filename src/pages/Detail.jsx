@@ -15,7 +15,7 @@ const sanitizeHtml = (html) => {
   return { __html: sanitizedHtml };
 };
 
-const Detail = () => {
+const Detail = React.memo(() => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,8 +50,6 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
-  // console.log(targetPost.writerNickname);
-  // console.log(targetPost.writerPhotoURL);
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -156,11 +154,7 @@ const Detail = () => {
                 <br />
                 <St.BodyLabel>내용</St.BodyLabel>
                 {/* 에디터로 변경 */}
-                <Editor
-                  style={{ width: '100%', height: '500px' }}
-                  value={newPostBody}
-                  onChange={(value) => setNewPostBody(value)}
-                />
+                <Editor value={newPostBody} onChange={(value) => setNewPostBody(value)} />
                 {/* <St.EditTextarea
                   type="text"
                   value={newPostBody}
@@ -184,7 +178,7 @@ const Detail = () => {
 
       <St.DetailContainer>
         <St.DetailListsWrapper key={targetPost?.id}>
-          <St.DetailList>
+          <St.DetailList style={{ marginLeft: '400px' }}>
             <St.WriterInfoSection>
               <St.WriterInfoImageWrapper>
                 <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />
@@ -227,6 +221,5 @@ const Detail = () => {
       </St.DetailContainer>
     </St.WholeContainer>
   );
-};
-
+});
 export default Detail;
