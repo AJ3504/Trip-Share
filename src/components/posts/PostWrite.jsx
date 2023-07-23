@@ -85,71 +85,69 @@ const PostWrite = ({ marker, setIsModal }) => {
   };
 
   return (
-    <>
-      <StModalBox>
-        <StModalContents>
-          <CloseButton
-            onClick={() => {
-              setIsModal(false);
-            }}
-          >
-            ❌
-          </CloseButton>
-          <h3
-            style={{
-              textAlign: 'center',
-              fontSize: '30px',
-              marginBottom: '30px'
-            }}
-          >
-            게시글 작성
-          </h3>
-          <form onSubmit={onSubmitNewPost}>
-            <StOptionWrapper>
-              <StOptionHeader
-                onClick={() => {
-                  setIsOpen((prev) => !prev);
-                }}
-              >
-                <span>{selectedOption || '카테고리'}</span>
-                <span>{isOpen ? '▴' : '▾'}</span>
-              </StOptionHeader>
-              {isOpen && (
-                <StOptionList>
-                  {options.map((option) => (
-                    <StOptionItem
-                      key={option}
-                      onClick={() => {
-                        handelOptionClick(option);
-                      }}
-                    >
-                      {option}
-                    </StOptionItem>
-                  ))}
-                </StOptionList>
-              )}
-            </StOptionWrapper>
-            <StLabel>제목</StLabel>
-            <StInput type="text" value={postTitle} name="title" onChange={onChangePost} />
-            <StLabel>내용</StLabel>
-            <St.EditTextarea
-              style={{ width: '425px' }}
-              type="text"
-              value={postBody}
-              name="body"
-              onChange={onChangePost}
-            />
-            <div style={{ marginLeft: '200px', marginBottom: '10px' }}>
-              <StLabel>사진</StLabel>
-            </div>
-            <StInput style={{ width: '250px', marginLeft: '80px' }} type="file" onChange={imgSelect} />
-            <PostStButton type="submit" style={{ marginLeft: '150px' }}>
-              글 작성하기
-            </PostStButton>
-          </form>
-        </StModalContents>
-      </StModalBox>
-    </>
+    <StModalBox>
+      <StModalContents>
+        <CloseButton
+          onClick={() => {
+            setIsModal(false);
+          }}
+        >
+          ❌
+        </CloseButton>
+        <h3
+          style={{
+            textAlign: 'center',
+            fontSize: '30px',
+            marginBottom: '30px'
+          }}
+        >
+          게시글 작성
+        </h3>
+        <form onSubmit={onSubmitNewPost}>
+          <StOptionWrapper>
+            <StOptionHeader
+              onClick={() => {
+                setIsOpen((prev) => !prev);
+              }}
+            >
+              <span>{selectedOption || '카테고리'}</span>
+              <span>{isOpen ? '▴' : '▾'}</span>
+            </StOptionHeader>
+            {isOpen && (
+              <StOptionList>
+                {options.map((option) => (
+                  <StOptionItem
+                    key={option}
+                    onClick={() => {
+                      handelOptionClick(option);
+                    }}
+                  >
+                    {option}
+                  </StOptionItem>
+                ))}
+              </StOptionList>
+            )}
+          </StOptionWrapper>
+          <StLabel>제목</StLabel>
+          <StInput type="text" value={postTitle} name="title" onChange={onChangePost} />
+          <StLabel>내용</StLabel>
+          <St.EditTextarea
+            style={{ width: '425px' }}
+            type="text"
+            value={postBody}
+            name="body"
+            onChange={onChangePost}
+          />
+          <div style={{ marginLeft: '200px', marginBottom: '10px' }}>
+            <StLabel>사진</StLabel>
+          </div>
+          <StInput style={{ width: '250px', marginLeft: '80px' }} type="file" onChange={imgSelect} />
+          <PostStButton type="submit" style={{ marginLeft: '150px' }}>
+            글 작성하기
+          </PostStButton>
+        </form>
+      </StModalContents>
+    </StModalBox>
   );
 };
 

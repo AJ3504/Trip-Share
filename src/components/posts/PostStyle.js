@@ -1,5 +1,40 @@
 import styled from 'styled-components';
 
+export const StPostContainer = styled.div`
+  background-color: bisque;
+
+  right: 0px;
+  /* display: flex; */
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  overflow-y: hidden;
+  &:hover {
+    overflow-y: scroll;
+  }
+`;
+
+export const StPostList = styled.div`
+  /* cursor: pointer; */
+
+  /* display: flex;
+  align-items: center;
+  margin: 16px;
+  border-radius: 10px;
+
+  background-color: rgb(230, 241, 245);
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.18); */
+
+  /* border: solid;
+  margin: 10px;
+  padding: 10px;
+  display: flex; */
+`;
+
 export const StModalBox = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -96,27 +131,4 @@ export const StInput = styled.input`
 
 export const StLabel = styled.label`
   font-weight: bold;
-`;
-
-export const StSideBox = styled.ul`
-  background-color: lightblue;
-  width: 20%;
-  height: 97.3%;
-  right: 0px;
-  position: absolute;
-  transition: 1s;
-  z-index: 1;
-  /* Hide scrollbar by default */
-  overflow-y: hidden;
-  /* Firefox scrollbar hidden */
-  scrollbar-width: none;
-  /* IE/Edge scrollbar hidden */
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  /* Show scrollbar when hovering */
-  &:hover {
-    overflow-y: scroll;
-  }
 `;

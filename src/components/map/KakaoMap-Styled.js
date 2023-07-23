@@ -9,38 +9,6 @@ export const StLeftContainer = styled.div`
   height: 100%;
 `;
 
-export const StPlaceContainer = styled.div`
-  height: 100%;
-  align-items: center;
-`;
-
-export const StPlaceDetail = styled.div`
-  display: flex;
-`;
-
-export const StIframeContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-
-  overflow: auto;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-export const StIframe = styled.iframe`
-  width: 100%;
-  height: 4200px;
-`;
-
-export const StButton = styled.button`
-  cursor: pointer;
-  background-color: transparent;
-`;
-
 export const StSearchInputContainer = styled.div`
   height: 4vh;
   padding: 6px;
@@ -116,6 +84,38 @@ export const StSearchPhone = styled.div`
   font-style: oblique;
 `;
 
+export const StPlaceContainer = styled.div`
+  height: 100%;
+  align-items: center;
+`;
+
+export const StPlaceDetail = styled.div`
+  display: flex;
+`;
+
+export const StIframeContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  overflow: auto;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const StIframe = styled.iframe`
+  width: 100%;
+  height: 4200px;
+`;
+
+export const StButton = styled.button`
+  cursor: pointer;
+  background-color: transparent;
+`;
+
 export const StMapContainer = styled.div`
   width: 80%;
   height: 100vh;
@@ -149,13 +149,13 @@ export const StMarkerAddress = styled.div`
   display: flex;
 `;
 
-export const ContentWrapper = styled.div`
-  background-color: transparent;
-  padding: 20px;
+export const StRightContainer = styled.div`
+  width: 20%;
+  height: 100%;
 `;
 
-export const CategoryButton = styled.button`
-  background-color: transparent;
-
-  cursor: pointer;
+export const StMenuWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
