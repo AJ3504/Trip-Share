@@ -56,6 +56,7 @@ export const StModalContents = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-width: 450px;
   width: 90%;
+  margin-bottom: 6.25rem;
 `;
 
 export const StOptionWrapper = styled.div`
