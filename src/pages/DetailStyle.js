@@ -29,6 +29,7 @@ export const St = {
     justify-content: center;
     z-index: 999;
   `,
+
   EditInputWrapper: styled.section`
     width: 65%;
     margin-top: 40px;

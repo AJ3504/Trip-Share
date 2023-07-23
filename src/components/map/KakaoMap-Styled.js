@@ -84,23 +84,19 @@ export const StSearchPhone = styled.div`
   font-style: oblique;
 `;
 
-export const StPlaceContainer = styled.div`
-  height: 100%;
-  align-items: center;
-`;
-
 export const StPlaceDetail = styled.div`
+  width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const StIframeContainer = styled.div`
-  width: 100vh;
+  flex: 1;
   height: 100vh;
 
   overflow: auto;
-
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -114,11 +110,17 @@ export const StIframe = styled.iframe`
 `;
 
 export const StButton = styled.button`
+  width: 7%;
+  height: 100vh;
+
   cursor: pointer;
   background-color: transparent;
   border: none;
+  font-size: 30px;
 
-  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StMapContainer = styled.div`

@@ -181,7 +181,7 @@ const KakaoMap = () => {
         {isModal && <PostWrite marker={selectedMarker} setIsModal={setIsModal} />}
         <StLeftContainer>
           {showDetails ? (
-            <StPlaceContainer>
+            <>
               {selectedMarker && (
                 <StPlaceDetail>
                   <StIframeContainer>
@@ -194,7 +194,7 @@ const KakaoMap = () => {
                   <StButton onClick={() => setShowDetails(false)}>←</StButton>
                 </StPlaceDetail>
               )}
-            </StPlaceContainer>
+            </>
           ) : (
             <>
               <Search searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleSearch={handleSearch} />
