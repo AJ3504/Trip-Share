@@ -116,21 +116,13 @@ export const St = {
 
   //  ------------------상세게시글 ------------------//
   DetailContainer: styled.div`
-    //
-    position: relative;
-    left: 10px;
-    top: 30px;
-    //
-
+    margin-top: 5%;
     height: 100vh;
-    width: 60vw;
   `,
 
   DetailListsWrapper: styled.ul`
-    //
     display: flex;
     flex-direction: column;
-    //
 
     justify-content: space-between;
     text-align: center;
@@ -139,9 +131,8 @@ export const St = {
   DetailList: styled.li`
     border-radius: 7px;
     box-shadow: 5px 5px 10px #eee;
-    margin: 15px;
-    margin-left: 30px;
-    margin-right: 50px;
+    display: inline-block;
+    margin: 0 auto;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 25px;
