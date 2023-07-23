@@ -31,8 +31,8 @@ export const St = {
   `,
 
   EditInputWrapper: styled.section`
-    width: 65%;
-    margin-top: 40px;
+    width: 42.5%;
+    /* margin-top: 40px; */
   `,
 
   TitleLabel: styled.label`
@@ -148,6 +148,7 @@ export const St = {
     padding-bottom: 20px;
     background-color: #fafafa;
     height: 300px;
+    /* height: auto; */
   `,
 
   // section className="writerInfo"
