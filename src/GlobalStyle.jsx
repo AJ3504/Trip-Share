@@ -6,6 +6,7 @@ ${reset}
 
 *{
     font-family: 'NanumSquareNeo-Variable', sans-serif;
+    outline:none;
 }
 
 body {
