@@ -102,7 +102,7 @@ export const StLabel = styled.label`
 export const StSideBox = styled.ul`
   background-color: lightblue;
   width: 20%;
-  height: 97.3%;
+  height: 97.8%;
   right: 0px;
   position: absolute;
   transition: 1s;
