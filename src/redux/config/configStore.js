@@ -7,7 +7,7 @@ const store = configureStore({
     postsSlice,
     userInfo: userInfoSlice
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+  middleware: getDefaultMiddleware({ serializableCheck: false }),
   devTools: true
 });
 
