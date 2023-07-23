@@ -140,18 +140,23 @@ export const St = {
     border-radius: 7px;
     box-shadow: 5px 5px 10px #eee;
     margin: 15px;
+    margin-left: 30px;
     margin-right: 50px;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 25px;
     padding-bottom: 20px;
     background-color: #fafafa;
-    height: 300px;
-    /* height: auto; */
+    overflow: auto;
+    width: 900px;
+    height: 400px;
   `,
 
   // section className="writerInfo"
-  WriterInfoSection: styled.section``,
+  WriterInfoSection: styled.section`
+    width: 6%;
+    padding: 8px;
+  `,
 
   WriterInfoImageWrapper: styled.div`
     width: 50px;
@@ -172,8 +177,8 @@ export const St = {
     color: #a8b0c4da;
     padding-top: 5px;
 
-    position: absolute;
-    left: 60px;
+    text-align: left;
+    margin-left: 10px;
   `,
 
   // section className="content"
@@ -182,7 +187,7 @@ export const St = {
     display: flex;
     justify-content: space-between;
     //
-    margin-top: 50px;
+    margin-top: 40px;
   `,
 
   Article: styled.div`
@@ -191,7 +196,7 @@ export const St = {
     top: 10px;
     line-height: 1.5;
     text-align: justify;
-    width: 500px;
+    width: 55.5%;
     height: 30px;
   `,
 
