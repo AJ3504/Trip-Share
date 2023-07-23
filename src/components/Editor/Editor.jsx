@@ -1,10 +1,19 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
+
+// 이미지 리사이즈를 위해 모듈을 Quill에 등록
+Quill.register('modules/imageResize', ImageResize);
 
 const Editor = ({ value, onChange }) => {
   const quillRef = useRef();
   const [content, setContent] = useState(value);
+
+  // 이미지 리사이즈를 위해 모듈을 Quill에 등록
+  // useEffect(() => {
+  //   Quill.register('modules/imageResize', ImageResize);
+  // }, []);
 
   const modules = useMemo(() => {
     return {
@@ -17,6 +26,9 @@ const Editor = ({ value, onChange }) => {
           [{ color: [] }, { background: [] }],
           [{ align: [] }, 'link', 'image']
         ]
+      },
+      imageResize: {
+        modules: ['Resize', 'DisplaySize', 'Toolbar']
       }
     };
   }, []);
@@ -56,13 +68,13 @@ const Editor = ({ value, onChange }) => {
         const imgSrc = imageTag.match(/src="([^"]+)"/)[1];
         const imageBlob = await dataURItoBlob(imgSrc);
 
-        if (imageBlob.size > 1 * 1024 * 1024) {
+        if (imageBlob.size > 1 * 800 * 1024) {
           rejectedImages.push(imgSrc);
         }
       }
 
       if (rejectedImages.length > 0) {
-        alert('이미지 크기는 1MB 이하로 업로드해주세요.');
+        alert('이미지 크기는 800KB 이하로 업로드해주세요.');
         return;
       }
     }
