@@ -20,7 +20,7 @@ export const St = {
     width: 50px;
     height: 50px;
     border-radius: 100%;
-    margin-left: 10px;
+    margin-left: 20px;
     image-rendering: -webkit-optimize-contrast !important ;
   `,
 
@@ -65,16 +65,9 @@ export const St = {
 
   HeaderMenu: styled.div`
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 20px;
   `,
-  HeaderMenu2: styled.div`
-    cursor: pointer;
-    padding: 1px 6px;
-    font-size: 0.8333rem;
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-  `,
+
   Nickname: styled.div`
     cursor: pointer;
     font-size: 15px;
@@ -89,7 +82,7 @@ export const St = {
     width: 100px;
     position: absolute;
     top: 65px;
-    margin-left: 4.125rem;
+    margin-left: 5rem;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;

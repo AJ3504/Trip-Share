@@ -44,6 +44,6 @@ export const St = {
   `,
   Nickname: styled.p`
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 18px;
   `
 };
