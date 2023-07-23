@@ -170,7 +170,7 @@ const Detail = React.memo(() => {
 
       <St.DetailContainer>
         <St.DetailListsWrapper key={targetPost?.id}>
-          <St.DetailList style={{ marginLeft: '400px' }}>
+          <St.DetailList>
             <St.WriterInfoSection>
               <St.WriterInfoImageWrapper>
                 <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />
