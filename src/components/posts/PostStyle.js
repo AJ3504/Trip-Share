@@ -1,5 +1,40 @@
 import styled from 'styled-components';
 
+export const StPostContainer = styled.div`
+  background-color: bisque;
+
+  right: 0px;
+  /* display: flex; */
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  overflow-y: hidden;
+  &:hover {
+    overflow-y: scroll;
+  }
+`;
+
+export const StPostList = styled.div`
+  /* cursor: pointer; */
+
+  /* display: flex;
+  align-items: center;
+  margin: 16px;
+  border-radius: 10px;
+
+  background-color: rgb(230, 241, 245);
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.18); */
+
+  /* border: solid;
+  margin: 10px;
+  padding: 10px;
+  display: flex; */
+`;
+
 export const StModalBox = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -38,7 +73,6 @@ export const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: #f0f0f0;
   }
@@ -71,18 +105,18 @@ export const StOptionItem = styled.div`
 `;
 
 export const PostButton = styled.button`
-  /* padding: 10px 20px; */
+  cursor: pointer;
   margin-top: 10px;
   font-size: 16px;
   width: 80px;
-  /* background-color: #4caf50; */
-  /* color: #ffffff; */
-  /* border: none;
-  border-radius: 5px; */
-  cursor: pointer;
-  /* transition: background-color 0.3s ease; */
 
-  /* &:hover {
+  /* padding: 10px 20px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  &:hover {
     background-color: #45a049;
   } */
 `;
@@ -97,26 +131,4 @@ export const StInput = styled.input`
 
 export const StLabel = styled.label`
   font-weight: bold;
-`;
-
-export const StSideBox = styled.ul`
-  background-color: lightblue;
-  width: 20%;
-  height: 97.3%;
-  right: 0px;
-  position: absolute;
-  transition: 1s;
-  z-index: 1;
-  overflow-y: hidden; /* Hide scrollbar by default */
-
-  scrollbar-width: none; /* Firefox scrollbar hidden */
-  -ms-overflow-style: none; /* IE/Edge scrollbar hidden */
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  &:hover {
-    overflow-y: scroll; /* Show scrollbar when hovering */
-  }
 `;

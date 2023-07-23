@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { auth } from '../service/firebase';
 import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/modules/postsSlice';
-import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 import { St } from './DetailStyle';
 import { PostStButton } from '../components/common/PostStButton';
@@ -14,12 +13,6 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   const { postId } = useParams();
-  // const prevTitle = location.state.prevTitle;
-  // const prevBody = location.state.prevBody;
-
-  const getProfile = useSelector((state) => state.userInfo);
-  const nickName = useSelector((state) => state.userInfo.nickname);
-  const photoURL = useSelector((state) => state.userInfo.photoURL);
 
   const [editMode, setEditMode] = useState(false);
   const [editSelectAreaIsOpen, setEditSelectAreaIsOpen] = useState(false);
@@ -31,22 +24,25 @@ const Detail = () => {
 
   //게시글 Data fetch
   useEffect(() => {
-    const fetchData = () => {
+    const fetchDataAndWriterNickname = () => {
       dispatch(__getPostsSlice());
     };
 
-    fetchData();
+    fetchDataAndWriterNickname();
   }, [dispatch]);
 
   const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
+
   if (isLoading) {
-    return <h1>아직 로딩중입니다</h1>;
+    return <h1>아직 로딩 중입니다</h1>;
   }
   if (isError) {
     return <h1>오류가 발생했어요</h1>;
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
+  console.log(targetPost.writerNickname);
+  console.log(targetPost.writerPhotoURL);
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -77,7 +73,10 @@ const Detail = () => {
       isModified: true,
       category: editSelectedOption,
       id: postId,
-      markerPosition: targetPost.markerPosition
+      markerPosition: targetPost.markerPosition,
+      writerNickname: targetPost.writerNickname,
+      writerPhotoURL: targetPost.writerPhotoURL,
+      postImg: targetPost.postImg
     };
 
     dispatch(__updatePostSlice(editedPost));
@@ -136,7 +135,7 @@ const Detail = () => {
                 </St.DropdownWrapper>
               </div>
               {/* ---------------------------------------------------- */}
-              <div className="editInputArea">
+              <St.EditInputWrapper>
                 <St.TitleLabel>제목</St.TitleLabel>
                 <St.EditInput
                   type="text"
@@ -156,14 +155,12 @@ const Detail = () => {
                 <div style={{ display: 'flex' }}>
                   <div style={{ marginLeft: 'auto' }}>
                     <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
-                    <PostStButton onClick style={{ marginLeft: '5px' }}>
-                      수정 완료
-                    </PostStButton>
+                    <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
                   </div>
                 </div>
 
                 <br />
-              </div>
+              </St.EditInputWrapper>
             </St.EditForm>
           </St.EditModalContainer>
         ) : null}
@@ -174,9 +171,9 @@ const Detail = () => {
           <St.DetailList>
             <St.WriterInfoSection>
               <St.WriterInfoImageWrapper>
-                <St.WriterInfoImage src={photoURL} alt="writerInfo" />
+                <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />
               </St.WriterInfoImageWrapper>
-              <St.WriterInfoNickName>{nickName}</St.WriterInfoNickName>
+              <St.WriterInfoNickName>{targetPost?.writerNickname}</St.WriterInfoNickName>
             </St.WriterInfoSection>
             {/* ---------------------------------------------------- */}
             <St.ContentSection>

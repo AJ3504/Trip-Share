@@ -16,7 +16,6 @@ word-break: keep-all;
 color: #000000c1;
 width: 100%;
 height:100%
-
 }
 
 @font-face {

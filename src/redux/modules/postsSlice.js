@@ -12,27 +12,38 @@ const initialState = {
 
 export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (payload, thunkAPI) => {
   try {
-    //게시글 data
+    const postsData = [];
+
+    // 게시글 data
     const q = query(collection(db, 'posts'));
     const querySnapshot = await getDocs(q);
 
-    const posts = querySnapshot.docs.map((doc) => {
-      return {
-        id: doc.id,
-        ...doc.data()
+    // 프로필 data를 저장할 객체
+    const profileMap = {};
+
+    // 프로필 data
+    const profileQ = query(collection(db, 'userInfo'));
+    const profileQuerySnapshot = await getDocs(profileQ);
+
+    profileQuerySnapshot.forEach((doc) => {
+      const profile = doc.data();
+      profileMap[profile.uid] = {
+        nickname: profile.nickname,
+        photoURL: profile.photoURL
       };
     });
 
-    // //작성자 닉네임 data
-    // //collection ref
-    // const colRef = collection(db, 'userInfo');
-    // //queries
-    // const nicknameQ = query(colRef, where('nickname', '==', currentNickname));
-    // //query Results
-    // const result = await getDocs(nicknameQ);
-    // const nData = result.docs[0]?.data();
+    querySnapshot.forEach((doc) => {
+      const post = {
+        id: doc.id,
+        ...doc.data(),
+        writerNickname: profileMap[doc.data().uid]?.nickname || '',
+        writerPhotoURL: profileMap[doc.data().uid]?.photoURL || ''
+      };
+      postsData.push(post);
+    });
 
-    return thunkAPI.fulfillWithValue(posts);
+    return thunkAPI.fulfillWithValue({ postsData });
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -89,7 +100,7 @@ export const postsSlice = createSlice({
     [__getPostsSlice.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.postsData = action.payload;
+      state.postsData = action.payload.postsData;
     },
 
     [__getPostsSlice.rejected]: (state, action) => {

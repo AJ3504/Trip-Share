@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  Button2,
+  StButton,
   Container,
-  DetailsContainer,
-  MapContainer,
-  StyledIframe,
-  LeftContainer,
-  CategoryButton
+  StPlaceContainer,
+  StMapContainer,
+  StIframe,
+  StSearchResult,
+  StCategoryMenu,
+  StLeftContainer,
+  StMainBody,
+  StPlaceDetail,
+  StIframeContainer,
+  StSearchContainer,
+  StRightContainer,
+  StMenuWrapper
 } from './KakaoMap-Styled';
 import PostWrite from '../posts/PostWrite';
 import PostListMain from '../posts/PostListMain';
 import Search from './Search';
 import SearchResult from './SearchResult';
 import LocationMap from './LocationMap';
+import { PostStButton } from '../common/PostStButton';
 
 const { kakao } = window;
 
@@ -35,7 +43,7 @@ const KakaoMap = () => {
     neLng: 180
   });
   const [option, setOption] = useState('');
-  const [showPostList, setShowPostList] = useState(true);
+  const [showPostList, setShowPostList] = useState(false);
 
   // 게시글 작성 modal
   const [isModal, setIsModal] = useState(false);
@@ -160,7 +168,7 @@ const KakaoMap = () => {
     setSelectedMarker(marker);
     setCurrentPosition(marker.position);
     setShowDetails(true);
-    map.setLevel(1);
+    map.setLevel(3);
   };
 
   const togglePostList = () => {
@@ -169,28 +177,36 @@ const KakaoMap = () => {
 
   return (
     <>
-      <Container>
+      <StMainBody>
         {isModal && <PostWrite marker={selectedMarker} setIsModal={setIsModal} />}
-        {showDetails ? (
-          <DetailsContainer>
-            {selectedMarker && (
-              <StyledIframe
-                title="place-details"
-                src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
-                scrolling="no"
+        <StLeftContainer>
+          {showDetails ? (
+            <StPlaceContainer>
+              {selectedMarker && (
+                <StPlaceDetail>
+                  <StIframeContainer>
+                    <StIframe
+                      title="place-details"
+                      src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
+                      scrolling="no"
+                    />
+                  </StIframeContainer>
+                  <PostStButton onClick={() => setShowDetails(false)}>숨김</PostStButton>
+                </StPlaceDetail>
+              )}
+            </StPlaceContainer>
+          ) : (
+            <>
+              <Search searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleSearch={handleSearch} />
+              <SearchResult
+                searchResults={searchResults}
+                handleResultClick={handleResultClick}
+                thumbnails={thumbnails}
               />
-            )}
-            <Button2 style={{ fontSize: '45px' }} onClick={() => setShowDetails(false)}>
-              ⬅️
-            </Button2>
-          </DetailsContainer>
-        ) : (
-          <LeftContainer>
-            <Search searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} handleSearch={handleSearch} />
-            <SearchResult searchResults={searchResults} handleResultClick={handleResultClick} thumbnails={thumbnails} />
-          </LeftContainer>
-        )}
-        <MapContainer>
+            </>
+          )}
+        </StLeftContainer>
+        <StMapContainer>
           <LocationMap
             currentPosition={currentPosition}
             markers={markers}
@@ -202,17 +218,55 @@ const KakaoMap = () => {
             setState={setState}
             setIsModal={setIsModal}
           />
-        </MapContainer>
-        <div>
-          <CategoryButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</CategoryButton>
-          <CategoryButton onClick={() => setOption('관광')}>관광</CategoryButton>
-          <CategoryButton onClick={() => setOption('식당')}>식당</CategoryButton>
-          <CategoryButton onClick={() => setOption('카페')}>카페</CategoryButton>
-          <CategoryButton onClick={() => setOption('숙소')}>숙소</CategoryButton>
-
+        </StMapContainer>
+        {/* component 분리 */}
+        <StRightContainer>
+          <StMenuWrapper>
+            <PostStButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption(false);
+                setShowPostList(true);
+              }}
+            >
+              전체
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('관광');
+                setShowPostList(true);
+              }}
+            >
+              관광
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('식당');
+                setShowPostList(true);
+              }}
+            >
+              식당
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('카페');
+                setShowPostList(true);
+              }}
+            >
+              카페
+            </PostStButton>
+            <PostStButton
+              onClick={() => {
+                setOption('숙소');
+                setShowPostList(true);
+              }}
+            >
+              숙소
+            </PostStButton>
+          </StMenuWrapper>
           {showPostList && <PostListMain option={option} position={state} />}
-        </div>
-      </Container>
+        </StRightContainer>
+      </StMainBody>
     </>
   );
 };
