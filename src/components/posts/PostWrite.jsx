@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { auth, storage } from '../../service/firebase';
 import { __addPostSlice } from '../../redux/modules/postsSlice';
-import { St } from '../../pages/DetailStyle';
 import {
   StModalBox,
   StModalContents,
@@ -86,8 +85,6 @@ const PostWrite = ({ marker, setIsModal }) => {
     setIsModal(false);
   };
 
-  console.log(postBody);
-
   return (
     <StModalBox>
       <StModalContents>
@@ -135,16 +132,8 @@ const PostWrite = ({ marker, setIsModal }) => {
           <StLabel>제목</StLabel>
           <StInput type="text" value={postTitle} name="title" onChange={onChangePost} />
           <StLabel>내용</StLabel>
-          {/* <St.EditTextarea
-            style={{ width: '425px' }}
-            type="text"
-            value={postBody}
-            name="body"
-            onChange={onChangePost}
-          /> */}
 
           {/* 에디터로 변경테스트 */}
-          {/* <Editor type="text" value={postBody} name="body" onChange={onChangePost} /> */}
           <Editor value={postBody} onChange={(value) => setPostBody(value)} />
           <br />
           <br />
