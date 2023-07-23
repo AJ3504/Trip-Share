@@ -27,7 +27,7 @@ const Editor = ({ value, onChange }) => {
         ]
       },
       imageResize: {
-        parchment: Quill.import('parchment')
+        modules: ['Resize', 'DisplaySize', 'Toolbar']
       }
     };
   }, []);
@@ -41,7 +41,7 @@ const Editor = ({ value, onChange }) => {
         return imageTag;
       } else {
         // 이미지 태그에 스타일 속성을 추가하여 크기 조절
-        return imageTag.replace('<img', '<img style="max-width: 50%;"');
+        return imageTag.replace('<img', '<img style="max-width: 20%;"');
       }
     });
     return resizedContent;

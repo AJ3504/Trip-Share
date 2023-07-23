@@ -187,7 +187,7 @@ const KakaoMap = () => {
                   <StIframeContainer>
                     <StIframe
                       title="place-details"
-                      src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
+                      src={`https://place.map.kakao.com/m/${selectedMarker.id}`}
                       scrolling="no"
                     />
                   </StIframeContainer>
