@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
 export const StPostContainer = styled.div`
-  /* background-color: bisque; */
-
   right: 0px;
   height: 824px;
-  /* display: flex; */
 
   scrollbar-width: none;
   -ms-overflow-style: none;

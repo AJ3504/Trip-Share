@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   StButton,
-  Container,
   StPlaceContainer,
   StMapContainer,
   StIframe,
-  StSearchResult,
-  StCategoryMenu,
   StLeftContainer,
   StMainBody,
   StPlaceDetail,
   StIframeContainer,
-  StSearchContainer,
   StRightContainer,
   StMenuWrapper
 } from './KakaoMap-Styled';
@@ -187,7 +183,7 @@ const KakaoMap = () => {
                   <StIframeContainer>
                     <StIframe
                       title="place-details"
-                      src={`http://place.map.kakao.com/m/${selectedMarker.id}`}
+                      src={`https://place.map.kakao.com/m/${selectedMarker.id}`}
                       scrolling="no"
                     />
                   </StIframeContainer>
@@ -222,10 +218,7 @@ const KakaoMap = () => {
         {/* component 분리 */}
         <StRightContainer>
           <StMenuWrapper>
-            {/* <PostStButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</PostStButton> */}
-            <PostStButton style={{ fontSize: '8px' }} onClick={togglePostList}>
-              {showPostList ? '⬆️' : '⬇️'}
-            </PostStButton>
+            <PostStButton onClick={togglePostList}>{showPostList ? '닫기' : '열기'}</PostStButton>
             <PostStButton
               onClick={() => {
                 setOption(false);

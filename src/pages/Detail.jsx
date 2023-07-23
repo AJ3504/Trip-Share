@@ -15,7 +15,7 @@ const sanitizeHtml = (html) => {
   return { __html: sanitizedHtml };
 };
 
-const Detail = () => {
+const Detail = React.memo(() => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,7 +28,6 @@ const Detail = () => {
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
-  // const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
   const [newPostBody, setNewPostBody] = useState('');
 
   //게시글 Data fetch
@@ -50,8 +49,6 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
-  // console.log(targetPost.writerNickname);
-  // console.log(targetPost.writerPhotoURL);
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -92,7 +89,6 @@ const Detail = () => {
 
     resetNewPostTitle('');
     setNewPostBody('');
-    // resetNewPostBody('');
   };
 
   const handleOptionClick = (option) => {
@@ -156,17 +152,7 @@ const Detail = () => {
                 <br />
                 <St.BodyLabel>내용</St.BodyLabel>
                 {/* 에디터로 변경 */}
-                <Editor
-                  style={{ width: '100%', height: '500px' }}
-                  value={newPostBody}
-                  onChange={(value) => setNewPostBody(value)}
-                />
-                {/* <St.EditTextarea
-                  type="text"
-                  value={newPostBody}
-                  onChange={onChangeNewPostBodyHandler}
-                  placeholder="본문 내용을 5글자 이상 입력해주세요!"
-                /> */}
+                <Editor value={newPostBody} onChange={(value) => setNewPostBody(value)} />
                 <br />
                 <div style={{ display: 'flex' }}>
                   <div style={{ marginLeft: '150px', marginTop: '50px' }}>
@@ -184,7 +170,7 @@ const Detail = () => {
 
       <St.DetailContainer>
         <St.DetailListsWrapper key={targetPost?.id}>
-          <St.DetailList>
+          <St.DetailList style={{ marginLeft: '400px' }}>
             <St.WriterInfoSection>
               <St.WriterInfoImageWrapper>
                 <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />
@@ -208,7 +194,6 @@ const Detail = () => {
                 <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
                 <br />
                 {/* 에디터때문에 이 부분 수정했습니다  */}
-                {/* <div>{targetPost?.postBody}</div> */}
                 <div dangerouslySetInnerHTML={sanitizeHtml(targetPost?.postBody)} />
                 <div style={{ marginTop: '20px' }}></div>
               </St.Article>
@@ -227,6 +212,5 @@ const Detail = () => {
       </St.DetailContainer>
     </St.WholeContainer>
   );
-};
-
+});
 export default Detail;
