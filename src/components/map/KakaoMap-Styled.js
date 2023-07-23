@@ -91,10 +91,12 @@ export const StPlaceContainer = styled.div`
 
 export const StPlaceDetail = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StIframeContainer = styled.div`
-  width: 100%;
+  width: 100vh;
   height: 100vh;
 
   overflow: auto;
@@ -114,6 +116,9 @@ export const StIframe = styled.iframe`
 export const StButton = styled.button`
   cursor: pointer;
   background-color: transparent;
+  border: none;
+
+  font-size: 32px;
 `;
 
 export const StMapContainer = styled.div`
