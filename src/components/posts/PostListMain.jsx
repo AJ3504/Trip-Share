@@ -7,6 +7,13 @@ import { StPostContainer, StPostList } from './PostStyle';
 const PostListMain = ({ option, position }) => {
   const [] = useState();
 
+  //html 태그 없애는 함수
+  const stripHtmlTags = (htmlString) => {
+    const div = document.createElement('div');
+    div.innerHTML = htmlString;
+    return div.textContent || div.innerText || '';
+  };
+
   //hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,14 +53,20 @@ const PostListMain = ({ option, position }) => {
     <StPostContainer>
       {(option ? filteredPosts : statedPosts).map((post) => {
         const truncatedTitle = post.postTitle.length > 5 ? post.postTitle.substring(0, 5) + '...' : post.postTitle;
-        const truncatedBody = post.postBody.length > 10 ? post.postBody.substring(0, 10) + '...' : post.postBody;
+        const truncatedBody =
+          stripHtmlTags(post.postBody).length > 10
+            ? stripHtmlTags(post.postBody).substring(0, 10) + '...'
+            : stripHtmlTags(post.postBody);
         return (
           <StPostList key={post.id}>
             <div style={{ flex: 1 }}>
               <ul>
-                <li>{post.category}</li>
-                <li>{truncatedTitle}</li>
+                <li style={{ marginLeft: '20px' }}>{post.category}</li>
+                <br />
+                <li style={{ fontWeight: 'bold' }}>{truncatedTitle}</li>
+                <br />
                 <li>{truncatedBody}</li>
+                <br />
                 <button onClick={() => onPostClick(post)}>상세보기</button>
               </ul>
             </div>

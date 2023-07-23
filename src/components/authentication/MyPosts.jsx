@@ -12,6 +12,11 @@ const MyPosts = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
 
+  //html 태그를 자르기 위한 함수
+  const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+  };
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
@@ -33,6 +38,7 @@ const MyPosts = () => {
   return (
     <St.MyPostContainer>
       {myPostsData?.map((myPostData) => {
+        const strippedPostBody = stripHtmlTags(myPostData.postBody); //이 부분에서 html태그를 자릅니다
         return (
           <St.MyPostListsWrapper key={myPostData.id}>
             <St.MyPostList>
@@ -48,7 +54,7 @@ const MyPosts = () => {
                     whiteSpace: 'nowrap'
                   }}
                 >
-                  {myPostData.postBody}
+                  {strippedPostBody}
                 </p>
                 <br />
                 <div>

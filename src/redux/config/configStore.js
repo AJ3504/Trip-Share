@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import postsSlice from '../modules/postsSlice';
 import userInfoSlice from '../modules/userInfoSlice';
 
