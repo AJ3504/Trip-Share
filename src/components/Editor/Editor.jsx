@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 
-const Editor = ({ value, onChange }) => {
+const Editor = ({ value, onChange, onChangeNewPostBodyHandler }) => {
   const quillRef = useRef();
   const [content, setContent] = useState(value);
 

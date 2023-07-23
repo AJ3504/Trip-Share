@@ -8,6 +8,8 @@ import { St } from './DetailStyle';
 import { PostStButton } from '../components/common/PostStButton';
 import DOMPurify from 'dompurify';
 
+import Editor from '../components/Editor/Editor';
+
 const sanitizeHtml = (html) => {
   const sanitizedHtml = DOMPurify.sanitize(html);
   return { __html: sanitizedHtml };
@@ -26,7 +28,8 @@ const Detail = () => {
   const options = ['관광', '식당', '카페', '숙소'];
 
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
-  const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
+  // const [newPostBody, onChangeNewPostBodyHandler, resetNewPostBody] = useInput('');
+  const [newPostBody, setNewPostBody] = useState('');
 
   //게시글 Data fetch
   useEffect(() => {
@@ -47,8 +50,8 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
-  console.log(targetPost.writerNickname);
-  console.log(targetPost.writerPhotoURL);
+  // console.log(targetPost.writerNickname);
+  // console.log(targetPost.writerPhotoURL);
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -88,7 +91,8 @@ const Detail = () => {
     dispatch(__updatePostSlice(editedPost));
 
     resetNewPostTitle('');
-    resetNewPostBody('');
+    setNewPostBody('');
+    // resetNewPostBody('');
   };
 
   const handleOptionClick = (option) => {
@@ -151,15 +155,21 @@ const Detail = () => {
                 />
                 <br />
                 <St.BodyLabel>내용</St.BodyLabel>
-                <St.EditTextarea
+                {/* 에디터로 변경 */}
+                <Editor
+                  style={{ width: '100%', height: '500px' }}
+                  value={newPostBody}
+                  onChange={(value) => setNewPostBody(value)}
+                />
+                {/* <St.EditTextarea
                   type="text"
                   value={newPostBody}
                   onChange={onChangeNewPostBodyHandler}
                   placeholder="본문 내용을 5글자 이상 입력해주세요!"
-                />
+                /> */}
                 <br />
                 <div style={{ display: 'flex' }}>
-                  <div style={{ marginLeft: 'auto' }}>
+                  <div style={{ marginLeft: '150px', marginTop: '50px' }}>
                     <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
                     <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
                   </div>
