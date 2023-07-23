@@ -20,8 +20,8 @@ export const St = {
   EditForm: styled.form`
     background-color: #fafafa;
     padding: 20px;
-    width: 50%;
-    height: 50%;
+    width: 65%;
+    height: 70%;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -29,6 +29,11 @@ export const St = {
     justify-content: center;
     z-index: 999;
   `,
+  EditInputWrapper: styled.section`
+    width: 65%;
+    margin-top: 40px;
+  `,
+
   TitleLabel: styled.label`
     font-size: 14px;
     color: #555;
@@ -73,9 +78,9 @@ export const St = {
   // ------------------slect Area------------------ //
   DropdownWrapper: styled.div`
     width: 200px;
-    position: relative;
+    position: relative; //이부분 다시보기
     bottom: 20px;
-    margin-bottom: 10px;
+    margin-top: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     &:hover {

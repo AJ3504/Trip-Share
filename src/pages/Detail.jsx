@@ -73,7 +73,9 @@ const Detail = () => {
       isModified: true,
       category: editSelectedOption,
       id: postId,
-      markerPosition: targetPost.markerPosition
+      markerPosition: targetPost.markerPosition,
+      writerNickname: targetPost.writerNickname,
+      writerPhotoURL: targetPost.writerPhotoURL
     };
 
     dispatch(__updatePostSlice(editedPost));
@@ -132,7 +134,7 @@ const Detail = () => {
                 </St.DropdownWrapper>
               </div>
               {/* ---------------------------------------------------- */}
-              <div className="editInputArea">
+              <St.EditInputWrapper>
                 <St.TitleLabel>제목</St.TitleLabel>
                 <St.EditInput
                   type="text"
@@ -152,14 +154,12 @@ const Detail = () => {
                 <div style={{ display: 'flex' }}>
                   <div style={{ marginLeft: 'auto' }}>
                     <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
-                    <PostStButton onClick style={{ marginLeft: '5px' }}>
-                      수정 완료
-                    </PostStButton>
+                    <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
                   </div>
                 </div>
 
                 <br />
-              </div>
+              </St.EditInputWrapper>
             </St.EditForm>
           </St.EditModalContainer>
         ) : null}
