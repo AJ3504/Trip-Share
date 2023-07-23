@@ -128,6 +128,7 @@ export const StMapContainer = styled.div`
 
 export const StMarkerContents = styled.div`
   height: 80px;
+
   padding: 8px;
 
   display: flex;

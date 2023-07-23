@@ -2,8 +2,10 @@ import { styled } from 'styled-components';
 
 export const PostStButton = styled.button`
   color: #000000c1;
+
   background-color: #ece8e8;
   border: none;
+  margin-bottom: 15px;
   cursor: pointer;
   border-radius: 3px;
   transition: background-color 0.2s ease;
