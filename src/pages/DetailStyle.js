@@ -20,8 +20,8 @@ export const St = {
   EditForm: styled.form`
     background-color: #fafafa;
     padding: 20px;
-    width: 50%;
-    height: 50%;
+    width: 65%;
+    height: 70%;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -29,6 +29,11 @@ export const St = {
     justify-content: center;
     z-index: 999;
   `,
+  EditInputWrapper: styled.section`
+    width: 65%;
+    margin-top: 40px;
+  `,
+
   TitleLabel: styled.label`
     font-size: 14px;
     color: #555;
@@ -73,9 +78,9 @@ export const St = {
   // ------------------slect Area------------------ //
   DropdownWrapper: styled.div`
     width: 200px;
-    position: relative;
+    position: relative; //이부분 다시보기
     bottom: 20px;
-    margin-bottom: 10px;
+    margin-top: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     &:hover {
@@ -146,19 +151,13 @@ export const St = {
   `,
 
   // section className="writerInfo"
-  WriterInfoSection: styled.section`
-    position: absolute;
-    right: 470px;
-  `,
+  WriterInfoSection: styled.section``,
 
   WriterInfoImageWrapper: styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
     overflow: hidden;
-
-    position: relative;
-    right: 690px;
   `,
 
   WriterInfoImage: styled.img`
@@ -173,8 +172,8 @@ export const St = {
     color: #a8b0c4da;
     padding-top: 5px;
 
-    position: relative;
-    right: 690px;
+    position: absolute;
+    left: 60px;
   `,
 
   // section className="content"
@@ -183,7 +182,7 @@ export const St = {
     display: flex;
     justify-content: space-between;
     //
-    margin-top: 80px;
+    margin-top: 50px;
   `,
 
   Article: styled.div`
