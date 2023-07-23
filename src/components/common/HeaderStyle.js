@@ -41,6 +41,7 @@ export const St = {
   //   height: 100%;
   //   margin: 0 auto;
   // `,
+
   Img: styled.img`
     background-color: white;
     width: 50px;
@@ -57,7 +58,7 @@ export const St = {
   `,
 
   LogoImg: styled.img`
-    width: 130px;
+    width: auto;
     height: 90px;
     cursor: pointer;
     margin-top: 5px;
@@ -85,16 +86,10 @@ export const St = {
     margin-left: 10px;
   `,
 
-  ArrowIcons: styled.div`
-    cursor: pointer;
-    margin-top: 16px;
-    margin-left: 5px;
-  `,
-
   Dropdown: styled.div`
     width: 100px;
     position: absolute;
-    top: 60px;
+    top: 65px;
     margin-left: 4.125rem;
     background-color: white;
     border: 1px solid #ccc;

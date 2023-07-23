@@ -1,22 +1,29 @@
 import React from 'react';
-import { StyledUl, Li, ThumbnailImage } from './KakaoMap-Styled';
+import {
+  StSearchResultContainer,
+  Li,
+  StSearchImage,
+  StSearchResultList,
+  StSearchName,
+  StSearchAddress,
+  StSearchPhone,
+  StSearchInfo
+} from './KakaoMap-Styled';
 
 const SearchResult = ({ searchResults, handleResultClick, thumbnails }) => {
   return (
-    <StyledUl>
+    <StSearchResultContainer>
       {searchResults.map((result, index) => (
-        <Li key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
-          <div style={{ display: 'flex' }}>
-            <ThumbnailImage src={thumbnails[index]} alt={`thumbnail-${result.id}`} />
-            <div style={{ padding: '18px' }}>
-              <h3>{result.place_name}</h3>
-              <p>{result.address_name}</p>
-              <p>{result.phone}</p>
-            </div>
-          </div>
-        </Li>
+        <StSearchResultList key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
+          <StSearchImage src={thumbnails[index]} alt={`thumbnail-${result.id}`} />
+          <StSearchInfo>
+            <StSearchName>{result.place_name}</StSearchName>
+            <StSearchAddress>{result.address_name}</StSearchAddress>
+            <StSearchPhone>{result.phone}</StSearchPhone>
+          </StSearchInfo>
+        </StSearchResultList>
       ))}
-    </StyledUl>
+    </StSearchResultContainer>
   );
 };
 

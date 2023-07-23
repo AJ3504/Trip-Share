@@ -1,114 +1,157 @@
 import styled from 'styled-components';
 
-export const Button = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: transparent;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+export const StMainBody = styled.div`
+  display: flex;
+`;
 
-  &:hover {
-    background-color: yellowgreen;
+export const StLeftContainer = styled.div`
+  width: 22%;
+  height: 100%;
+`;
+
+export const StPlaceContainer = styled.div`
+  height: 100%;
+  align-items: center;
+`;
+
+export const StPlaceDetail = styled.div`
+  display: flex;
+`;
+
+export const StIframeContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  overflow: auto;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
-export const Button2 = styled.button`
-  padding: 10px 20px;
-  margin-top: 300px;
-  margin-right: 50px;
-  width: 30px;
-  height: 40px;
-  font-size: 16px;
-  background-color: transparent;
-  color: black;
-  border: none;
-  border-radius: 5px;
+export const StIframe = styled.iframe`
+  width: 100%;
+  height: 4200px;
+`;
+
+export const StButton = styled.button`
   cursor: pointer;
-  transition: background-color 0.3s ease;
-`;
-
-export const Li = styled.li`
-  padding: 18px;
-  border: 1px solid yellowgreen;
-  cursor: pointer;
-`;
-
-export const Container = styled.div`
-  display: flex;
-  background-size: cover;
-  background-position: center center;
-`;
-
-export const LeftContainer = styled.div`
-  text-align: center;
-  flex: 1;
-`;
-
-export const SearchInput = styled.input`
-  text-align: center;
-  margin-right: 10px;
-`;
-
-export const DetailsContainer = styled.div`
-  display: flex;
-`;
-
-export const MarkerContentContainer = styled.div`
   background-color: transparent;
-  width: 400px;
-  background-color: wheat;
-  text-align: center;
-  align-items: center;
-  display: flex;
 `;
 
-export const MarkerContent = styled.div`
+export const StSearchInputContainer = styled.div`
+  height: 4vh;
+  padding: 6px;
+
   display: flex;
   align-items: center;
+  justify-content: center;
+`;
+
+export const StSearchInput = styled.input`
+  width: 80%;
+  height: 30px;
+  margin: 10px;
+  border-radius: 8px;
+
+  text-align: center;
+`;
+
+export const StSearchResultContainer = styled.div`
+  height: 96vh;
+  overflow: auto;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const StSearchResultList = styled.div`
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  margin: 16px;
+  border-radius: 10px;
+
+  background-color: rgb(230, 241, 245);
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.18);
+`;
+
+export const StSearchImage = styled.img`
+  width: 30%;
+  height: 30%;
+  object-fit: cover;
+  border-radius: 10px 0 0 10px;
+`;
+
+export const StSearchInfo = styled.div`
+  width: 70%;
+  height: 100%;
+  padding: 10px;
+
+  display: flex;
   flex-direction: column;
 `;
 
-export const ThumbnailImage = styled.img`
-  width: 110px;
-  height: 110px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-right: 12px;
+export const StSearchName = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+
+  margin: 0 0 10px 0;
 `;
 
-export const MapContainer = styled.div`
-  width: 60%;
-  height: 874px;
+export const StSearchAddress = styled.div`
+  font-size: 14px;
+
+  margin: 0 0 8px 0;
+`;
+
+export const StSearchPhone = styled.div`
+  font-size: 13px;
+  font-style: oblique;
+`;
+
+export const StMapContainer = styled.div`
+  width: 80%;
+  height: 100vh;
+`;
+
+export const StMarkerContents = styled.div`
+  height: 80px;
+  padding: 8px;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StMarkerInfo = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const StMarkerName = styled.div`
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: bold;
+`;
+
+export const StMarkerAddress = styled.div`
+  font-size: 12px;
+  /* white-space: nowrap; */
+  display: flex;
 `;
 
 export const ContentWrapper = styled.div`
   background-color: transparent;
   padding: 20px;
-`;
-
-export const StyledUl = styled.ul`
-  height: 832px;
-  overflow-y: hidden;
-
-  scrollbar-width: none; /* Firefox 스크롤바 숨김 */
-  -ms-overflow-style: none; /* IE/Edge 스크롤바 숨김 */
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  &:hover {
-    overflow-y: scroll;
-  }
-`;
-
-export const StyledIframe = styled.iframe`
-  width: 300px; //원래 900
-  height: 800px;
-  overflow-y: hidden;
 `;
 
 export const CategoryButton = styled.button`

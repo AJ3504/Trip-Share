@@ -1,22 +1,23 @@
 import React from 'react';
-import { SearchInput, Button } from './KakaoMap-Styled';
+import { StSearchInputContainer, StSearchInput } from './KakaoMap-Styled';
+import { PostStButton } from '../common/PostStButton';
 
 const Search = ({ searchKeyword, setSearchKeyword, handleSearch }) => {
   return (
-    <>
-      <SearchInput
+    <StSearchInputContainer>
+      <StSearchInput
         type="text"
         value={searchKeyword}
         onChange={(e) => setSearchKeyword(e.target.value)}
-        placeholder="검색어를 입력하세요"
+        placeholder="추천하고 싶은 장소를 찾아주세요."
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
             handleSearch();
           }
         }}
       />
-      <Button onClick={handleSearch}>🔎</Button>
-    </>
+      <PostStButton onClick={handleSearch}>검색</PostStButton>
+    </StSearchInputContainer>
   );
 };
 

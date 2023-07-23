@@ -13,11 +13,9 @@ background-color: rgb(236, 249, 255);
 font-family: 'NanumSquareNeo-Variable', sans-serif;
 font-size: 16px;
 word-break: keep-all;
-
-
 color: #000000c1;
 width: 100%;
-
+height:100%
 }
 
 @font-face {
