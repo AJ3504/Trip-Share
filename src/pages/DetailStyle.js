@@ -141,7 +141,8 @@ export const St = {
     padding-top: 25px;
     padding-bottom: 20px;
     background-color: #fafafa;
-    height: 300px;
+    height: 800px;
+    /* height: auto; */
   `,
 
   // section className="writerInfo"

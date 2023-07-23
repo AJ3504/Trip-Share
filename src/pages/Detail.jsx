@@ -7,6 +7,12 @@ import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
 import { St } from './DetailStyle';
 import { PostStButton } from '../components/common/PostStButton';
+import DOMPurify from 'dompurify';
+
+const sanitizeHtml = (html) => {
+  const sanitizedHtml = DOMPurify.sanitize(html);
+  return { __html: sanitizedHtml };
+};
 
 const Detail = () => {
   const location = useLocation();
@@ -181,22 +187,23 @@ const Detail = () => {
             {/* ---------------------------------------------------- */}
             <St.ContentSection>
               <St.Article>
+                {isSignedIn ? (
+                  <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
+                    수정하기
+                  </PostStButton>
+                ) : null}
+                {isSignedIn ? (
+                  <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
+                    삭제하기
+                  </PostStButton>
+                ) : null}
+                <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
                 <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
                 <br />
-                <div>{targetPost?.postBody}</div>
-                <div style={{ marginTop: '20px' }}>
-                  {isSignedIn ? (
-                    <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
-                      수정하기
-                    </PostStButton>
-                  ) : null}
-                  {isSignedIn ? (
-                    <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
-                      삭제하기
-                    </PostStButton>
-                  ) : null}
-                  <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
-                </div>
+                {/* 에디터때문에 이 부분 수정했습니다  */}
+                {/* <div>{targetPost?.postBody}</div> */}
+                <div dangerouslySetInnerHTML={sanitizeHtml(targetPost?.postBody)} />
+                <div style={{ marginTop: '20px' }}></div>
               </St.Article>
               <St.Img>
                 <img

@@ -12,6 +12,10 @@ const MyPosts = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
 
+  const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+  };
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
@@ -33,6 +37,7 @@ const MyPosts = () => {
   return (
     <St.MyPostContainer>
       {myPostsData?.map((myPostData) => {
+        const strippedPostBody = stripHtmlTags(myPostData.postBody); // Extract text without HTML tags
         return (
           <St.MyPostListsWrapper key={myPostData.id}>
             <St.MyPostList>
@@ -48,7 +53,7 @@ const MyPosts = () => {
                     whiteSpace: 'nowrap'
                   }}
                 >
-                  {myPostData.postBody}
+                  {strippedPostBody}
                 </p>
                 <br />
                 <div>
