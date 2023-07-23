@@ -191,7 +191,7 @@ const KakaoMap = () => {
                       scrolling="no"
                     />
                   </StIframeContainer>
-                  <PostStButton onClick={() => setShowDetails(false)}>숨김</PostStButton>
+                  <StButton onClick={() => setShowDetails(false)}>←</StButton>
                 </StPlaceDetail>
               )}
             </StPlaceContainer>
