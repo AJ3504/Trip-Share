@@ -29,29 +29,16 @@ const Detail = () => {
 
   //게시글 Data fetch
   useEffect(() => {
-    const fetchData = () => {
+    const fetchDataAndWriterNickname = () => {
       dispatch(__getPostsSlice());
     };
 
-    fetchData();
+    fetchDataAndWriterNickname();
   }, [dispatch]);
 
-  const { postsData, profilesData, isLoading, isError } = useSelector((state) => state.postsSlice);
-
-  //postsData[i].uid === profilesData[i].uid인 profilesData[i].nickname이 곧 writerNickname
-  let writerNickname = '';
-
-  for (const postData of postsData) {
-    for (const profileData of profilesData) {
-      if (postData.uid === profileData.uid) {
-        // 매칭된 데이터를 찾았을 때, nickname 프로퍼티를 해당 postData에 추가 => writerNickname 배열에 push
-        writerNickname = profileData.nickname;
-        break;
-      }
-    }
-  }
-
-  console.log(writerNickname);
+  const { postsData, isLoading, isError } = useSelector((state) => state.postsSlice);
+  // const getProfile = useSelector((state) => state.userInfo);
+  // console.log(getProfile);
 
   if (isLoading) {
     return <h1>아직 로딩중입니다</h1>;
@@ -61,6 +48,8 @@ const Detail = () => {
   }
 
   const targetPost = postsData.find((item) => item.id === postId);
+  console.log(targetPost.writerNickname);
+  console.log(targetPost.writerPhotoURL);
 
   //------------------------------------------------------------------------------------------
   //event Handler
@@ -188,9 +177,9 @@ const Detail = () => {
           <St.DetailList>
             <St.WriterInfoSection>
               <St.WriterInfoImageWrapper>
-                <St.WriterInfoImage src={photoURL} alt="writerInfo" />
+                <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />
               </St.WriterInfoImageWrapper>
-              <St.WriterInfoNickName>{writerNickname}</St.WriterInfoNickName>
+              <St.WriterInfoNickName>{targetPost?.writerNickname}</St.WriterInfoNickName>
             </St.WriterInfoSection>
             {/* ---------------------------------------------------- */}
             <St.ContentSection>

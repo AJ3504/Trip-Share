@@ -145,19 +145,13 @@ export const St = {
   `,
 
   // section className="writerInfo"
-  WriterInfoSection: styled.section`
-    position: absolute;
-    right: 470px;
-  `,
+  WriterInfoSection: styled.section``,
 
   WriterInfoImageWrapper: styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
     overflow: hidden;
-
-    position: relative;
-    right: 690px;
   `,
 
   WriterInfoImage: styled.img`
@@ -172,8 +166,8 @@ export const St = {
     color: #a8b0c4da;
     padding-top: 5px;
 
-    position: relative;
-    right: 690px;
+    position: absolute;
+    left: 60px;
   `,
 
   // section className="content"
@@ -182,7 +176,7 @@ export const St = {
     display: flex;
     justify-content: space-between;
     //
-    margin-top: 80px;
+    margin-top: 50px;
   `,
 
   Article: styled.div`
