@@ -61,7 +61,7 @@ export const StModalInner = styled.div`
 `;
 
 export const StOptionWrapper = styled.div`
-  width: 94%;
+  width: 400px;
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -94,7 +94,7 @@ export const StOptionHeader = styled.div`
 `;
 
 export const StOptionList = styled.div`
-  width: 26%;
+  width: 400px;
   background-color: gray;
   position: absolute;
 `;
@@ -112,16 +112,6 @@ export const PostButton = styled.button`
   margin-top: 10px;
   font-size: 16px;
   width: 80px;
-
-  /* padding: 10px 20px;
-  background-color: #4caf50;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #45a049;
-  } */
 `;
 
 export const StInput = styled.input`
