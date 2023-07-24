@@ -15,7 +15,6 @@ const PostEditInputArea = ({
       <St.TitleLabel>제목</St.TitleLabel>
       <br />
       <St.EditInput
-        style={{ width: '74%' }}
         type="text"
         value={newPostTitle}
         onChange={onChangeNewPostTitleHandler}
@@ -23,7 +22,6 @@ const PostEditInputArea = ({
       />
       <br />
       <St.BodyLabel>내용</St.BodyLabel>
-      <br />
       <br />
       <Editor
         style={{ width: '100%', height: '500px', marginTop: '20px' }}
@@ -33,7 +31,6 @@ const PostEditInputArea = ({
       <br />
       <div style={{ display: 'flex', marginTop: '20px' }}>
         <div style={{ marginLeft: '150px', marginTop: '50px' }}>
-          <br />
           <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
           <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
         </div>

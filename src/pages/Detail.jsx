@@ -33,6 +33,8 @@ const Detail = React.memo(() => {
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
   const [newPostBody, setNewPostBody] = useState('');
 
+  const [createdAt, setCreatedAt] = useState(null);
+
   //게시글 Data fetch
   useEffect(() => {
     const fetchDataAndWriterNickname = () => {
@@ -67,11 +69,8 @@ const Detail = React.memo(() => {
   const onSubmitEditHandler = async (e) => {
     e.preventDefault();
 
-    if (!newPostTitle || !newPostBody) {
-      alert('제목과 본문을 입력해주세요!');
-      return;
-    } else if (newPostTitle.length < 0 || newPostBody.length < 0) {
-      alert('제목과 본문을 입력해주세요!');
+    if (newPostTitle.trim() === '' || newPostBody.trim() === '') {
+      alert('제목과 내용을 입력해주세요.');
       return;
     }
 
@@ -151,6 +150,7 @@ const Detail = React.memo(() => {
                 <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />
               </St.WriterInfoImageWrapper>
               <St.WriterInfoNickName>{targetPost?.writerNickname}</St.WriterInfoNickName>
+              {/* <p>{new Date(createdAt * 1000).toLocaleString()}</p> */}
             </St.WriterInfoSection>
             <St.ContentSection>
               <St.Article>
@@ -168,13 +168,15 @@ const Detail = React.memo(() => {
                 <div style={{ marginTop: '20px' }}></div>
               </St.Article>
               <St.Img>
-                <img
-                  src={targetPost?.postImg}
-                  alt="이미지 없음"
-                  width={'200px'}
-                  height={'200px'}
-                  style={{ boxShadow: '0 0 4px rgba(0, 0, 0, 0.2)' }}
-                />
+                {targetPost?.postImg && (
+                  <img
+                    src={targetPost?.postImg}
+                    alt="이미지 없음"
+                    width={'200px'}
+                    height={'200px'}
+                    style={{ boxShadow: '0 0 4px rgba(0, 0, 0, 0.2)' }}
+                  />
+                )}
               </St.Img>
             </St.ContentSection>
           </St.DetailList>

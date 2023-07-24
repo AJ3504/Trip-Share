@@ -45,7 +45,7 @@ export const St = {
     color: #555;
   `,
   EditInput: styled.input`
-    width: 100%;
+    width: 380px;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -83,7 +83,7 @@ export const St = {
 
   // ------------------slect Area------------------ //
   DropdownWrapper: styled.div`
-    width: 95%;
+    width: 398px;
     position: relative;
     bottom: 20px;
     margin-top: 20px;
