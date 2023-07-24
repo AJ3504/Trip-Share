@@ -70,6 +70,11 @@ const PostWrite = ({ marker, setIsModal }) => {
       setPostImg(downloadURL);
     }
 
+    if (option != null) {
+      alert('카테고리를 선택해 주세요.');
+      return;
+    }
+    
     const now = new Date();
     const createdAtTimestamp = Math.floor(now.getTime() / 1000);
     setCreatedAt(createdAtTimestamp);
