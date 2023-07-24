@@ -13,7 +13,6 @@ const LocationMarker = ({ position, onClick, selectedMarker, setIsModal }) => {
       <MapMarker position={position} onClick={onClick}>
         {selectedMarker ? (
           <>
-            {/* <StSearchImage src={thumbnail} alt={`thumbnail-${selectedMarker.content}`} /> */}
             <StMarkerContents>
               <StMarkerInfo>
                 <StMarkerName>{selectedMarker.content}</StMarkerName>

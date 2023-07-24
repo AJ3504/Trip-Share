@@ -5,7 +5,7 @@ export const St = {
     position: relative;
     left: 230px;
     min-height: 100%;
-    width: 100vw;
+    width: 60vw;
     display: flex;
     flex-direction: column;
     text-align: center;

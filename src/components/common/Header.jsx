@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../service/firebase';
 import SingUp from '../authentication/SignUp';
@@ -9,6 +9,7 @@ import { St } from './HeaderStyle';
 import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi';
 
 const Header = () => {
+  const location = useLocation();
   const getProfile = useSelector((state) => state.userInfo);
   const { nickname } = getProfile;
   const navigate = useNavigate();
@@ -106,7 +107,11 @@ const Header = () => {
         <St.LogoWrapper>
           <div
             onClick={() => {
-              navigate('/');
+              if (location.pathname === '/') {
+                window.location.reload();
+              } else {
+                navigate('/');
+              }
             }}
           >
             <St.LogoImg src="/Logo.png" alt="TripShare Logo" />

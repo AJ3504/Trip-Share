@@ -14,7 +14,7 @@ const SearchResult = ({ searchResults, handleResultClick, thumbnails }) => {
     <StSearchResultContainer>
       {searchResults.map((result, index) => (
         <StSearchResultList key={result.id} onClick={() => handleResultClick({ lat: result.y, lng: result.x })}>
-          <StSearchImage src={thumbnails[index]} alt={`thumbnail-${result.id}`} />
+          {thumbnails[index] && <StSearchImage src={thumbnails[index]} alt={`thumbnail-${result.id}`} />}
           <StSearchInfo>
             <StSearchName>{result.place_name}</StSearchName>
             <StSearchAddress>{result.address_name}</StSearchAddress>

@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
 export const StPostContainer = styled.div`
-  /* background-color: bisque; */
-
   right: 0px;
   height: 824px;
-  /* display: flex; */
 
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -20,8 +17,6 @@ export const StPostContainer = styled.div`
 `;
 
 export const StPostList = styled.div`
-  cursor: pointer;
-
   display: flex;
   align-items: center;
   margin: 16px;
@@ -54,17 +49,23 @@ export const StModalContents = styled.div`
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  max-width: 450px;
+  max-width: 470px;
   width: 90%;
+  height: 70%;
   margin-bottom: 6.25rem;
 `;
 
+export const StModalInner = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`;
+
 export const StOptionWrapper = styled.div`
-  width: 100%;
+  width: 400px;
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const CloseButton = styled.button`
@@ -93,7 +94,7 @@ export const StOptionHeader = styled.div`
 `;
 
 export const StOptionList = styled.div`
-  width: 26%;
+  width: 400px;
   background-color: gray;
   position: absolute;
 `;
@@ -111,26 +112,17 @@ export const PostButton = styled.button`
   margin-top: 10px;
   font-size: 16px;
   width: 80px;
-
-  /* padding: 10px 20px;
-  background-color: #4caf50;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #45a049;
-  } */
 `;
 
 export const StInput = styled.input`
-  width: 95%;
+  width: 90%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 export const StLabel = styled.label`
   font-weight: bold;
+  font-size: 13px;
 `;
