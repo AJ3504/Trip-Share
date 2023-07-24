@@ -62,7 +62,6 @@ export const St = {
   BodyLabel: styled.label`
     font-size: 14px;
     color: #555;
-    margin-bottom: '20px';
   `,
   EditTextarea: styled.textarea`
     width: 100%;

@@ -91,6 +91,8 @@ const Detail = React.memo(() => {
 
     resetNewPostTitle('');
     setNewPostBody('');
+
+    setEditMode(false);
   };
 
   const handleOptionClick = (option) => {
