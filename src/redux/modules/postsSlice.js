@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../../service/firebase';
 
@@ -15,7 +15,7 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
     const postsData = [];
 
     // 게시글 data
-    const q = query(collection(db, 'posts'));
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
 
     // 프로필 data를 저장할 객체

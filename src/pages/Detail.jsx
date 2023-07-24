@@ -33,6 +33,8 @@ const Detail = React.memo(() => {
   const [newPostTitle, onChangeNewPostTitleHandler, resetNewPostTitle] = useInput('');
   const [newPostBody, setNewPostBody] = useState('');
 
+  const [createdAt, setCreatedAt] = useState(null);
+
   //게시글 Data fetch
   useEffect(() => {
     const fetchDataAndWriterNickname = () => {
@@ -148,6 +150,7 @@ const Detail = React.memo(() => {
                 <St.WriterInfoImage src={targetPost?.writerPhotoURL} alt="writerInfo" />
               </St.WriterInfoImageWrapper>
               <St.WriterInfoNickName>{targetPost?.writerNickname}</St.WriterInfoNickName>
+              {/* <p>{new Date(createdAt * 1000).toLocaleString()}</p> */}
             </St.WriterInfoSection>
             <St.ContentSection>
               <St.Article>
