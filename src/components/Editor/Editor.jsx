@@ -29,7 +29,7 @@ const Editor = ({ value, onChange }) => {
   return (
     <div>
       <ReactQuill
-        style={{ width: '450px', height: '300px' }}
+        style={{ width: '400px', height: '150px' }}
         placeholder="내용을 입력해주세요"
         theme="snow"
         ref={quillRef}
