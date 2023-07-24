@@ -91,6 +91,8 @@ const Detail = React.memo(() => {
 
     resetNewPostTitle('');
     setNewPostBody('');
+    alert('게시글 수정 완료');
+    setEditMode(false);
   };
 
   const handleOptionClick = (option) => {
@@ -131,8 +133,6 @@ const Detail = React.memo(() => {
                   PostStButton={PostStButton}
                   setEditMode={setEditMode}
                 />
-                <br />
-                <br />
               </St.EditInputWrapper>
             </St.EditForm>
           </St.EditModalContainer>

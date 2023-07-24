@@ -10,7 +10,7 @@ const PostEditSelectArea = ({
 }) => {
   return (
     <div>
-      <St.DropdownWrapper>
+      <St.DropdownWrapper style={{ width: '400px', marginRight: '113px' }}>
         <St.DropdownHeader
           onClick={() => {
             setEditSelectAreaIsOpen((prev) => !prev);
@@ -20,7 +20,7 @@ const PostEditSelectArea = ({
           <span>▼</span>
         </St.DropdownHeader>
         {editSelectAreaIsOpen && (
-          <St.DropdownList>
+          <St.DropdownList style={{ width: '400px' }}>
             {options.map((option) => (
               <St.DropdownItem
                 key={option}

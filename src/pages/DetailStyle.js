@@ -21,7 +21,7 @@ export const St = {
     background-color: #fafafa;
     padding: 20px;
     width: 65%;
-    height: 70%;
+    height: 80%;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@ export const St = {
     z-index: 999;
   `,
   EditInputWrapper: styled.section`
-    width: 42.5%;
+    width: 45.5%;
     /* margin-top: 40px; */
   `,
 

@@ -11,7 +11,7 @@ export const PostStButton = styled.button`
   transition: background-color 0.2s ease;
   font-family: 'NanumSquareNeo-Variable', sans-serif;
 
-  /* margin-top: 10px; */
+  margin-top: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 5px;
