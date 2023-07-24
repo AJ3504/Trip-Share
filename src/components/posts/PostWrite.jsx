@@ -69,7 +69,7 @@ const PostWrite = ({ marker, setIsModal }) => {
       setPostImg(downloadURL);
     }
 
-    if (option != null) {
+    if (option === '') {
       alert('카테고리를 선택해 주세요.');
       return;
     }
