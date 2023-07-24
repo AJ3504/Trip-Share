@@ -13,6 +13,7 @@ const PostEditInputArea = ({
   return (
     <>
       <St.TitleLabel>제목</St.TitleLabel>
+      <br />
       <St.EditInput
         type="text"
         value={newPostTitle}

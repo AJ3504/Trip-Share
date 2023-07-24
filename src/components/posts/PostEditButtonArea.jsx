@@ -6,14 +6,14 @@ const PostEditButtonArea = ({ isSignedIn, PostStButton, editModeHandler, deleteH
   return (
     <>
       {isSignedIn ? (
-        <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
-          수정하기
-        </PostStButton>
-      ) : null}
-      {isSignedIn ? (
-        <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
-          삭제하기
-        </PostStButton>
+        <>
+          <PostStButton onClick={editModeHandler} style={{ marginRight: '5px' }}>
+            수정하기
+          </PostStButton>
+          <PostStButton onClick={() => deleteHandler(postId)} style={{ marginRight: '5px' }}>
+            삭제하기
+          </PostStButton>
+        </>
       ) : null}
       <PostStButton onClick={() => navigate('/')}>이전 화면으로</PostStButton>
     </>
