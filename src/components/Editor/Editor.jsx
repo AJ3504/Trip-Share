@@ -16,7 +16,6 @@ const Editor = ({ value, onChange }) => {
           [{ list: 'ordered' }, { list: 'bullet' }],
           [{ color: [] }, { background: [] }],
           [{ align: [] }, 'link']
-          //   [{ align: [] }, 'link', 'image'] 이미지를 추가하려면 이렇게 넣으면됩니다
         ]
       }
     };
@@ -29,9 +28,8 @@ const Editor = ({ value, onChange }) => {
 
   return (
     <div>
-      {/* <button onClick={() => console.log(content)}>Value</button> */}
       <ReactQuill
-        style={{ width: '450px', height: '300px' }}
+        style={{ width: '400px', height: '150px' }}
         placeholder="내용을 입력해주세요"
         theme="snow"
         ref={quillRef}

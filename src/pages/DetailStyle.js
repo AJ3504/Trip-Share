@@ -17,21 +17,27 @@ export const St = {
     justify-content: center;
     z-index: 999;
   `,
-  EditForm: styled.form`
+  EditModalContents: styled.div`
     background-color: #fafafa;
     padding: 20px;
-    width: 65%;
+    width: 40%;
     height: 70%;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 999;
   `,
+  EditModalInner: styled.div`
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 70px;
+  `,
+  EditForm: styled.form``,
   EditInputWrapper: styled.section`
-    width: 42.5%;
-    /* margin-top: 40px; */
+    width: 91%;
+    margin-top: 20px;
+    margin-bottom: 60px;
   `,
 
   TitleLabel: styled.label`
@@ -77,8 +83,8 @@ export const St = {
 
   // ------------------slect Area------------------ //
   DropdownWrapper: styled.div`
-    width: 200px;
-    position: relative; //이부분 다시보기
+    width: 95%;
+    position: relative;
     bottom: 20px;
     margin-top: 20px;
     border: 1px solid #ccc;
@@ -116,21 +122,13 @@ export const St = {
 
   //  ------------------상세게시글 ------------------//
   DetailContainer: styled.div`
-    //
-    position: relative;
-    left: 10px;
-    top: 30px;
-    //
-
+    margin-top: 5%;
     height: 100vh;
-    width: 60vw;
   `,
 
   DetailListsWrapper: styled.ul`
-    //
     display: flex;
     flex-direction: column;
-    //
 
     justify-content: space-between;
     text-align: center;
@@ -139,9 +137,8 @@ export const St = {
   DetailList: styled.li`
     border-radius: 7px;
     box-shadow: 5px 5px 10px #eee;
-    margin: 15px;
-    margin-left: 30px;
-    margin-right: 50px;
+    display: inline-block;
+    margin: 0 auto;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 25px;
