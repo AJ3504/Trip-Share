@@ -21,13 +21,14 @@ const PostEditInputArea = ({
       />
       <br />
       <St.BodyLabel>내용</St.BodyLabel>
+      <br />
       <Editor
-        style={{ width: '100%', height: '500px' }}
+        style={{ width: '100%', height: '500px', marginTop: '20px' }}
         value={newPostBody}
         onChange={(value) => setNewPostBody(value)}
       />
       <br />
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', marginTop: '20px' }}>
         <div style={{ marginLeft: '150px', marginTop: '50px' }}>
           <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
           <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>

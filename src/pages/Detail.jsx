@@ -113,26 +113,30 @@ const Detail = React.memo(() => {
       <div>
         {editMode ? (
           <St.EditModalContainer>
-            <St.EditForm onSubmit={onSubmitEditHandler}>
-              <PostEditSelectArea
-                handleOptionClick={handleOptionClick}
-                setEditSelectAreaIsOpen={setEditSelectAreaIsOpen}
-                editSelectedOption={editSelectedOption}
-                editSelectAreaIsOpen={editSelectAreaIsOpen}
-                options={options}
-              />
-              <St.EditInputWrapper>
-                <PostEditInputArea
-                  newPostTitle={newPostTitle}
-                  onChangeNewPostTitleHandler={onChangeNewPostTitleHandler}
-                  Editor={Editor}
-                  newPostBody={newPostBody}
-                  setNewPostBody={setNewPostBody}
-                  PostStButton={PostStButton}
-                  setEditMode={setEditMode}
-                />
-              </St.EditInputWrapper>
-            </St.EditForm>
+            <St.EditModalContents>
+              <St.EditModalInner>
+                <St.EditForm onSubmit={onSubmitEditHandler}>
+                  <PostEditSelectArea
+                    handleOptionClick={handleOptionClick}
+                    setEditSelectAreaIsOpen={setEditSelectAreaIsOpen}
+                    editSelectedOption={editSelectedOption}
+                    editSelectAreaIsOpen={editSelectAreaIsOpen}
+                    options={options}
+                  />
+                  <St.EditInputWrapper>
+                    <PostEditInputArea
+                      newPostTitle={newPostTitle}
+                      onChangeNewPostTitleHandler={onChangeNewPostTitleHandler}
+                      Editor={Editor}
+                      newPostBody={newPostBody}
+                      setNewPostBody={setNewPostBody}
+                      PostStButton={PostStButton}
+                      setEditMode={setEditMode}
+                    />
+                  </St.EditInputWrapper>
+                </St.EditForm>
+              </St.EditModalInner>
+            </St.EditModalContents>
           </St.EditModalContainer>
         ) : null}
       </div>
