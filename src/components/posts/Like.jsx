@@ -1,46 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Like = () => {
-  // //hooks
-  // const dispatch = useDispatch();
+  //useStates
+  const [like, setLike] = useState(456);
+  const [isLike, setIsLike] = useState(false);
 
-  // //functions
-  // const addLike = async (postId) => {
-  //   try {
-  //     const res = await axios.put(`/api/posts/like/${postId}`);
-  //     dispatch({
-  //       type: UPDATE_LIKES,
-  //       paylaod: { id, likes: res.data }
-  //     });
-  //   } catch (err) {
-  //     dispatch({
-  //       type: POST_ERROR,
-  //       payload: { msg: err.response.statusText, status: err.response.status }
-  //     });
-  //   }
-  // };
-  // const removeLike = async (postId) => {
-  //   try {
-  //     const res = await axios.put(`/api/posts/unlike/${postId}`);
-  //     dispatch({
-  //       type: UPDATE_LIKES,
-  //       paylaod: { id, likes: res.data }
-  //     });
-  //   } catch (err) {
-  //     dispatch({
-  //       type: POST_ERROR,
-  //       payload: { msg: err.response.statusText, status: err.response.status }
-  //     });
-  //   }
-  // };
+  //Event Handler
+  const onLikeButtonClick = () => {
+    setLike(like + (isLike ? -1 : 1));
+    setIsLike(!isLike);
+  };
 
   return (
-    <div>
-      <span>
-        <i class="fa-solid fa-thumbs-up"></i>
-      </span>
+    <div style={{ display: 'flex' }}>
+      <i class="fa-solid fa-thumbs-up" onClick={onLikeButtonClick} style={{ border: 'solid', marginRight: '10px' }}>
+        공감{like}
+      </i>
+      <i class="fa-solid fa-comment" style={{ fontSize: '15px', border: 'solid' }}>
+        댓글
+      </i>
     </div>
   );
 };

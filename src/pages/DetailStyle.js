@@ -207,5 +207,8 @@ export const St = {
     position: relative;
     right: 20px;
     margin-left: 10px;
-  `
+  `,
+
+  // section className="좋아요"
+  LikeSection: styled.section``
 };

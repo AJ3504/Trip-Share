@@ -180,8 +180,11 @@ const Detail = React.memo(() => {
                 )}
               </St.Img>
             </St.ContentSection>
+            {/* -------------------------------------------------------- */}
             <hr style={{ marginTop: '80px' }} className="좋아요" />
-            <Like />
+            <St.LikeSection>
+              <Like />
+            </St.LikeSection>
           </St.DetailList>
         </St.DetailListsWrapper>
       </St.DetailContainer>
