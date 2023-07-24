@@ -131,21 +131,6 @@ const Detail = React.memo(() => {
                   PostStButton={PostStButton}
                   setEditMode={setEditMode}
                 />
-
-                <br />
-                <St.BodyLabel>내용</St.BodyLabel>
-                {/* 에디터로 변경 */}
-                <Editor value={newPostBody} onChange={(value) => setNewPostBody(value)} />
-                <br />
-                <div style={{ display: 'flex' }}>
-                  <div style={{ marginLeft: '150px', marginTop: '50px' }}>
-                    <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
-                    <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
-                  </div>
-                </div>
-
-                <br />
-
               </St.EditInputWrapper>
             </St.EditForm>
           </St.EditModalContainer>
