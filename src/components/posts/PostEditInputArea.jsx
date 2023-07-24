@@ -26,12 +26,12 @@ const PostEditInputArea = ({
       <br />
       <br />
       <Editor
-        style={{ width: '100%', height: '500px' }}
+        style={{ width: '100%', height: '500px', marginTop: '20px' }}
         value={newPostBody}
         onChange={(value) => setNewPostBody(value)}
       />
       <br />
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', marginTop: '20px' }}>
         <div style={{ marginLeft: '150px', marginTop: '50px' }}>
           <br />
           <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>

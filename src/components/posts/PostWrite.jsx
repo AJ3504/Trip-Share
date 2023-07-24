@@ -151,7 +151,7 @@ const PostWrite = ({ marker, setIsModal }) => {
             </div>
             <StInput style={{ width: '250px', marginLeft: '80px' }} type="file" onChange={imgSelect} />
 
-            <PostStButton type="submit" style={{ marginLeft: '175px', marginBottom: '70px' }}>
+            <PostStButton type="submit" style={{ marginLeft: '175px' }}>
               글 작성하기
             </PostStButton>
           </form>

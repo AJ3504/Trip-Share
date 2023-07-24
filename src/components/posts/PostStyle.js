@@ -53,7 +53,7 @@ export const StModalContents = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-width: 470px;
   width: 90%;
-  height: 70%;
+  height: 80%;
   margin-bottom: 6.25rem;
 `;
 
@@ -96,7 +96,7 @@ export const StOptionHeader = styled.div`
 `;
 
 export const StOptionList = styled.div`
-  width: 26%;
+  width: 23%;
   background-color: gray;
   position: absolute;
 `;
