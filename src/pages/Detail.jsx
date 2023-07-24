@@ -131,21 +131,8 @@ const Detail = React.memo(() => {
                   PostStButton={PostStButton}
                   setEditMode={setEditMode}
                 />
-
                 <br />
-                <St.BodyLabel>내용</St.BodyLabel>
-                {/* 에디터로 변경 */}
-                <Editor value={newPostBody} onChange={(value) => setNewPostBody(value)} />
                 <br />
-                <div style={{ display: 'flex' }}>
-                  <div style={{ marginLeft: '150px', marginTop: '50px' }}>
-                    <PostStButton onClick={() => setEditMode(false)}>취소</PostStButton>
-                    <PostStButton style={{ marginLeft: '5px' }}>수정 완료</PostStButton>
-                  </div>
-                </div>
-
-                <br />
-
               </St.EditInputWrapper>
             </St.EditForm>
           </St.EditModalContainer>
@@ -172,7 +159,7 @@ const Detail = React.memo(() => {
                 />
                 <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
                 <br />
-                {/* 에디터때문에 이 부분 수정했습니다  */}
+                {/* 에디터때문에 이 부분 수정했습니다  sanitizeHtml 함수가 html태그를 */}
                 <div dangerouslySetInnerHTML={sanitizeHtml(targetPost?.postBody)} />
                 <div style={{ marginTop: '20px' }}></div>
               </St.Article>
