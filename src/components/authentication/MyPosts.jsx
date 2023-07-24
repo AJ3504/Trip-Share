@@ -62,7 +62,9 @@ const MyPosts = () => {
                 </div>
               </St.MyPostBody>
               <St.MyPostImg>
-                <img src={myPostData.postImg} alt="이미지 없음" width={'150px'} height={'150px'} />
+                {myPostData.postImg && (
+                  <img src={myPostData.postImg} alt="이미지 없음" width={'150px'} height={'150px'} />
+                )}
               </St.MyPostImg>
             </St.MyPostList>
           </St.MyPostListsWrapper>
