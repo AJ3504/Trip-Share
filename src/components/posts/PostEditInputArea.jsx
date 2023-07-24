@@ -17,22 +17,15 @@ const PostEditInputArea = ({
         type="text"
         value={newPostTitle}
         onChange={onChangeNewPostTitleHandler}
-        placeholder="제목을 5글자 이상 입력해주세요!"
+        placeholder="제목을 입력해주세요!"
       />
       <br />
       <St.BodyLabel>내용</St.BodyLabel>
-      {/* 에디터로 변경 */}
       <Editor
         style={{ width: '100%', height: '500px' }}
         value={newPostBody}
         onChange={(value) => setNewPostBody(value)}
       />
-      {/* <St.EditTextarea
-            type="text"
-            value={newPostBody}
-            onChange={onChangeNewPostBodyHandler}
-            placeholder="본문 내용을 5글자 이상 입력해주세요!"
-                /> */}
       <br />
       <div style={{ display: 'flex' }}>
         <div style={{ marginLeft: '150px', marginTop: '50px' }}>
