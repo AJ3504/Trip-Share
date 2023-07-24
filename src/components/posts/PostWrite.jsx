@@ -35,6 +35,7 @@ const PostWrite = ({ marker, setIsModal }) => {
   const [postTitle, setPostTitle] = useState('');
   const [postBody, setPostBody] = useState('');
   const [postImg, setPostImg] = useState(null);
+  const [createdAt, setCreatedAt] = useState(null);
 
   const onChangePost = (e) => {
     const {
@@ -69,6 +70,10 @@ const PostWrite = ({ marker, setIsModal }) => {
       setPostImg(downloadURL);
     }
 
+    const now = new Date();
+    const createdAtTimestamp = Math.floor(now.getTime() / 1000);
+    setCreatedAt(createdAtTimestamp);
+
     const newPost = {
       uid: auth.currentUser.uid,
       markerId: marker.id,
@@ -76,7 +81,8 @@ const PostWrite = ({ marker, setIsModal }) => {
       postTitle: postTitle,
       postBody: postBody,
       postImg: postImg,
-      category: option
+      category: option,
+      createdAt: createdAtTimestamp
     };
 
     dispatch(__addPostSlice(newPost));
