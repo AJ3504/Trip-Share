@@ -12,6 +12,7 @@ import Editor from '../components/Editor/Editor';
 import PostEditSelectArea from '../components/posts/PostEditSelectArea';
 import PostEditInputArea from '../components/posts/PostEditInputArea';
 import PostEditButtonArea from '../components/posts/PostEditButtonArea';
+import Like from '../components/posts/Like';
 
 const sanitizeHtml = (html) => {
   const sanitizedHtml = DOMPurify.sanitize(html);
@@ -179,6 +180,8 @@ const Detail = React.memo(() => {
                 )}
               </St.Img>
             </St.ContentSection>
+            <hr style={{ marginTop: '80px' }} className="좋아요" />
+            <Like />
           </St.DetailList>
         </St.DetailListsWrapper>
       </St.DetailContainer>
