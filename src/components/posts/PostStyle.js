@@ -17,8 +17,6 @@ export const StPostContainer = styled.div`
 `;
 
 export const StPostList = styled.div`
-  cursor: pointer;
-
   display: flex;
   align-items: center;
   margin: 16px;
