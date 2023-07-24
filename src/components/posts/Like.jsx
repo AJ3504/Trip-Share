@@ -25,17 +25,17 @@ const Like = () => {
   // 'likes' 컬렉션
   const likesRef = collection(db, 'likes');
 
-  // const likesDoc = query(likesRef, where('targetPostId', '==', targetPost.id));
-  // const getLikes = async () => {
-  //   const data = await getDocs(likesDoc);
-  //   console.log(data);
-  // };
-
+  const likesDoc = query(likesRef, where('targetPostId', '==', targetPost?.id));
   const getLikes = async () => {
-    const data = await getDocs(likesRef);
-    // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); //여기서의 id는: 유저가 누른 like만큼 likesRef에 올라간 문서의 id
+    const data = await getDocs(likesDoc);
     setLikeAmount(data.docs.length);
   };
+
+  // const getLikes = async () => {
+  //   const data = await getDocs(likesRef);
+  //   // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); //여기서의 id는: 유저가 누른 like만큼 likesRef에 올라간 문서의 id
+  //   setLikeAmount(data.docs.length);
+  // };
 
   const addLike = async () => {
     await addDoc(likesRef, { userId: user?.uid, targetPostId: targetPost.id });
