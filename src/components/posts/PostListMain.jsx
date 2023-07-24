@@ -67,11 +67,13 @@ const PostListMain = ({ option, position }) => {
                 <br />
                 <li>{truncatedBody}</li>
                 <br />
-                <button onClick={() => onPostClick(post)}>상세보기</button>
+                <button onClick={() => onPostClick(post)} style={{ cursor: 'pointer' }}>
+                  상세보기
+                </button>
               </ul>
             </div>
             <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-              <img src={post.postImg} alt="Post Image" style={{ width: '80px', height: '80px' }} />
+              {post.postImg && <img src={post.postImg} alt="Post Image" style={{ width: '80px', height: '80px' }} />}
             </div>
           </StPostList>
         );
