@@ -16,8 +16,6 @@ const Header = () => {
   const [currentUser, setCurrentUser] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  console.log(location);
-
   const openDropdown = () => {
     setIsDropdownOpen(true);
   };
@@ -109,10 +107,10 @@ const Header = () => {
         <St.LogoWrapper>
           <div
             onClick={() => {
-              if (location.pathname === '/mypage') {
-                navigate('/');
-              } else {
+              if (location.pathname === '/') {
                 window.location.reload();
+              } else {
+                navigate('/');
               }
             }}
           >
