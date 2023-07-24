@@ -43,7 +43,7 @@ export const StSearchResultList = styled.div`
 
   display: flex;
   align-items: center;
-  margin: 16px;
+  margin: 18px;
   border-radius: 10px;
 
   background-color: rgb(230, 241, 245);
@@ -51,8 +51,9 @@ export const StSearchResultList = styled.div`
 `;
 
 export const StSearchImage = styled.img`
-  width: 30%;
-  height: 30%;
+  width: 95px;
+  height: auto;
+
   object-fit: cover;
   border-radius: 10px 0 0 10px;
 `;
