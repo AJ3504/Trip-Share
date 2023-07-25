@@ -10,7 +10,7 @@ const Like = () => {
   // 상단 hooks
   const [user] = useAuthState(auth);
   const [likeAmount, setLikeAmount] = useState(null);
-  const [liked, setLiked] = useState([]);
+  const [liked, setLiked] = useState(false);
   const { postId } = useParams();
 
   // fetch data
@@ -29,31 +29,25 @@ const Like = () => {
     const hasUserLiked = spreadData.filter((doc) => doc.userId === user?.uid);
     // console.log('그중에서 로그인id랑 같은 것', hasUserLiked);
 
-    //-------------------------------------------------------------------------------------------------------------------
-    // const hasUserLiked = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    // const hasUserLiked = data.docs.find((doc) => doc.userId === user?.uid && doc.targetPostId === targetPost?.id);
-    // const data2 = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })); //[{..}, {...}] 배열 형태로 문서 데이터 가져온 후
-
-    // const hasUserLiked = data2.docs.find((item) => item.userId === user?.uid);
-    // console.log(hasUserLiked);
-    //-------------------------------------------------------------------------------------------------------------------
+    // 한번만 로직 추가
 
     setLikeAmount(data.docs.length); //문서개수만큼 상태관리 업데이트
-    setLiked(hasUserLiked);
+    setLiked(hasUserLiked.length > 0);
   };
 
   // ADD
   const addLike = async () => {
-    if (liked.length === 0) {
+    if (!liked) {
       await addDoc(likesRef, { userId: user?.uid, targetPostId: targetPost.id });
 
       setLikeAmount((prev) => prev + 1);
+      setLiked(true);
     }
   };
 
   // REMOVE
   const removeLike = async () => {
-    if (liked.length > 0) {
+    if (liked) {
       const wouldDeleteQuery = query(
         likesRef,
         where('targetPostId', '==', targetPost?.id),
@@ -64,59 +58,20 @@ const Like = () => {
 
       await deleteDoc(wouldDelete);
       setLikeAmount((prev) => prev - 1);
+      setLiked(false);
     }
   };
 
   //
-  // const hasUserLiked = data2.find((item) => item.userId === user?.uid);
-
   useEffect(() => {
     getLikes();
   }, []);
 
   return (
-    // <div>
-    //   {/* <i class="fa-solid fa-thumbs-up" onClick={addLike}>
-    //     공감{likeAmount}
-    //   </i> */}
-    //   {/* <i class="fa-solid fa-thumbs-down" onClick={removeLike}>
-    //     별로{likeAmount}
-    //   </i> */}
-    // </div>
-
-    <i class="fa-solid fa-thumbs-up" onClick={liked.length > 0 ? removeLike : addLike}>
+    <i class="fa-solid fa-thumbs-up" onClick={liked ? removeLike : addLike}>
       공감{likeAmount}
     </i>
   );
 };
 
 export default Like;
-
-// const Like = () => {
-//   //useStates
-//   const [like, setLike] = useState(0);
-//   const [isLike, setIsLike] = useState(false);
-//   const [disLike, setDisLike] = useState(0);
-//   const [isDisLike, setIsDisLike] = useState(false);
-
-//   //Event Handler
-//   const onLikeButtonClick = () => {
-//     setLike(like + (isLike ? -1 : 1));
-//     setIsLike(!isLike);
-//   };
-
-//   return (
-//     <div style={{ display: 'flex' }}>
-//       <i class="fa-solid fa-thumbs-up" onClick={onLikeButtonClick} style={{ border: 'solid', marginRight: '10px' }}>
-//         공감{like}
-//       </i>
-
-//       {/* --------------------------------------------------------------------- */}
-//       <i class="fa-solid fa-comment" style={{ fontSize: '15px', border: 'solid' }}>
-//         댓글
-//       </i>
-//     </div>
-//   );
-// };
-
-// export default Like;
