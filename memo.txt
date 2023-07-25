@@ -1,0 +1,7 @@
+const getLikes = async () => {
+    const data = await getDocs(likesRef);
+    // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); //여기서의 id는: 유저가 누른 like만큼 likesRef에 올라간 문서의 id
+    setLikeAmount(data.docs.length);
+  };
+
+user와 targetPost가 정상적인 값일 때에만 쿼리를 실행하도록
