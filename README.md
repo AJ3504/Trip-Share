@@ -82,3 +82,12 @@
 - Styled-components
 - JavaScript
 - HTML
+
+## 🛠️ Trouble Shooting
+
+- Main page
+  > 
+- Detail page
+  > 변수가 가끔 undefined되며 발생하는 invalid data issue
+- My page
+  > 
