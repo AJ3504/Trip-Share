@@ -83,7 +83,7 @@
 - JavaScript
 - HTML
 
-## ⚔️ Trouble Shooting
+## ⚔️ Trouble Shooting
 
 - Main page
   > 
