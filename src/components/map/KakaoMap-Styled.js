@@ -123,7 +123,7 @@ export const StButton = styled.button`
 `;
 
 export const StMapContainer = styled.div`
-  width: 80%;
+  width: 70%;
   height: 100vh;
 `;
 

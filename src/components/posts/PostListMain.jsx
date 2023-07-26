@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 import { StPostContainer, StPostList } from './PostStyle';
+import Like from './Like';
 
 const PostListMain = ({ option, position }) => {
   const [] = useState();
@@ -67,13 +68,26 @@ const PostListMain = ({ option, position }) => {
                 <br />
                 <li>{truncatedBody}</li>
                 <br />
-                <button onClick={() => onPostClick(post)} style={{ cursor: 'pointer' }}>
-                  상세보기
-                </button>
+                <div>
+                  <button onClick={() => onPostClick(post)} style={{ cursor: 'pointer' }}>
+                    상세보기
+                  </button>
+                </div>
               </ul>
             </div>
             <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-              {post.postImg && <img src={post.postImg} alt="Post Image" style={{ width: '80px', height: '80px' }} />}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {post.postImg && (
+                  <img
+                    src={post.postImg}
+                    alt="Post Image"
+                    style={{ width: '80px', height: '80px', marginBottom: '30px' }}
+                  />
+                )}
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Like />
+                </div>
+              </div>
             </div>
           </StPostList>
         );
