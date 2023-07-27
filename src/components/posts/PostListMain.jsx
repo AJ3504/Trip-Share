@@ -18,6 +18,8 @@ const PostListMain = ({ option, position }) => {
   //hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { likeAmount } = useSelector((state) => state.likeSlice);
+  console.log(likeAmount);
 
   useEffect(() => {
     const fetchData = () => {
@@ -85,7 +87,7 @@ const PostListMain = ({ option, position }) => {
                   />
                 )}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Like />
+                  <i class="fa-solid fa-thumbs-up">{likeAmount}</i>
                 </div>
               </div>
             </div>

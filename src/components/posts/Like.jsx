@@ -5,13 +5,14 @@ import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'fireb
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../service/firebase';
 import { useParams } from 'react-router-dom';
+import { setLikeAmount, setLiked } from '../../redux/modules/likeSlice';
 
 const Like = () => {
   // 상단 hooks
   const [user] = useAuthState(auth);
-  const [likeAmount, setLikeAmount] = useState(null);
-  const [liked, setLiked] = useState(false);
+  const { likeAmount, liked } = useSelector((state) => state.likeSlice);
   const { postId } = useParams();
+  const dispatch = useDispatch();
 
   // fetch data
   const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
@@ -30,8 +31,8 @@ const Like = () => {
       const hasUserLiked = spreadData.filter((doc) => doc.userId === user?.uid);
       // console.log('그중에서 로그인id랑 같은 것', hasUserLiked);
 
-      setLikeAmount(data.docs.length); //문서개수만큼 상태관리 업데이트
-      setLiked(hasUserLiked.length > 0);
+      dispatch(setLikeAmount(data.docs.length)); //문서개수만큼 상태관리 업데이트
+      dispatch(setLiked(hasUserLiked.length > 0));
     }
   };
 
@@ -39,9 +40,6 @@ const Like = () => {
   const addLike = async () => {
     if (targetPost && !liked) {
       await addDoc(likesRef, { userId: user?.uid, targetPostId: targetPost.id });
-
-      setLikeAmount((prev) => prev + 1);
-      setLiked(true);
     }
   };
 
@@ -57,8 +55,6 @@ const Like = () => {
       const wouldDelete = doc(db, 'likes', wouldDeleteData?.docs[0].id);
 
       await deleteDoc(wouldDelete);
-      setLikeAmount((prev) => prev - 1);
-      setLiked(false);
     }
   };
 
@@ -67,8 +63,20 @@ const Like = () => {
     getLikes();
   }, []);
 
+  const handleLikeClick = () => {
+    if (liked) {
+      removeLike();
+      dispatch(setLikeAmount(likeAmount - 1));
+      dispatch(setLiked(false));
+    } else {
+      addLike();
+      dispatch(setLikeAmount(likeAmount + 1));
+      dispatch(setLiked(true));
+    }
+  };
+
   return (
-    <i class="fa-solid fa-thumbs-up" onClick={liked ? removeLike : addLike}>
+    <i class="fa-solid fa-thumbs-up" onClick={handleLikeClick}>
       공감{likeAmount}
     </i>
   );
