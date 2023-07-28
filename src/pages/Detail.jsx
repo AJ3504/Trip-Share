@@ -181,7 +181,7 @@ const Detail = React.memo(() => {
               </St.Img>
             </St.ContentSection>
             {/* -------------------------------------------------------- */}
-            <hr style={{ marginTop: '80px' }} className="좋아요" />
+            <hr style={{ marginTop: '80px' }} className="like" />
             <St.LikeSection>
               <Like />
             </St.LikeSection>

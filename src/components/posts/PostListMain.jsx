@@ -19,17 +19,18 @@ const PostListMain = ({ option, position }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { likeAmount } = useSelector((state) => state.likeSlice);
-  console.log(likeAmount);
+  // console.log(likeAmount);
 
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
+      // query(collection(db, 'likes')); //이다음에, 어딘가에 넣어서 저장
     };
 
     fetchData();
   }, [dispatch]);
 
-  const { postsData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
+  const { postsData, likesData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
 
   if (isLoading) {
     return <h1>아직 로딩 중입니다</h1>;
@@ -55,6 +56,7 @@ const PostListMain = ({ option, position }) => {
   return (
     <StPostContainer>
       {(option ? filteredPosts : statedPosts).map((post) => {
+        const eachLikesData = likesData.filter((item) => item.targetPostId === post.id);
         const truncatedTitle = post.postTitle.length > 5 ? post.postTitle.substring(0, 5) + '...' : post.postTitle;
         const truncatedBody =
           stripHtmlTags(post.postBody).length > 10
@@ -87,7 +89,7 @@ const PostListMain = ({ option, position }) => {
                   />
                 )}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <i class="fa-solid fa-thumbs-up">{likeAmount}</i>
+                  <i class="fa-solid fa-thumbs-up">{eachLikesData.length}</i>
                 </div>
               </div>
             </div>
