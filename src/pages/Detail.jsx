@@ -152,6 +152,18 @@ const Detail = React.memo(() => {
               </St.WriterInfoImageWrapper>
               <St.WriterInfoNickName>{targetPost?.writerNickname}</St.WriterInfoNickName>
               {/* <p>{new Date(createdAt * 1000).toLocaleString()}</p> */}
+              {/* <p>{targetPost?.createdAt.toISOString()}</p> */}
+              {/* <p>{new Date(targetPost?.createdAt * 1000).toISOString()}</p> */}
+              <p style={{ marginTop: '5px', fontSize: '13px', color: '#a8b0c4da', marginRight: '20px' }}>
+                {new Date(targetPost?.createdAt * 1000).toLocaleString('ko-KR', {
+                  timeZone: 'Asia/Seoul',
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </p>
             </St.WriterInfoSection>
             <St.ContentSection>
               <St.Article>

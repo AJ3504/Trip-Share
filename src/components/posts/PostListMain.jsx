@@ -25,7 +25,6 @@ const PostListMain = ({ option, position }) => {
   useEffect(() => {
     const fetchData = () => {
       dispatch(__getPostsSlice());
-      // query(collection(db, 'likes')); //이다음에, 어딘가에 넣어서 저장
     };
 
     fetchData();

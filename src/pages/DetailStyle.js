@@ -151,7 +151,7 @@ export const St = {
 
   // section className="writerInfo"
   WriterInfoSection: styled.section`
-    width: 6%;
+    width: 20%;
     padding: 8px;
   `,
 

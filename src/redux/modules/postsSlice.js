@@ -64,16 +64,6 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
       likesData.push({ ...likeMap[likeTargetPostId] });
     });
 
-    // // 3. sortedByLikeData
-    // const sortedByLikeData = [];
-
-    // likesData.forEach((like) => {
-    //   const post = postsData.filter((post) => post.id === like.targetPostId);
-    //   if (post) {
-    //     sortedByLikeData.push(like);
-    //   }
-    // });
-
     return thunkAPI.fulfillWithValue({ postsData, likesData });
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
