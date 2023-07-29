@@ -76,7 +76,7 @@ const Like = () => {
   };
 
   return (
-    <i class="fa-solid fa-thumbs-up" onClick={handleLikeClick}>
+    <i className="fa-solid fa-thumbs-up" onClick={handleLikeClick}>
       공감{likeAmount}
     </i>
   );
