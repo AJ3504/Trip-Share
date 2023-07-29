@@ -77,6 +77,9 @@ const PostListMain = ({ option, position }) => {
       <button style={{ height: '70%', fontSize: '50%', marginLeft: '10px' }} onClick={() => setSortByLike(true)}>
         좋아요순
       </button>
+      <button style={{ height: '70%', fontSize: '50%', marginLeft: '10px' }} onClick={() => setSortByLike(false)}>
+        최신순
+      </button>
       <StPostContainer>
         {sortByLike
           ? (option ? sortedByLikeFilteredPosts : sortedByLikeStatedPosts).map((post) => {
