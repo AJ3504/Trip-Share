@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize';
+Quill.register('modules/imageResize', ImageResize);
 
 const Editor = ({ value, onChange }) => {
   const quillRef = useRef();
@@ -15,13 +17,15 @@ const Editor = ({ value, onChange }) => {
           ['blockquote'],
           [{ list: 'ordered' }, { list: 'bullet' }],
           [{ color: [] }, { background: [] }],
-          [{ align: [] }, 'link']
+          [{ align: [] }, 'link', 'image']
         ]
+      },
+      imageResize: {
+        parchment: Quill.import('parchment')
       }
     };
   }, []);
 
-  // 에디터 내용이 바뀔 때마다 부모 컴포넌트로 업데이트 전달
   useEffect(() => {
     onChange(content);
   }, [content, onChange]);
@@ -29,7 +33,7 @@ const Editor = ({ value, onChange }) => {
   return (
     <div>
       <ReactQuill
-        style={{ width: '403px', height: '300px' }}
+        style={{ width: '450px', height: '300px' }}
         placeholder="내용을 입력해주세요"
         theme="snow"
         ref={quillRef}
