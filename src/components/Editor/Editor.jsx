@@ -51,7 +51,7 @@ const Editor = ({ value, onChange }) => {
           ['blockquote'],
           [{ list: 'ordered' }, { list: 'bullet' }],
           [{ color: [] }, { background: [] }],
-          [{ align: [] }, 'link', 'image']
+          [{ align: [] }, 'link', 'image', 'video']
         ],
         handlers: {
           image: handleImageSelect

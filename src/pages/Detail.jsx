@@ -6,17 +6,17 @@ import { __deletePostSlice, __getPostsSlice, __updatePostSlice } from '../redux/
 import useInput from '../hooks/useInput';
 import { St } from './DetailStyle';
 import { PostStButton } from '../components/common/PostStButton';
-import DOMPurify from 'dompurify';
+// import DOMPurify from 'dompurify';
 
 import Editor from '../components/Editor/Editor';
 import PostEditSelectArea from '../components/posts/PostEditSelectArea';
 import PostEditInputArea from '../components/posts/PostEditInputArea';
 import PostEditButtonArea from '../components/posts/PostEditButtonArea';
 
-const sanitizeHtml = (html) => {
-  const sanitizedHtml = DOMPurify.sanitize(html);
-  return { __html: sanitizedHtml };
-};
+// const sanitizeHtml = (html) => {
+//   const sanitizedHtml = DOMPurify.sanitize(html);
+//   return { __html: sanitizedHtml };
+// };
 
 const Detail = React.memo(() => {
   const location = useLocation();
@@ -164,7 +164,9 @@ const Detail = React.memo(() => {
                 <St.TitleLetter>{targetPost?.postTitle}</St.TitleLetter>
                 <br />
                 {/* 에디터때문에 이 부분 수정했습니다  sanitizeHtml 함수가 html태그를 */}
-                <div dangerouslySetInnerHTML={sanitizeHtml(targetPost?.postBody)} />
+                {/* <div dangerouslySetInnerHTML={sanitizeHtml(targetPost?.postBody)} /> */}
+                <div dangerouslySetInnerHTML={{ __html: targetPost?.postBody }} />
+
                 <div style={{ marginTop: '20px' }}></div>
               </St.Article>
               <St.Img>
