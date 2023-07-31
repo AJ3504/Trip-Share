@@ -86,7 +86,7 @@
 ## ⚔️ Trouble Shooting
 
 - Main page
-  > 
+  > hook의 위치 조정 issue
 - Detail page
   > 변수가 가끔 undefined되며 발생하는 invalid data issue
 - My page
