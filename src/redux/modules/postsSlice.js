@@ -16,11 +16,11 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
     const postsData = [];
 
     const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-    const querySnapshot = await getDocs(q); // [{1}, {2}, {3}]
+    const querySnapshot = await getDocs(q);
 
     // 프로필 data
     const profileQ = query(collection(db, 'userInfo'));
-    const profileQuerySnapshot = await getDocs(profileQ); // [{1}, {2}, {3}]
+    const profileQuerySnapshot = await getDocs(profileQ);
 
     const profileMap = {};
 
@@ -54,7 +54,7 @@ export const __getPostsSlice = createAsyncThunk('posts/getPostsSlice', async (pa
     likeQuerySnapshot.forEach((doc) => {
       // likeMap[likeTargetPostId] 객체 생성
       const like = doc.data();
-      const likeTargetPostId = doc.data().targetPostId; // 아예 likes 속 targetPostId속성을 key로 씀
+      const likeTargetPostId = doc.data().targetPostId;
       likeMap[likeTargetPostId] = {
         targetPostId: like.targetPostId,
         userId: like.userId

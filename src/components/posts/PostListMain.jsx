@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 import { StPostContainer, StPostList } from './PostStyle';
-import Like from './Like';
 
 const PostListMain = ({ option, position }) => {
   const [] = useState();
@@ -15,10 +14,10 @@ const PostListMain = ({ option, position }) => {
     return div.textContent || div.innerText || '';
   };
 
-  //hooks
+  // hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { likeAmount } = useSelector((state) => state.likeSlice);
+
   // 좋아요 로직
   const [sortByLike, setSortByLike] = useState(false);
 
