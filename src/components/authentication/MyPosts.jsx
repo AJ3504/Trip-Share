@@ -14,7 +14,6 @@ const MyPosts = () => {
   const { postId } = useParams();
 
   //useStates
-  const [listOfPosts, setListOfPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(3);
 

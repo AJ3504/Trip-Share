@@ -1,11 +1,11 @@
 //원래
-// useEffect(() => {
-  //   const fetchData = () => {
-  //     dispatch(__getPostsSlice());
-  //   };
+ useEffect(() => {
+     const fetchData = () => {
+       dispatch(__getPostsSlice());
+     };
 
-  //   fetchData();
-  // }, [dispatch]);
+     fetchData();
+   }, [dispatch]);
 
 
 
@@ -47,3 +47,55 @@ useEffect(() => {
 
     fetchData();
   }, []);
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const postRef = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+  const likeRef = query(collection(db, 'likes'));
+
+
+  useEffect(() => {
+    postRef
+      .limit(3)
+      .get()
+      .then((collections) => {
+        updateState(collections);
+      });
+    
+    likeRef.limit(3).get().then((collections) => {
+      updateState(collections)
+    })
+  }, []);
+
+  const updateState = (collections) => {
+    const isCollectionEmpty = collections.size === 0;
+    if (!isCollectionEmpty) {
+      //
+      const posts = collections.docs.map((post) => post.data());
+      const lastdoc = collections.docs[collections.docs.length - 1];
+      //
+      setListOfPosts((listOfPosts) => [...listOfPosts, ...posts]);
+      setLastKey(lastdoc);
+    } else {
+      setIsEmpty(true);
+    }
+    //
+    setIsLoading(false);
+  };
+
+  const fetchMorePosts = () => {
+    //
+    setIsLoading(true);
+    //
+    postRef
+      .startAfter(lastKey)
+      .limit(3)
+      .get()
+      .then((collections) => {
+        updateState(collections);
+      });
+  };
+
+  if (listOfPosts.length === 0) {
+    return <h1>Loading...</h1>;
+  }

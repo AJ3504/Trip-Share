@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getPostsSlice, __postsSlice } from '../../redux/modules/postsSlice';
 import { StPostContainer, StPostList } from './PostStyle';
+import { __getMainPostsSlice } from '../../redux/modules/mainPostsSlice';
 
 const PostListMain = ({ option, position }) => {
   const [] = useState();
@@ -18,18 +18,22 @@ const PostListMain = ({ option, position }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // 좋아요 로직
+  // 좋아요, 무한스크롤
   const [sortByLike, setSortByLike] = useState(false);
+  const [listOfPosts, setListOfPosts] = useState([]);
+  const [lastKey, setLastKey] = useState();
+  const [isScrollLoading, setIsLoading] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
     const fetchData = () => {
-      dispatch(__getPostsSlice());
+      dispatch(__getMainPostsSlice());
     };
 
     fetchData();
   }, [dispatch]);
 
-  const { postsData, likesData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
+  const { postsData, likesData, isLoading, isError, error } = useSelector((state) => state.mainPostsSlice);
 
   if (isLoading) {
     return <h1>아직 로딩 중입니다</h1>;
@@ -80,7 +84,7 @@ const PostListMain = ({ option, position }) => {
       </button>
       <StPostContainer>
         {sortByLike
-          ? (option ? sortedByLikeFilteredPosts : sortedByLikeStatedPosts).map((post) => {
+          ? (option ? sortedByLikeFilteredPosts : sortedByLikeStatedPosts).map((post, index) => {
               //
               const eachLikesData = likesData.filter((item) => item.targetPostId === post.id);
               const truncatedTitle =
@@ -91,7 +95,7 @@ const PostListMain = ({ option, position }) => {
                   : stripHtmlTags(post.postBody);
               //
               return (
-                <StPostList key={post.id}>
+                <StPostList key={index}>
                   <div style={{ flex: 1 }}>
                     <ul>
                       <li style={{ marginLeft: '20px' }}>{post.category}</li>
@@ -120,11 +124,16 @@ const PostListMain = ({ option, position }) => {
                         <i className="fa-solid fa-thumbs-up">{eachLikesData.length}</i>
                       </div>
                     </div>
+                  </div>
+                  <div>
+                    {/* {isScrollLoading && <h1>Loading...</h1>}
+                    {!isScrollLoading && !isEmpty && <button onClick={() => fetchMorePosts()}>더보기</button>}
+                    {isEmpty && <h1>You've watched all posts</h1>} */}
                   </div>
                 </StPostList>
               );
             })
-          : (option ? filteredPosts : statedPosts).map((post) => {
+          : (option ? filteredPosts : statedPosts).map((post, index) => {
               //
               const eachLikesData = likesData.filter((item) => item.targetPostId === post.id);
               const truncatedTitle =
@@ -135,7 +144,7 @@ const PostListMain = ({ option, position }) => {
                   : stripHtmlTags(post.postBody);
               //
               return (
-                <StPostList key={post.id}>
+                <StPostList key={index}>
                   <div style={{ flex: 1 }}>
                     <ul>
                       <li style={{ marginLeft: '20px' }}>{post.category}</li>
@@ -164,6 +173,11 @@ const PostListMain = ({ option, position }) => {
                         <i className="fa-solid fa-thumbs-up">{eachLikesData.length}</i>
                       </div>
                     </div>
+                  </div>
+                  <div>
+                    {/* {isScrollLoading && <h1>Loading...</h1>}
+                    {!isScrollLoading && !isEmpty && <button onClick={() => fetchMorePosts()}>더보기</button>}
+                    {isEmpty && <h1>You've watched all posts</h1>} */}
                   </div>
                 </StPostList>
               );
