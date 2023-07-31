@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StPostContainer, StPostList } from './PostStyle';
 import { __getMainPostsSlice } from '../../redux/modules/mainPostsSlice';
+import { getMainPosts } from '../../api/mainPosts';
 
 const PostListMain = ({ option, position }) => {
   const [] = useState();
@@ -20,27 +21,37 @@ const PostListMain = ({ option, position }) => {
 
   // 좋아요, 무한스크롤
   const [sortByLike, setSortByLike] = useState(false);
-  const [listOfPosts, setListOfPosts] = useState([]);
-  const [lastKey, setLastKey] = useState();
-  const [isScrollLoading, setIsLoading] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [postsData, setPostsData] = useState([]);
+  const [likesData, setLikesData] = useState([]);
+  const [page, setPage] = useState(1);
+
+  // useEffect(async () => {
+  //   const { postsData, likesData } = await getMainPosts();
+  //   setPostsData((prev) => [...prev, ...postsData]);
+  //   setLikesData((prev) => [...prev, ...likesData]);
+  // }, [page]);
+
+  const function1 = async () => {
+    const { postsData, likesData } = await getMainPosts(page); // getMainPosts()에 인자로 page를 넘겨주고
+    setPostsData((prev) => [...prev, ...postsData]);
+    setLikesData(likesData);
+  };
 
   useEffect(() => {
-    const fetchData = () => {
-      dispatch(__getMainPostsSlice());
-    };
+    function1();
+  }, [page]);
 
-    fetchData();
-  }, [dispatch]);
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
+      setPage((prev) => prev + 1);
+    }
+  };
 
-  const { postsData, likesData, isLoading, isError, error } = useSelector((state) => state.mainPostsSlice);
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
 
-  if (isLoading) {
-    return <h1>아직 로딩 중입니다</h1>;
-  }
-  if (isError) {
-    return <h1>오류가 발생했어요</h1>;
-  }
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const onPostClick = (post) => {
     navigate(`/detail/${post.id}`);
@@ -127,8 +138,8 @@ const PostListMain = ({ option, position }) => {
                   </div>
                   <div>
                     {/* {isScrollLoading && <h1>Loading...</h1>}
-                    {!isScrollLoading && !isEmpty && <button onClick={() => fetchMorePosts()}>더보기</button>}
-                    {isEmpty && <h1>You've watched all posts</h1>} */}
+                      {!isScrollLoading && !isEmpty && <button onClick={() => fetchMorePosts()}>더보기</button>}
+                      {isEmpty && <h1>You've watched all posts</h1>} */}
                   </div>
                 </StPostList>
               );
@@ -176,8 +187,8 @@ const PostListMain = ({ option, position }) => {
                   </div>
                   <div>
                     {/* {isScrollLoading && <h1>Loading...</h1>}
-                    {!isScrollLoading && !isEmpty && <button onClick={() => fetchMorePosts()}>더보기</button>}
-                    {isEmpty && <h1>You've watched all posts</h1>} */}
+                      {!isScrollLoading && !isEmpty && <button onClick={() => fetchMorePosts()}>더보기</button>}
+                      {isEmpty && <h1>You've watched all posts</h1>} */}
                   </div>
                 </StPostList>
               );

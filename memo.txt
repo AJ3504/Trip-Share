@@ -99,3 +99,24 @@ useEffect(() => {
   if (listOfPosts.length === 0) {
     return <h1>Loading...</h1>;
   }
+
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const { postsData, likesData, isLoading, isError, error } = useSelector((state) => state.mainPostsSlice);
+
+  if (isLoading) {
+    return <h1>아직 로딩 중입니다</h1>;
+  }
+  if (isError) {
+    return <h1>오류가 발생했어요</h1>;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 스크롤 내리면 : window + top = height
+
+    // 스크롤 올리면 : height와 같지 않음
+    // console.log('Height: ', document.documentElement.scrollHeight);
+    // console.log('Top:', document.documentElement.scrollTop);
+    // console.log('Window: ', window.innerHeight);

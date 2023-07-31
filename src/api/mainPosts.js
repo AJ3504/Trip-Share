@@ -1,20 +1,17 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
-import { db } from '../../service/firebase';
+import { db } from '../service/firebase';
 
-const initialState = {
-  postsData: [],
-  isLoading: false,
-  isError: false,
-  error: null
-};
-
-export const __getMainPostsSlice = createAsyncThunk('posts/getMainPostsSlice', async (payload, thunkAPI) => {
+const getMainPosts = async (page) => {
   try {
+    // 넘겨받은 인자로 다음을 처리
+    const itemsPerPage = 5;
+    const startAt = (page - 1) * itemsPerPage;
+    const endAt = page * itemsPerPage;
+
     // 1. postsData
     const postsData = [];
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(endAt)); // limit(5)등이 아니라
 
-    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(5));
     const querySnapshot = await getDocs(q);
 
     // 프로필 data
@@ -63,35 +60,14 @@ export const __getMainPostsSlice = createAsyncThunk('posts/getMainPostsSlice', a
       likesData.push({ ...likeMap[likeTargetPostId] });
     });
 
-    return thunkAPI.fulfillWithValue({ postsData, likesData });
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    // 현재 페이지에 맞게 데이터를 slice하여 가져옴
+    const currentPageData = postsData.slice(startAt, endAt);
+
+    return { postsData: currentPageData, likesData };
+  } catch (err) {
+    console.log(err);
+    return { postsData: [], likesData: [] };
   }
-});
+};
 
-export const mainPostsSlice = createSlice({
-  name: 'posts',
-  initialState,
-  reducers: {},
-  extraReducers: {
-    [__getMainPostsSlice.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.isError = false;
-      state.postsData = action.payload.postsData;
-      state.likesData = action.payload.likesData;
-    },
-
-    [__getMainPostsSlice.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-      state.error = action.payload;
-    },
-    [__getMainPostsSlice.pending]: (state) => {
-      state.isLoading = true;
-      state.isError = false;
-    }
-  }
-});
-
-export const {} = mainPostsSlice.actions;
-export default mainPostsSlice.reducer;
+export { getMainPosts };
