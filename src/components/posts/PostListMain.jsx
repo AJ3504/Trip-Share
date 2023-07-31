@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StPostContainer, StPostList } from './PostStyle';
 import { __getMainPostsSlice } from '../../redux/modules/mainPostsSlice';
-import { getMainPosts } from '../../api/mainPosts';
+import { getMainLikes, getMainPosts } from '../../api/mainPosts';
+import { __getPostsSlice } from '../../redux/modules/postsSlice';
 
 const PostListMain = ({ option, position }) => {
   const [] = useState();
@@ -22,7 +23,7 @@ const PostListMain = ({ option, position }) => {
   // 좋아요, 무한스크롤
   const [sortByLike, setSortByLike] = useState(false);
   const [postsData, setPostsData] = useState([]);
-  const [likesData, setLikesData] = useState([]);
+  // const [likesData, setLikesData] = useState([]);
   const [page, setPage] = useState(1);
 
   // useEffect(async () => {
@@ -32,9 +33,9 @@ const PostListMain = ({ option, position }) => {
   // }, [page]);
 
   const function1 = async () => {
-    const { postsData, likesData } = await getMainPosts(page); // getMainPosts()에 인자로 page를 넘겨주고
+    const { postsData } = await getMainPosts(page); // getMainPosts()에 인자로 page를 넘겨주고
     setPostsData((prev) => [...prev, ...postsData]);
-    setLikesData(likesData);
+    // setLikesData(likesData);
   };
 
   useEffect(() => {
@@ -56,6 +57,33 @@ const PostListMain = ({ option, position }) => {
   const onPostClick = (post) => {
     navigate(`/detail/${post.id}`);
   };
+
+  //
+  // const function2 = async () => {
+  //   const response = await getMainLikes();
+  //   console.log(response);
+  // };
+
+  // useEffect(() => {
+  //   function2();
+  // }, [page]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      dispatch(__getPostsSlice());
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  const { likesData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
+
+  if (isLoading) {
+    return <h1>아직 로딩 중입니다</h1>;
+  }
+  if (isError) {
+    return <h1>오류가 발생했어요</h1>;
+  }
 
   // 좋아요 정렬 미적용
   const statedPosts = postsData.filter(

@@ -1,107 +1,3 @@
-//원래
- useEffect(() => {
-     const fetchData = () => {
-       dispatch(__getPostsSlice());
-     };
-
-     fetchData();
-   }, [dispatch]);
-
-
-
-
-//
-useEffect(() => {
-    const fetchData = () => {
-      try {
-        // __getPostsSlice 액션 크리에이터를 호출하여 데이터를 가져옴
-        const actionResult = dispatch(__getPostsSlice());
-
-        // 액션 크리에이터가 반환한 결과에서, payload를 확인하여 데이터를 가져옴
-        if ('fulfilled' in actionResult && actionResult.payload) {
-          const { postsData } = actionResult.payload;
-          setListOfPosts(postsData); //가져온 데이터를 -> listOfPosts 상태로 설정
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-//
-  useEffect(() => {
-    const fetchData = () => {
-      try {
-        // __getPostsSlice 액션 크리에이터를 호출하여 데이터를 가져옴
-        const { postsData } = dispatch(__getPostsSlice());
-        console.log(postsData);
-
-        const myPostsData = postsData.filter((item) => item.uid === auth.currentUser.uid);
-        setListOfPosts(myPostsData); //가져온 데이터를 -> listOfPosts 상태로 설정
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const postRef = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-  const likeRef = query(collection(db, 'likes'));
-
-
-  useEffect(() => {
-    postRef
-      .limit(3)
-      .get()
-      .then((collections) => {
-        updateState(collections);
-      });
-    
-    likeRef.limit(3).get().then((collections) => {
-      updateState(collections)
-    })
-  }, []);
-
-  const updateState = (collections) => {
-    const isCollectionEmpty = collections.size === 0;
-    if (!isCollectionEmpty) {
-      //
-      const posts = collections.docs.map((post) => post.data());
-      const lastdoc = collections.docs[collections.docs.length - 1];
-      //
-      setListOfPosts((listOfPosts) => [...listOfPosts, ...posts]);
-      setLastKey(lastdoc);
-    } else {
-      setIsEmpty(true);
-    }
-    //
-    setIsLoading(false);
-  };
-
-  const fetchMorePosts = () => {
-    //
-    setIsLoading(true);
-    //
-    postRef
-      .startAfter(lastKey)
-      .limit(3)
-      .get()
-      .then((collections) => {
-        updateState(collections);
-      });
-  };
-
-  if (listOfPosts.length === 0) {
-    return <h1>Loading...</h1>;
-  }
-
-
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const { postsData, likesData, isLoading, isError, error } = useSelector((state) => state.mainPostsSlice);
@@ -120,3 +16,34 @@ useEffect(() => {
     // console.log('Height: ', document.documentElement.scrollHeight);
     // console.log('Top:', document.documentElement.scrollTop);
     // console.log('Window: ', window.innerHeight);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    <mainPosts.js>
+     // 2. likesData
+    const likeQ = query(collection(db, 'likes'));
+    const likeQuerySnapshot = await getDocs(likeQ);
+
+    const likeMap = {};
+    const likesData = [];
+
+    likeQuerySnapshot.forEach((doc) => {
+      // likeMap[likeTargetPostId] 객체 생성
+      const like = doc.data();
+      const likeTargetPostId = doc.data().targetPostId;
+      likeMap[likeTargetPostId] = {
+        targetPostId: like.targetPostId,
+        userId: like.userId
+      };
+
+      //  각각의 객체들을 얕은복사하여 likesData 배열에 추가
+      likesData.push({ ...likeMap[likeTargetPostId] });
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const { likesData, isLoading, isError, error } = useSelector((state) => state.postsSlice);
+  if (isLoading) {
+    return <h1>아직 로딩 중입니다</h1>;
+  }
+  if (isError) {
+    return <h1>오류가 발생했어요</h1>;
+  }

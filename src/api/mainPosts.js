@@ -40,34 +40,40 @@ const getMainPosts = async (page) => {
       postsData.push(post);
     });
 
-    // 2. likesData
-    const likeQ = query(collection(db, 'likes'));
-    const likeQuerySnapshot = await getDocs(likeQ);
-
-    const likeMap = {};
-    const likesData = [];
-
-    likeQuerySnapshot.forEach((doc) => {
-      // likeMap[likeTargetPostId] 객체 생성
-      const like = doc.data();
-      const likeTargetPostId = doc.data().targetPostId;
-      likeMap[likeTargetPostId] = {
-        targetPostId: like.targetPostId,
-        userId: like.userId
-      };
-
-      //  각각의 객체들을 얕은복사하여 likesData 배열에 추가
-      likesData.push({ ...likeMap[likeTargetPostId] });
-    });
-
     // 현재 페이지에 맞게 데이터를 slice하여 가져옴
     const currentPageData = postsData.slice(startAt, endAt);
 
-    return { postsData: currentPageData, likesData };
+    return { postsData: currentPageData };
   } catch (err) {
     console.log(err);
-    return { postsData: [], likesData: [] };
+    return { postsData: [] };
   }
 };
+
+//////////////////////////////////////
+// const getMainLikes = async () => {
+//   try {
+//     const likeQ = query(collection(db, 'likes'));
+//     const likeQuerySnapshot = await getDocs(likeQ);
+
+//     const likeMap = {};
+//     const likesData = [];
+
+//     likeQuerySnapshot.forEach((doc) => {
+//       const like = doc.data();
+//       const likeTargetPostId = doc.data().targetPostId;
+//       likeMap[likeTargetPostId] = {
+//         targetPostId: like.targetPostId,
+//         userId: like.userId
+//       };
+
+//       likesData.push({ ...likeMap[likeTargetPostId] });
+//       return likesData;
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     return { likesData: [] };
+//   }
+// };
 
 export { getMainPosts };
