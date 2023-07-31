@@ -50,30 +50,4 @@ const getMainPosts = async (page) => {
   }
 };
 
-//////////////////////////////////////
-// const getMainLikes = async () => {
-//   try {
-//     const likeQ = query(collection(db, 'likes'));
-//     const likeQuerySnapshot = await getDocs(likeQ);
-
-//     const likeMap = {};
-//     const likesData = [];
-
-//     likeQuerySnapshot.forEach((doc) => {
-//       const like = doc.data();
-//       const likeTargetPostId = doc.data().targetPostId;
-//       likeMap[likeTargetPostId] = {
-//         targetPostId: like.targetPostId,
-//         userId: like.userId
-//       };
-
-//       likesData.push({ ...likeMap[likeTargetPostId] });
-//       return likesData;
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     return { likesData: [] };
-//   }
-// };
-
 export { getMainPosts };
